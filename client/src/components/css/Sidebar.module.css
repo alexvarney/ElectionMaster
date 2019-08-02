@@ -1,0 +1,6 @@
+.sidebar{
+    height: inherit;
+    max-height: inherit;
+    overflow-y: scroll;
+    flex-direction: column;
+}

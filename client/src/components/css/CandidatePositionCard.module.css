@@ -1,0 +1,32 @@
+.row{
+    display: flex;
+    width: 100%;
+    padding: 1em;
+}
+
+.container{
+    margin-right: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.title{
+    flex: 1;
+    font-family: 'IBM Plex Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 23px;
+    letter-spacing: -0.03em;
+}
+
+.description{
+    padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+}
+
+.closeButton{
+    display: block;
+    width: 100%;
+    text-align: right;
+    padding: 0 1.2rem 0.5rem 0;
+    cursor: pointer;
+}
