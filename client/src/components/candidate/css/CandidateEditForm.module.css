@@ -1,0 +1,88 @@
+.overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.25);
+  z-index: 1;
+  overflow-y: scroll;
+}
+
+.container{
+  width: 60%;
+  height: 80%;
+  margin: 5rem auto 5rem auto;
+  padding: 3rem 3rem 3rem 3rem;
+  background: #fff;
+  border: 1px solid #949494;
+  box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.33);
+  border-radius: 10px;
+}
+
+.container h1{
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 48px;
+  line-height: 62px;
+  letter-spacing: -0.03em;
+}
+
+.formRow{
+  display: flex;
+  height: 90%;
+  padding-bottom: 5rem;
+}
+
+.formCol{
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin: 0 1em 0 1em;
+  justify-content: space-between;
+}
+
+.formItem label, .formAbout label{
+  display: block;
+  margin: 0;
+  padding: 0;
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 23px;
+  letter-spacing: -0.03em;
+}
+
+.formItem input{
+  width: 100%;
+  background: #FFFFFF;
+  border: 1px solid #C9C9C9;
+  box-sizing: border-box;
+  box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+  font-family: 'Open-Sans', sans-serif;
+}
+
+.formAbout{
+  composes: formCol;
+  flex-grow: 2;
+}
+
+.formAbout textarea{
+  width: 100%;
+  height: 100%;
+  background: #FFFFFF;
+  border: 1px solid #C9C9C9;
+  box-sizing: border-box;
+  box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+  font-family: 'Open-Sans', sans-serif;
+}
+
+.formButton{
+  margin-right: 3em;
+}

@@ -1,0 +1,22 @@
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    overflow-y: scroll;
+    max-height: 100%;
+}
+
+.issue{
+    flex-basis: 33%;
+    padding: 2rem;
+}
+
+.description{
+    font-family: 'Open Sans', sans-serif;
+}
+
+@media only screen and (max-width: 768px) {
+    .issue{
+        flex-basis: 50%;
+    }    
+}

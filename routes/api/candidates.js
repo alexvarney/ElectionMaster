@@ -40,7 +40,9 @@ router.put('/:id', (req, res) =>{
             return res.send(500);
         }
         
-        res.send(req.body);
+        Candidate.findById(req.params.id).exec((err, newDoc)=>{
+            res.send(newDoc);
+        })
     })
 })
 

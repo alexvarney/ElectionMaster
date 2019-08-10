@@ -1,0 +1,173 @@
+.overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.25);
+    z-index: 1;
+    overflow-y: hidden;
+  }
+  
+  .container{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    height: 80vh;
+    max-height: 90vh;
+    margin: 5rem auto 5rem auto;
+    padding: 3rem 3rem 3rem 3rem;
+    background: #fff;
+    border: 1px solid #949494;
+    box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.33);
+    border-radius: 10px;
+  }
+  
+  .container h1{
+    font-family: 'IBM Plex Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 62px;
+    letter-spacing: -0.03em;
+  }
+
+  .flexRow * {
+    flex-grow: 1;
+  }
+
+  .subheading {
+    font-family: 'IBM Plex Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 28px;
+    margin: 1rem 0rem 1rem 0rem;
+    line-height: 23px;
+    letter-spacing: -0.03em;
+    flex-grow: 0;
+  }
+
+  .issueHeading{
+    composes: subheading;
+    max-width: 20ch;
+    word-wrap: break-word;
+    text-align: right;
+  }
+
+  .flexRow {
+      display: flex;
+      flex-grow: 1;
+      width: 100%;
+  }
+
+  .flexRow:nth-child(1){
+    min-height: 90px;
+    flex-grow: 0;
+  }
+
+  .flexRow:nth-child(1) h2{
+    max-width: 20ch;
+    word-wrap: break-word;
+    text-align: right;
+  }
+
+  .flexCol {
+      display: flex;
+      flex-direction: column;
+  }
+
+  .flexCol:nth-child(1){
+    flex: 0 0 50%;
+  }
+
+  .flexCol:nth-child(2){
+    margin-left: 3rem;
+  }
+
+  .arrow {
+      text-align: right;
+      color: #595959;
+  }
+
+  .positionSelectorContainer{
+      flex: 2 0 auto;
+      border-radius: 10px;
+      border: 2px solid #b8b8b8;
+      margin: 0 0 1rem 0;
+      box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.25);
+      display: flex;
+      flex-direction: column;
+  }
+
+  .positionSelector{
+      display: flex;
+      padding: 1rem 1rem 1rem 1rem;
+      cursor: pointer;
+  }
+
+  .positionSelector:nth-child(even){
+    background-color: #EDEDED;
+  }
+
+  .positionSelector:nth-child(odd){
+    background-color: #F9F9F9;
+}
+
+  .positionSelector h3 {
+    color: #595959;
+    flex-grow: 1;
+    font-family: 'IBM Plex Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 21px;
+    letter-spacing: -0.03em;
+    padding-right: 3em;
+    min-width: 30ch;
+    max-width: 30ch;
+    word-wrap: break-word;
+  }
+
+  .controlButtons{
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+  }
+
+  .controlButtons button{
+    margin: 0 1em 0 0;
+  }
+
+  .filterButtons, .filterButtons div{
+    flex-grow: 0;
+    width: 100%;
+  }
+
+  .positionForm {
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 5rem 0;
+    justify-content: space-around;
+  }
+
+  .textAreaContainer{
+    flex: 1 1 auto;
+  }
+
+  .dropdown{
+    flex-grow: 0;
+    box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.15);
+  }
+
+  .descriptionEditor{
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #FFFFFF;
+    border: 1px solid #C9C9C9;
+    box-sizing: border-box;
+    box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    font-family: 'Open-Sans', sans-serif;
+  }

@@ -7,6 +7,14 @@ export default function(state = initialState, action){
                 ...state,
                 issues: action.payload,
             }
+        case 'UPDATE_ISSUE':
+            return {
+                ...state,
+                issues: [
+                    action.payload,
+                    ...state.issues.filter(item=>item._id !== action.payload._id)
+                ]
+            }
         default:
             return { ...state }
     }

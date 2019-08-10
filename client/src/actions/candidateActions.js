@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const getItems = () => dispatch => {
+export const getCandidates = () => dispatch => {
     axios.get('/api/candidates')
     .then(res=>
         dispatch({

@@ -8,3 +8,22 @@ export const getIssues = () => dispatch => {
             payload: res.data,
         }))
 }
+
+export const createIssue = (issue) => dispatch => {
+    axios.post('/api/issues', issue)
+    .then(res=>
+        dispatch({
+            type: 'UPDATE_ISSUE',
+            payload: res.data,
+        }))
+}
+
+export const updateIssue = (issue) => dispatch => {
+    console.log(issue);
+    axios.put(`/api/issues/${issue._id}`, issue)
+    .then(res=>
+        dispatch({
+            type: 'UPDATE_ISSUE',
+            payload: res.data,            
+        }))
+}
