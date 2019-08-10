@@ -8,9 +8,22 @@ import {Link} from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import {Scrollbars} from 'react-custom-scrollbars';
 import NumberFormat from 'react-number-format';
-import {Button} from 'reactstrap';
+import {Button, Tooltip} from 'reactstrap';
 
 class CandidatePanel extends Component {
+
+    constructor(props){
+        super(props);
+        this.state={
+            popovers: {
+                website: false,
+                age: false,
+                affiliation: false,
+                state: false,
+                netWorth: false,
+            }
+        }
+    }
 
     getRandomIntInclusive = (min, max) => {
         min = Math.ceil(min);
@@ -50,6 +63,15 @@ class CandidatePanel extends Component {
             ...getButtonStyle(),
             minWidth: '90px',
         };
+
+        const togglePopover = (id) => {
+            this.setState(prevState=>({
+                popovers: {
+                    ...prevState.popovers,
+                    [id]: !prevState.popovers[id],
+                }
+            }))
+        }
         
         return (
             <Scrollbars className={styles.candidatePanel}>
@@ -68,21 +90,37 @@ class CandidatePanel extends Component {
                         </div>
                     </div>
                     <div className={styles.buttonRow}>
-                        <div style={getButtonStyle()} className={styles.panelButton}>
-                            <a className="panel-websiteLink" href={website}>{websiteDisplay}</a>
+                        <div>
+                            <div id="tooltip-website" style={getButtonStyle()} className={styles.panelButton}>
+                                <a className="panel-websiteLink" href={website}>{websiteDisplay}</a>
+                            </div>
+                            <Tooltip placement="bottom" isOpen={this.state.popovers['website']}target="tooltip-website" toggle={()=>togglePopover('website')}>Candidate Website</Tooltip>
                         </div>
-                        <div style={getButtonStyle()} className={styles.panelButton}>
-                            Age: {age}
+                        <div>
+                            <div id="tooltip-age" style={getButtonStyle()} className={styles.panelButton}>
+                                Age: {age}
+                            </div>
+                            <Tooltip placement="bottom" isOpen={this.state.popovers['age']}target="tooltip-age" toggle={()=>togglePopover('age')}>Age</Tooltip>
                         </div>
-                        <div style={getButtonStyle()} className={styles.panelButton}>
-                            {partyAffiliation}
+                        <div>
+                            <div id="tooltip-affil" style={getButtonStyle()} className={styles.panelButton}>
+                                {partyAffiliation}
+                            </div>
+                            <Tooltip placement="bottom" isOpen={this.state.popovers['affiliation']}target="tooltip-affil" toggle={()=>togglePopover('affiliation')}>Party Affiliation</Tooltip>
                         </div>
-                        <div style={getButtonStyle()} className={styles.panelButton}>
-                            <i className="fas fa-location-arrow"></i>{state}
+                        <div>
+                            <div id="tooltip-state" style={getButtonStyle()} className={styles.panelButton}>
+                                <i className="fas fa-location-arrow"></i>{state}
+                            </div>
+                            <Tooltip placement="bottom" isOpen={this.state.popovers['state']}target="tooltip-state" toggle={()=>togglePopover('state')}>State</Tooltip>
                         </div>
-                        {netWorth ? <div style={getButtonStyle()} className={styles.panelButton}>
-                            <i className="fas fa-search-dollar"></i><NumberFormat value={netWorth} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                        {netWorth ? <div>
+                            <div id="tooltip-networth" style={getButtonStyle()} className={styles.panelButton}>
+                                <i className="fas fa-search-dollar"></i><NumberFormat value={netWorth} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                            </div>
+                            <Tooltip placement="bottom" isOpen={this.state.popovers['netWorth']}target="tooltip-networth" toggle={()=>togglePopover('netWorth')}>Net Worth</Tooltip>
                         </div> : null}
+                        
                         {this.isLoggedIn() ? <div style={getButtonStyle()} className={styles.panelButton}>
                                 <Link to={`${this.props.match.url}/edit`}>Edit</Link>
                             </div>: null}

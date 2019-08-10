@@ -20,7 +20,7 @@ class CandidateView extends Component {
         super(props);
 
         this.state = {
-            expandSelect: true,
+            expandSelect: false,
         }
 
     }

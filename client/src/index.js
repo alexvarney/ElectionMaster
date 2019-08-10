@@ -4,7 +4,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import axios from 'axios';
 
-axios.defaults.baseURL = (process.env.DEV) ? `http://localhost:5000`: '';
+axios.defaults.baseURL = (process.env.DEV) ? `http://192.168.0.20:5000`: '';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
