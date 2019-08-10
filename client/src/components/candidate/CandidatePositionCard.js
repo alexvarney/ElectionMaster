@@ -71,10 +71,10 @@ export default class CandidatePositionCard extends Component {
                 </div>
                 
                     <div className={(this.state.isExpanded)?styles.descriptionContainer_active:styles.descriptionContainer}>
-                        <p className={styles.description}>                
+                        <div className={styles.description}>                
                             <ReactMarkdown source={this.props.position.description} />
                             {this.props.position.links.map((item, index)=><a key={item._id} href={item.url}>[{index+1}]</a>)}
-                        </p>
+                        </div>
                         <span className={styles.closeButton}>
                             <i onClick={(e)=>this.contractContainer(e)} className="fas fa-times"></i>
                         </span>

@@ -47,6 +47,17 @@ export class IssueEditForm extends Component {
     }
 
     render() {
+
+        if(!this.props.user.token) {
+            return(
+                <div className={styles.overlay}>
+                    <div className={styles.container}>
+                        <h2 className={styles.subheading}>You must be logged in to view this page.</h2>
+                        <Button tag={Link} to="/issues">Close</Button>
+                    </div>
+                </div>
+        )}
+
         return (
             <div className={styles.overlay}>
                 <div className={styles.container}>
@@ -56,7 +67,7 @@ export class IssueEditForm extends Component {
                             <h2 className={styles.subheading}>Issue</h2>
                             <div className={styles.issueSelectContainer}>
                                 <Scrollbars style={{borderRadius: '10px'}}>
-                                    <div className={styles.issueSelector} onClick={this.createNewIssue}><span><i class="fas fa-plus-circle"></i> New Issue</span></div>
+                                    <div className={styles.issueSelector} onClick={this.createNewIssue}><span><i className="fas fa-plus-circle"></i> New Issue</span></div>
                                     {this.props.issues.issues.map(issue=>(
                                         <div onClick={()=>this.setSelectedIssue(issue)} className={styles.issueSelector}>{issue.name}</div>
                                     ))}
@@ -86,6 +97,7 @@ export class IssueEditForm extends Component {
 
 const mapStateToProps = (state) => ({
     issues: state.issues,
+    user: state.user,
 })
 
 export default connect(mapStateToProps, {createIssue, updateIssue})(IssueEditForm)

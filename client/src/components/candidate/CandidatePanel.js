@@ -7,6 +7,7 @@ import CandidatePositionCard from './CandidatePositionCard';
 import {Link} from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import {Scrollbars} from 'react-custom-scrollbars';
+import NumberFormat from 'react-number-format';
 
 class CandidatePanel extends Component {
 
@@ -30,7 +31,7 @@ class CandidatePanel extends Component {
 
         const rank = sorted.indexOf(candidate) + 1;
 
-        const {name, state, dob, slogan, polling, description, website, websiteDisplay, partyAffiliation} = candidate;
+        const {name, state, dob, slogan, polling, description, website, websiteDisplay, partyAffiliation, netWorth} = candidate;
     
         const age = moment().diff(dob, 'years');
 
@@ -69,10 +70,12 @@ class CandidatePanel extends Component {
                             {partyAffiliation}
                         </div>
                         <div style={getButtonStyle()} className={styles.panelButton}>
-                            {state}
+                            <i className="fas fa-location-arrow"></i>{state}
                         </div>
-                        {this.isLoggedIn() ? 
-                            <div style={getButtonStyle()} className={styles.panelButton}>
+                        {netWorth ? <div style={getButtonStyle()} className={styles.panelButton}>
+                            <i className="fas fa-search-dollar"></i><NumberFormat value={netWorth} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                        </div> : null}
+                        {this.isLoggedIn() ? <div style={getButtonStyle()} className={styles.panelButton}>
                                 <Link to={`${this.props.match.url}/edit`}>Edit</Link>
                             </div>: null}
                     </div>

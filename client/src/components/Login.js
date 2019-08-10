@@ -14,7 +14,10 @@ class Login extends Component {
         super(props);
 
         this.state = {
-            formValues: {},
+            formValues: {
+                email: '',
+                password: '',
+            },
             dropdownOpen: false,
         }
     }
@@ -74,14 +77,14 @@ class Login extends Component {
                     Login
                 </DropdownToggle>
                 <DropdownMenu className={styles.dropdown} right>
-                    <form onSubmit={this.onFormSubmit} onChange={this.onFormChange} className={styles.form}>
+                    <form onSubmit={this.onFormSubmit} className={styles.form}>
                         <div className={styles.formItem}>
                             <label>Email:</label>
-                            <input name="email" value={this.state.formValues['email']} type="text" />
+                            <input name="email" onChange={this.onFormChange} value={this.state.formValues.email} type="text" />
                         </div>
                         <div className={styles.formItem}>
                             <label>Password:</label>
-                            <input name="password" value={this.state.formValues['password']} type="password" />
+                            <input name="password" onChange={this.onFormChange} value={this.state.formValues.password} type="password" />
                         </div>
                         <Button outline color="primary" size="sm" onClick={this.onFormSubmit}>Login</Button>
                     </form>

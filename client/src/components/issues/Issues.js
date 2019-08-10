@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Route} from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
-import {Scrollbars} from 'react-custom-scrollbars';
 
 import {getIssues} from '../../actions/issueActions';
 

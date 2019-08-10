@@ -173,6 +173,16 @@ class PositionEditForm extends Component {
 
     render() {
 
+        if(!this.props.user.token) {
+            return(
+                <div className={styles.overlay}>
+                    <div className={styles.container}>
+                        <h2 className={styles.subheading}>You must be logged in to view this page.</h2>
+                        <Button tag={Link} to="/candidates">Close</Button>
+                    </div>
+                </div>
+        )}
+
         const selectedIssue = this.getIssue(this.state.selectedIssueId);
 
         return (
@@ -257,6 +267,7 @@ class PositionEditForm extends Component {
 const mapStateToProps = (state) => ({
     candidates: state.candidates,
     issues: state.issues,
+    user: state.user,
 })
 
 export default connect(mapStateToProps, {updateCandidate})(PositionEditForm);

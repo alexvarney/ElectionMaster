@@ -44,6 +44,16 @@ class CandidateEditForm extends Component {
     }
 
     render() {
+        if(!this.props.user.token) {
+            return(
+                <div className={styles.overlay}>
+                    <div className={styles.container}>
+                        <h2 className={styles.subheading}>You must be logged in to view this page.</h2>
+                        <Button tag={Link} to="/candidates">Close</Button>
+                    </div>
+                </div>
+        )}
+
         return (
             <div className={styles.overlay}>
                 <div className={styles.container}>
@@ -92,6 +102,10 @@ class CandidateEditForm extends Component {
                                 <label>Status</label>
                                 <input type="text" name="status" value={this.state.formValues['status'] || ''} onChange={this.handleFormChange}></input>
                             </div>
+                            <div className={styles.formItem}>
+                                <label>Net Worth</label>
+                                <input type="text" name="netWorth" value={this.state.formValues['netWorth'] || ''} onChange={this.handleFormChange}></input>
+                            </div>
                         </div>
                         <div className={styles.formAbout}>
                             <label>About Candidate</label>
@@ -109,6 +123,7 @@ class CandidateEditForm extends Component {
 
 const mapStateToProps = (state) => ({
     candidates: state.candidates,
+    user: state.user,
 })
 
 export default connect(mapStateToProps, {updateCandidate})(CandidateEditForm);

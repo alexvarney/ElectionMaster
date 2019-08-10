@@ -42,5 +42,8 @@ export const auth = () => dispatch => {
             ls.remove('em-token');
             dispatch({type: 'LOGIN_FAILURE'});
         }
+    }).catch((err)=>{
+        ls.remove('em-token');
+        dispatch({type: 'LOGIN_FAILURE'});
     })
 }
