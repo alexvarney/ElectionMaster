@@ -1,6 +1,5 @@
 .container {
     display: flex;
-    width: 350px;
     min-height: 80px;
     background-color: #ededed;
     color: #00050f;

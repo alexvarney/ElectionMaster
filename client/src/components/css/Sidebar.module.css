@@ -1,6 +1,14 @@
 .sidebar{
     height: inherit;
     max-height: inherit;
-    overflow-y: scroll;
     flex-direction: column;
+    background-color: red;
+}
+
+@media only screen and (max-width: 800px) {
+
+    .sidebar{
+        background-color: red;
+    }
+
 }

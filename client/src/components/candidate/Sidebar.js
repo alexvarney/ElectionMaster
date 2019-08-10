@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {setSelected} from '../../actions/candidateActions';
-import styles from './css/Sidebar.module.css';
+import {Scrollbars} from 'react-custom-scrollbars';
+
 
 import CandidateListCard from './CandidateListCard';
 
@@ -11,12 +12,12 @@ class Sidebar extends Component {
         const { candidates, selectedCandidateId } = this.props.candidates;
 
         return (
-            <div style={{direction: 'rtl'}} className={styles.sidebar}>
-                <div style={{direction: 'ltr'}}>
+            <div className={this.props.className}>
+                <Scrollbars autoHide>
                     {(candidates ? candidates.sort((a,b)=>(a.polling>b.polling)?-1:1).map((candidate)=>(
-                        <CandidateListCard key={candidate._id} candidate={candidate} selected={selectedCandidateId} onSelect={this.props.setSelected}/>
+                        <CandidateListCard key={candidate._id} candidate={candidate} selected={selectedCandidateId} onSelect={this.props.onSelect}/>
                     )):null)}
-                </div>
+                </Scrollbars>
             </div>
         )
     }

@@ -8,6 +8,7 @@ import {Link} from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import {Scrollbars} from 'react-custom-scrollbars';
 import NumberFormat from 'react-number-format';
+import {Button} from 'reactstrap';
 
 class CandidatePanel extends Component {
 
@@ -25,7 +26,11 @@ class CandidatePanel extends Component {
 
         const candidate = this.props.candidates.candidates ?this.props.candidates.candidates.filter((item)=>item._id === this.props.candidates.selectedCandidateId)[0]:null;
 
-        if(!candidate) return null;
+        if(!candidate) return (
+            <div>
+                <Button outline color="primary" block onClick={this.props.toggle}  className={styles.mobileSelect}>Select Candidate</Button>
+            </div>
+        );
 
         const sorted = this.props.candidates.candidates.sort((a,b)=>(a.polling>b.polling)?-1:1);
 
@@ -49,6 +54,9 @@ class CandidatePanel extends Component {
         return (
             <Scrollbars className={styles.candidatePanel}>
                 <div className={styles.container}>
+                    
+                    <Button block outline color="primary" onClick={this.props.toggle} className={styles.mobileSelect}>Select Candidate</Button>
+
                     <div className={styles.row}>
                         <CandidatePanelCircle style={circleBg}>
                             <span className={styles.circlePolling}>{Math.floor(polling)}%</span>

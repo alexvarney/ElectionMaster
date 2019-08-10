@@ -4,3 +4,24 @@
     height: calc(100vh - 50px);
     overflow-y: hidden;
 }
+
+.sidebar{
+    flex-basis: 350px;
+}
+
+@media only screen and (max-width: 800px) {
+    .candidateView{
+        flex-direction: column;
+    }
+
+    .sidebar_expanded{
+        composes: sidebar;
+        flex-basis: 100%;
+    }
+
+    .sidebar_hidden {
+        composes: sidebar;
+        display: none;
+    }
+
+}
