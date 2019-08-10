@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux';
+import {Button} from 'reactstrap';
 
+
+import styles from './css/PollingEditor.module.css';
 import {updateCandidate, getCandidates} from '../actions/candidateActions';
 
 class PollingEditor extends Component {
@@ -51,32 +54,32 @@ class PollingEditor extends Component {
         }
 
         return (
-            <div>
+            <div className={styles.container}>
                 <form>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Candidate</th>
-                            <th>Polling</th>
-                            <th>Edit</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.props.candidates.sort((a, b)=> (a.polling < b.polling)?1:-1).map((candidate)=>
-                            <tr key={candidate._id}>
-                                <td>{candidate.name}</td>
-                                <td>{candidate.polling}</td>
-                                <td>
-                                    <input 
-                                        name={candidate._id} 
-                                        onChange={this.handlePollingUpdate} 
-                                        value={(this.state.newValues[candidate._id]) ? this.state.newValues[candidate._id].polling : candidate.polling
-                                }></input></td>
+                    <table className={styles.pollingTable}>
+                        <thead>
+                            <tr>
+                                <th>Candidate</th>
+                                <th>Polling</th>
+                                <th>Edit</th>
                             </tr>
-                        )}
-                    </tbody>
-                </table>
-                <button onClick={this.handlePollingSubmit}>Submit</button>
+                        </thead>
+                        <tbody>
+                            {this.props.candidates.sort((a, b)=> (a.polling < b.polling)?1:-1).map((candidate)=>
+                                <tr key={candidate._id}>
+                                    <td>{candidate.name}</td>
+                                    <td>{candidate.polling}</td>
+                                    <td>
+                                        <input 
+                                            name={candidate._id} 
+                                            onChange={this.handlePollingUpdate} 
+                                            value={(this.state.newValues[candidate._id]) ? this.state.newValues[candidate._id].polling : candidate.polling
+                                    }></input></td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                    <Button onClick={this.handlePollingSubmit}>Submit</Button>
                 </form>
             </div>
         )

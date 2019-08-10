@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Route} from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
+import {Scrollbars} from 'react-custom-scrollbars';
 
 import {getIssues} from '../../actions/issueActions';
 
@@ -20,18 +21,18 @@ export class Issues extends Component {
         const {match} = this.props;
 
         return (
+            <div className={styles.container}>
+                <Route exact path={`${match.path}/edit`} component={IssueEditForm} />
+                {this.props.issues.issues.map(issue => {
+                    return (
+                        <div className={styles.issue}>
+                            <h3>{issue.name}</h3>
+                            <p className={styles.description}><ReactMarkdown source={issue.description} /></p>
+                        </div>
+                    )
+                })}
                 
-                <div className={styles.container}>
-                    <Route exact path={`${match.path}/edit`} component={IssueEditForm} />
-                    {this.props.issues.issues.map(issue => {
-                        return (
-                            <div className={styles.issue}>
-                                <h3>{issue.name}</h3>
-                                <p className={styles.description}><ReactMarkdown source={issue.description} /></p>
-                            </div>
-                        )
-                    })}
-                </div>
+            </div>
         )
     }
 }

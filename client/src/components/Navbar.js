@@ -23,9 +23,6 @@ export class Navbar extends Component {
           {this.props.user.token !== "" ?
             <Link to="/editpolls">Polling Editor</Link> : null}
 
-          {this.props.user.token !== "" ?
-            <Link to="/profile">Profile</Link> : null}
-
         </div>
 
         <Login />
