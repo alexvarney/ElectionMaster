@@ -146,6 +146,8 @@ p {
 
 /* Mobile Styling */
 
+
+/* Breakpoint 1: Tablet (801-1100px) */
 @media only screen and (max-width: 1100px) {
 
   .container {
@@ -166,6 +168,7 @@ p {
 
 }
 
+/* Breakpoint 2: Mobile (<801px) */
 @media only screen and (max-width: 800px){
   .mobileSelect{
     margin-top: 2rem;

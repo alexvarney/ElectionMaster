@@ -203,7 +203,6 @@ class PositionEditForm extends Component {
                                     {this.getIssues() ? this.getIssues().map(issue=>
                                         <div key={issue._id} onClick={()=>this.setSelectedIssueId(issue._id)} className={styles.positionSelector}>
                                             <h3>{issue.name} </h3>
-                                            <span className={styles.arrow}><i className="fas fa-arrow-circle-right"></i></span>
                                         </div>
                                         ) : null}
                                 </Scrollbars>
