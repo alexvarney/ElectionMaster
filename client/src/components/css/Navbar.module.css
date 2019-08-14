@@ -4,24 +4,79 @@
     color: #fff;
     height: 50px;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     padding: 0 2rem 0 2rem;
-  }
-
-  .left *{
-    margin: 0 1em 0 0em;
   }
 
   .titleStyle {
     font-weight: 700;
   }
 
-  .left a {
+  .navbar a {
     color: #fff;
   }
 
-  .left a:hover {
+  .navbar a:hover {
     color: #d6d6d6;
     text-decoration: none;
+  }
+  
+  .navbar > * {
+    margin-right: 1em;
+  }
+
+  .loginContainer {
+    flex-grow: 2;
+    text-align: right;
+    margin: 0;
+  }
+
+  .navbar_expanded {
+    composes: navbar;
+  }
+
+  .mobileExpander {
+    display: none;
+  }
+
+  .mobileExpander * {
+    padding-right: 0.5em;
+  }
+
+  @media only screen and (max-width: 800px){
+    .navbar_expanded {
+      position: fixed;
+      height: 100%;
+      flex-direction: column;
+      justify-content: space-evenly;
+      overflow-y: scroll;
+      z-index: 1;
+    }
+
+    .navbar_expanded * {
+      flex-grow: 0;
+    }
+
+    .mobileExpander {
+      display: block;
+    }
+
+    .navbar a, .loginContainer {
+      display: none;
+    }
+
+    .navbar_expanded a, .navbar_expanded .loginContainer {
+      display: block;
+    }
+
+    .loginContainer {
+      order: -1;
+    }
+
+    .mobileExpander {
+      order: -2;
+    }
+
+
   }

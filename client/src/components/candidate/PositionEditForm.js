@@ -77,10 +77,10 @@ class PositionEditForm extends Component {
 
     getButton = (name) => {
         if (this.state.selectedFilter === name){
-            return <Button name={name} outline>{name}</Button>
+            return <Button color="primary" name={name} outline>{name}</Button>
         }
 
-        return <Button onClick={()=>this.setState({selectedFilter: name})} name={name}>{name}</Button>
+        return <Button color="primary" onClick={()=>this.setState({selectedFilter: name})} name={name}>{name}</Button>
     }
 
     getIssue = (id) => {
@@ -133,7 +133,6 @@ class PositionEditForm extends Component {
 
         if(!position){
             position = {
-                _id: null,
                 description: '',
                 issue: id,
                 links: [],
@@ -189,74 +188,76 @@ class PositionEditForm extends Component {
             <div className={styles.overlay}>
                 <div className={styles.container}>
 
-                    <div className={styles.flexRow}>
-                        <h1>Edit Positions</h1>
+                    <div className={styles.headingContainer}>
+                        <h1 className={styles.title}>Edit Positions</h1>
+                        {selectedIssue ? <h2 className={styles.issueHeading}>{selectedIssue.name}</h2> : null}
                     </div>
-
-                    <div className={styles.flexRow}>
-                        <div className={styles.flexCol}>
+                    <div className={styles.colContainer}>
+                        <div className={styles.positionColumn}>
 
                             <h2 className={styles.subheading}>Positions</h2>
-                            <div className={styles.positionSelectorContainer}>
-                                
-                                <Scrollbars autoHide style={{borderRadius:'10px'}}>
-                                    {this.getIssues() ? this.getIssues().map(issue=>
-                                        <div key={issue._id} onClick={()=>this.setSelectedIssueId(issue._id)} className={styles.positionSelector}>
-                                            <h3>{issue.name} </h3>
-                                        </div>
-                                        ) : null}
-                                </Scrollbars>
-                            
-                            </div>
-                            
+
                             <div className={styles.filterButtons}>
-                                <ButtonGroup>
+                                <ButtonGroup block>
                                     {this.getButton('All')}
                                     {this.getButton('Complete')}
                                     {this.getButton('Incomplete')}
                                 </ButtonGroup>
                             </div>
 
+                            <div className={styles.positionSelectorBorder}>
+                                <div className={styles.positionSelectorContainer}>
+                                    {this.getIssues() ? this.getIssues().map(issue=>
+                                        <div key={issue._id} onClick={()=>this.setSelectedIssueId(issue._id)} className={styles.positionSelector}>
+                                            <h3>{issue.name} </h3>
+                                        </div>
+                                        ) : null}
+                                </div>
+                            </div>
                         </div>
-
+                        
                         {selectedIssue ?
-                        <div className={styles.flexCol}>
-                            
-                            <h2 className={styles.issueHeading}>
-                                {selectedIssue.name}
-                            </h2>
+                        <div className={styles.positionColumn}>
 
-                            <form className={styles.positionForm}>
-                                <h2 className={styles.subheading}>Status</h2>
+                                <form className={styles.positionForm}>
+                                    <h2 className={styles.subheading}>Status</h2>
+                                    
+                                    <div className={styles.dropdown}>
+                                        <Dropdown color="primary" isOpen={this.state.statusDropdownOpen} toggle={this.toggleSelectDropdown}>
+                                            <DropdownToggle color="primary" outline block caret>
+                                                {this.state.position.status.charAt(0).toUpperCase() + this.state.position.status.slice(1)}
+                                            </DropdownToggle>
+                                            <DropdownMenu>
+                                                <DropdownItem onClick={()=>this.setPositionStatus('supports')}>Supports</DropdownItem>
+                                                <DropdownItem onClick={()=>this.setPositionStatus('mixed')}>Mixed</DropdownItem>
+                                                <DropdownItem onClick={()=>this.setPositionStatus('opposed')}>Opposed</DropdownItem>
+                                                <DropdownItem onClick={()=>this.setPositionStatus('unknown')}>Unknown</DropdownItem>
+                                            </DropdownMenu>
+                                        </Dropdown>
+                                    </div>
 
-                                <div className={styles.dropdown}>
-                                    <Dropdown isOpen={this.state.statusDropdownOpen} toggle={this.toggleSelectDropdown}>
-                                        <DropdownToggle outline block caret>
-                                            {this.state.position.status.charAt(0).toUpperCase() + this.state.position.status.slice(1)}
-                                        </DropdownToggle>
-                                        <DropdownMenu>
-                                            <DropdownItem onClick={()=>this.setPositionStatus('supports')}>Supports</DropdownItem>
-                                            <DropdownItem onClick={()=>this.setPositionStatus('mixed')}>Mixed</DropdownItem>
-                                            <DropdownItem onClick={()=>this.setPositionStatus('opposed')}>Opposed</DropdownItem>
-                                            <DropdownItem onClick={()=>this.setPositionStatus('unknown')}>Unknown</DropdownItem>
-                                        </DropdownMenu>
-                                    </Dropdown>
-                                </div>
-
-                                <h2 className={styles.subheading}>Description</h2>
-                                <div className={styles.textAreaContainer}>
-                                    <textarea className={styles.descriptionEditor} type="text" name="description" value={this.state.position.description || ''} onChange={this.handleDescriptionChange} />
-                                </div>
-                            </form>
-                        </div> : null}
+                                    <h2 className={styles.subheading}>Description</h2>
+                                    
+                                    <div className={styles.textAreaContainer}>
+                                        <textarea className={styles.descriptionEditor} type="text" name="description" value={this.state.position.description || ''} onChange={this.handleDescriptionChange} />
+                                    </div>
+                                    
+                                    <ol className={styles.links}>
+                                        {this.state.position.links ? this.state.position.links.map(item=>{
+                                            return (<li>{item.title}</li>)
+                                        }):null}
+                                    </ol>
+                                </form>
+                            </div> 
+                        : null}
 
                     </div>
 
                     <div className={styles.controlButtons}>
-                        <Button className={styles.formButton} onClick={this.submitForm} type="submit">Submit</Button>
-
-                        <Button className={styles.formButton} tag={Link} to="/candidates">Close</Button>
+                        <Button color="info" className={styles.formButton} onClick={this.submitForm} type="submit">Submit</Button>
+                        <Button color="danger" className={styles.formButton} tag={Link} to="/candidates">Close</Button>
                     </div>
+
                 </div>
             </div>
         )

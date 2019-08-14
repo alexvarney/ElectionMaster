@@ -4,28 +4,56 @@ import Login from './Login';
 import styles from './css/Navbar.module.css';
 import { connect } from 'react-redux'
 
+
 export class Navbar extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      isExpanded: false,
+    }
+  }
+
+  toggle = () => {
+    this.setState(prevState=>({isExpanded: !prevState.isExpanded}));
+  }
+
+  getStyle = () => {
+    return this.state.isExpanded ? styles.navbar_expanded : styles.navbar;
+  }
+
+  close = () => {
+    this.setState({isExpanded: false})
+  }
 
   render() {
 
     return (
-      <nav className={styles.navbar}>
-        <div className={styles.left}>
-          <Link to="/"><span className={styles.titleStyle}>ElectionsMaster</span></Link>
+      <nav className={this.getStyle()}>
+
+          <div onClick={this.toggle} className={styles.mobileExpander}>
+            <span className={styles.menuSelect}>
+              <i class="fas fa-bars"></i>
+            </span>
+            <span className={styles.titleStyle}>
+              {this.state.isExpanded ? 'Close Menu':'ElectionsMaster'}
+            </span>
+          </div>
+
+          <Link onClick={this.close} to="/"><span className={styles.titleStyle}>ElectionsMaster</span></Link>
           
-          <Link to="/candidates">Candidates</Link>
+          <Link onClick={this.close} to="/candidates">Candidates</Link>
 
-          <Link to="/issues">Issues</Link>
-
-          {this.props.user.token !== "" ?
-            <Link to="/issues/edit">Issue Editor</Link> : null}
+          <Link onClick={this.close} to="/issues">Issues</Link>
 
           {this.props.user.token !== "" ?
-            <Link to="/editpolls">Polling Editor</Link> : null}
+            <Link onClick={this.close} to="/issues/edit">Issue Editor</Link> : null}
 
-        </div>
-
-        <Login />
+          {this.props.user.token !== "" ?
+            <Link onClick={this.close} to="/editpolls">Polling Editor</Link> : null}
+          <div className={styles.loginContainer}>
+            <Login />
+          </div>
       </nav>
     )
   }

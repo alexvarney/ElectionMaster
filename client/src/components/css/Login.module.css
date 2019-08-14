@@ -45,6 +45,14 @@
     justify-content: space-around;
 }
 
+.dropdownContent > a {
+    color: #007bff !important;
+}
+
+.dropdownContent > a:hover {
+    color: #fff !important;
+}
+
 .dropdownContent * {
     z-index: 2;
 }
@@ -76,4 +84,19 @@
     border-style: solid;
     border-width: 0 15px 20px 15px;
     border-color: transparent transparent #fff transparent;
+}
+
+@media only screen and (max-width: 800px){
+    .triangle{
+        display: none;
+    }
+
+    .form {
+        flex-direction: column;
+    }
+
+    .form > button {
+        margin-top: 1rem;
+        width: 100%;
+    }
 }

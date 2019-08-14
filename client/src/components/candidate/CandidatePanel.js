@@ -74,9 +74,8 @@ class CandidatePanel extends Component {
         }
         
         return (
-            <Scrollbars className={styles.candidatePanel}>
+            <div className={styles.candidatePanel}>
                 <div className={styles.container}>
-                    
                     <Button block outline color="primary" onClick={this.props.toggle} className={styles.mobileSelect}>Select Candidate</Button>
 
                     <div className={styles.row}>
@@ -145,7 +144,7 @@ class CandidatePanel extends Component {
                         </div>
                     </div>
                 </div>
-            </Scrollbars>
+            </div>
         )
     }
 }

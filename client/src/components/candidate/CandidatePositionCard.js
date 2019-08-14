@@ -29,6 +29,11 @@ export default class CandidatePositionCard extends Component {
         })
     }
 
+    toggleContainer = (event) => {
+        event.stopPropagation();
+        this.setState(prevState=>({isExpanded: !prevState.isExpanded}));
+    }
+
     render() {
         //Get Issue
         const issue = this.props.issues.filter(item=>item._id === this.props.position.issue)[0];
@@ -65,20 +70,20 @@ export default class CandidatePositionCard extends Component {
 
         return (
             <div onClick={this.expandContainer} className={styles.container} style={getContainerStyle(this.props.position.status)}>
-                <div className={styles.row}>
+                <div onClick={this.toggleContainer} className={styles.titleRow}>
                     <div className={styles.title}>{issue.name}</div>
                     <div>{getIcon(this.props.position.status)}</div>
                 </div>
                 
-                    <div className={(this.state.isExpanded)?styles.descriptionContainer_active:styles.descriptionContainer}>
-                        <div className={styles.description}>                
-                            <ReactMarkdown source={this.props.position.description} />
-                            {this.props.position.links.map((item, index)=><a key={item._id} href={item.url}>[{index+1}]</a>)}
-                        </div>
-                        <span className={styles.closeButton}>
-                            <i onClick={(e)=>this.contractContainer(e)} className="fas fa-times"></i>
-                        </span>
+                <div className={(this.state.isExpanded)?styles.descriptionContainer_active:styles.descriptionContainer}>
+                    <div className={styles.description}>                
+                        <ReactMarkdown source={this.props.position.description} />
+                        {this.props.position.links.map((item, index)=><a key={item._id} href={item.url}>[{index+1}]</a>)}
                     </div>
+                    <span className={styles.closeButton}>
+                        <i onClick={(e)=>this.contractContainer(e)} className="fas fa-times"></i>
+                    </span>
+                </div>
             </div>
         )
     }

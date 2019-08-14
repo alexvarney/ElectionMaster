@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {Route} from 'react-router-dom';
+import {Route, Redirect} from 'react-router-dom';
 import {Button} from 'reactstrap';
 
 import Sidebar from './Sidebar';
@@ -47,6 +47,10 @@ class CandidateView extends Component {
     render() {
 
         const {match} = this.props;
+
+        if(match.url.endsWith('/')){
+            return <Redirect to={match.url.slice(0,-1)} />
+        }
 
         return (
             <div>
