@@ -46,9 +46,9 @@ export default class CandidatePositionCard extends Component {
                 case 'opposed': 
                     return (<i className="far fa-times-circle"></i>)
                 case 'mixed':
-                    return(<i className="far fa-question-circle"></i>)
+                    return(<i class="far fa-question-circle"></i>)
                 default:
-                    return(<i className="far fa-question-circle"></i>)
+                    return(<i className="far fa-circle"></i>)
             }
         }
     
