@@ -80,7 +80,7 @@ class CandidatePanel extends Component {
 
                     <div className={styles.row}>
                         <CandidatePanelCircle style={circleBg}>
-                            <span className={styles.circlePolling}>{Math.floor(polling)}%</span>
+                            <span className={styles.circlePolling}>{polling}%</span>
                             <span>#{rank}</span>
                         </CandidatePanelCircle>
                         <div className={styles.titleContainer}>
