@@ -76,7 +76,7 @@ export default class CandidatePositionCard extends Component {
             <div onClick={this.expandContainer} className={styles.container} style={getContainerStyle(this.props.position.status)}>
                 <div onClick={this.toggleContainer} className={styles.titleRow}>
                     <div className={styles.title}>{issue.name}</div>
-                    <div>{getIcon(this.props.position.status)}</div>
+                    <div className={styles.statusIcon}>{getIcon(this.props.position.status)}</div>
                 </div>
                 
                 <div className={(this.state.isExpanded)?styles.descriptionContainer_active:styles.descriptionContainer}>
