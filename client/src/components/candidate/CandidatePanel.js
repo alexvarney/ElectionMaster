@@ -9,6 +9,8 @@ import ReactMarkdown from 'react-markdown';
 import {Scrollbars} from 'react-custom-scrollbars';
 import NumberFormat from 'react-number-format';
 import {Button, Tooltip} from 'reactstrap';
+import PopoverButton from './PopoverButton';
+import uuid from 'short-uuid';
 
 class CandidatePanel extends Component {
 
@@ -16,8 +18,6 @@ class CandidatePanel extends Component {
         super(props);
         this.state={
             popovers: {
-                website: false,
-                age: false,
                 affiliation: false,
                 state: false,
                 netWorth: false,
@@ -90,34 +90,30 @@ class CandidatePanel extends Component {
                     </div>
                     <div className={styles.buttonRow}>
                         <div>
-                            <div id="tooltip-website" style={getButtonStyle()} className={styles.panelButton}>
+                            <PopoverButton tooltipText="Website" style={getButtonStyle()}>
                                 <a className="panel-websiteLink" href={website}>{websiteDisplay}</a>
-                            </div>
-                            <Tooltip placement="bottom" isOpen={this.state.popovers['website']}target="tooltip-website" toggle={()=>togglePopover('website')}>Candidate Website</Tooltip>
+                            </PopoverButton>
                         </div>
+
                         <div>
-                            <div id="tooltip-age" style={getButtonStyle()} className={styles.panelButton}>
+                            <PopoverButton tooltipText="Age" style={getButtonStyle()}>
                                 Age: {age}
-                            </div>
-                            <Tooltip placement="bottom" isOpen={this.state.popovers['age']}target="tooltip-age" toggle={()=>togglePopover('age')}>Age</Tooltip>
+                            </PopoverButton>
                         </div>
                         <div>
-                            <div id="tooltip-affil" style={getButtonStyle()} className={styles.panelButton}>
+                            <PopoverButton tooltipText="Party Affiliation" style={getButtonStyle()}>
                                 {partyAffiliation}
-                            </div>
-                            <Tooltip placement="bottom" isOpen={this.state.popovers['affiliation']}target="tooltip-affil" toggle={()=>togglePopover('affiliation')}>Party Affiliation</Tooltip>
+                            </PopoverButton>
                         </div>
                         <div>
-                            <div id="tooltip-state" style={getButtonStyle()} className={styles.panelButton}>
+                        <PopoverButton tooltipText="State" style={getButtonStyle()}>
                                 <i className="fas fa-location-arrow"></i>{state}
-                            </div>
-                            <Tooltip placement="bottom" isOpen={this.state.popovers['state']}target="tooltip-state" toggle={()=>togglePopover('state')}>State</Tooltip>
+                        </PopoverButton>
                         </div>
                         {netWorth ? <div>
-                            <div id="tooltip-networth" style={getButtonStyle()} className={styles.panelButton}>
+                            <PopoverButton tooltipText="Net Worth" style={getButtonStyle()}>
                                 <i className="fas fa-search-dollar"></i><NumberFormat value={netWorth} displayType={'text'} thousandSeparator={true} prefix={'$'} />
-                            </div>
-                            <Tooltip placement="bottom" isOpen={this.state.popovers['netWorth']}target="tooltip-networth" toggle={()=>togglePopover('netWorth')}>Net Worth</Tooltip>
+                            </PopoverButton>
                         </div> : null}
                         
                         {this.isLoggedIn() ? <div style={getButtonStyle()} className={styles.panelButton}>
