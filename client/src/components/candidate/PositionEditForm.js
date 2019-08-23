@@ -254,7 +254,7 @@ class PositionEditForm extends Component {
 
                     <div className={styles.controlButtons}>
                         <Button color="info" className={styles.formButton} onClick={this.submitForm} type="submit">Submit</Button>
-                        <Button color="danger" className={styles.formButton} tag={Link} to="/candidates">Close</Button>
+                        <Button color="danger" className={styles.formButton} tag={Link} to={`/candidates/${this.state.candidate._id}`}>Close</Button>
                     </div>
 
                 </div>

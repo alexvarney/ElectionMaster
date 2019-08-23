@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import {connect} from 'react-redux';
 import {Route, Redirect} from 'react-router-dom';
 
@@ -13,57 +13,73 @@ import {getCandidates, setSelected} from '../../actions/candidateActions';
 import styles from './css/CandidateView.module.css';
 
 
-class CandidateView extends Component {
+const CandidateView = (props) => {
 
-    constructor(props){
-        super(props);
+    /* Mobile Selection Modal State */
+    const [isSelectExpanded, expandSelect] = useState(false);
 
-        this.state = {
-            expandSelect: false,
+    const toggle = () => {expandSelect(!isSelectExpanded)}
+
+    const setSelectedCandidate = (id) => {
+        
+        props.history.push(`/candidates/${id}`);
+        props.setSelected(id);
+        expandSelect(false);
+        
+    }
+
+    const getSidebarStyle = () => {
+        return (isSelectExpanded) ? styles.sidebar_expanded : styles.sidebar_hidden
+    }
+
+
+    const {match, setSelected, getIssues, getCandidates, candidates} = props;
+    
+    /* CDM */
+    useEffect(()=>{
+        getIssues();
+
+        if(!candidates.candidates){
+            getCandidates();
         }
 
-    }
-
-    componentDidMount(){
-        this.props.getIssues();
-        this.props.getCandidates();
-    }
-
-    toggleSidebar = () => {
-        this.setState(prevState=>({expandSelect: !prevState.expandSelect}));
-    }
-
-    getSidebarStyle = () => {
-        const style = (this.state.expandSelect) ? styles.sidebar_expanded : styles.sidebar_hidden
-        return style;
-    }
-
-    setSelectedCandidate = (candidate) => {
-        this.props.setSelected(candidate);
-        this.setState({expandSelect: false});
-    }
-
-    render() {
-
-        const {match} = this.props;
-
-        if(match.url.endsWith('/')){
-            return <Redirect to={match.url.slice(0,-1)} />
+        const {id} = match.params;
+        if(id){
+            setSelected(id);
+        } else {
+            setSelected(null);
         }
 
-        return (
-            <div>
-                <Route exact path={`${match.path}/edit`} component={CandidateEditForm} />
-                <Route exact path={`${match.path}/editpositions`} component={PositionEditForm} />
-                <div className={styles.candidateView}>
-                    <Sidebar onSelect={this.setSelectedCandidate} className={this.getSidebarStyle()}/>
-                    <CandidatePanel toggle={this.toggleSidebar} match={match}/>
-                </div>
+        const cleanup = () => {setSelected(null);}
+        return cleanup;
+
+    }, []);
+
+    /* Fires on URL Change to update selected candidate */
+    useEffect(()=>{
+        setSelected(match.params.id);
+    },[match.params.id, setSelected]);
+
+    /* Remove trailing '/' from URL */
+    if(match.url.endsWith('/')){
+        return <Redirect to={match.url.slice(0,-1)} />
+    }
+
+    return (
+        <div>
+            <Route exact path={`${match.path}/edit`} component={CandidateEditForm} />
+            <Route exact path={`${match.path}/editpositions`} component={PositionEditForm} />
+            <div className={styles.candidateView}>
+                <Sidebar onSelect={setSelectedCandidate} className={getSidebarStyle()}/>
+                <CandidatePanel toggle={toggle} match={match}/>
             </div>
-        )
-    }
+        </div>
+    )
 }
 
-const mapStateToProps = (state) => ({});
+
+const mapStateToProps = (state) => ({
+    candidates: state.candidates,
+});
 
 export default connect(mapStateToProps, {getIssues, getCandidates, setSelected})(CandidateView);

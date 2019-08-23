@@ -20,7 +20,8 @@ export default class App extends Component {
       <Provider store={store}>
         <div className="app">
           <Navbar />
-          <Route path="/candidates" component={CandidateView} />
+          <Route exact path="/candidates" component={CandidateView} />
+          <Route path="/candidates/:id" component={CandidateView} />
           <Route path="/editpolls" component={PollingEditor} />
           <Route path="/issues" component={Issues} />
         </div>

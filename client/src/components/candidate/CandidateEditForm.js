@@ -113,7 +113,7 @@ class CandidateEditForm extends Component {
                         </div>
                     </form>
                     <Button className={styles.formButton} onClick={this.submitForm} type="submit">Submit</Button>
-                    <Button className={styles.formButton} tag={Link} to="/candidates">Close</Button>
+                    <Button className={styles.formButton} tag={Link} to={`/candidates/${this.state.formValues._id}`}>Close</Button>
                     
                 </div>
             </div>
