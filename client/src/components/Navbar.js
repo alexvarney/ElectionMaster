@@ -33,7 +33,7 @@ export class Navbar extends Component {
 
           <div onClick={this.toggle} className={styles.mobileExpander}>
             <span className={styles.menuSelect}>
-              <i class="fas fa-bars"></i>
+              <i className="fas fa-bars"></i>
             </span>
             <span className={styles.titleStyle}>
               {this.state.isExpanded ? 'Close Menu':'ElectionsMaster'}

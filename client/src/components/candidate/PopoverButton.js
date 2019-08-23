@@ -15,7 +15,7 @@ const PopoverButton = (props) => {
         if (linkRef.current) {
           setReady(true)
         }
-      }, [linkRef.current]);    
+      }, []);
 
     return (
         <div ref={linkRef} style={props.style} className={styles.panelButton}>

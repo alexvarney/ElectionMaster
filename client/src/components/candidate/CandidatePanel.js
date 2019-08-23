@@ -6,24 +6,11 @@ import CandidatePanelCircle from './CandidatePanelCircle';
 import CandidatePositionCard from './CandidatePositionCard';
 import {Link} from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
-import {Scrollbars} from 'react-custom-scrollbars';
 import NumberFormat from 'react-number-format';
-import {Button, Tooltip} from 'reactstrap';
+import {Button} from 'reactstrap';
 import PopoverButton from './PopoverButton';
-import uuid from 'short-uuid';
 
 class CandidatePanel extends Component {
-
-    constructor(props){
-        super(props);
-        this.state={
-            popovers: {
-                affiliation: false,
-                state: false,
-                netWorth: false,
-            }
-        }
-    }
 
     getRandomIntInclusive = (min, max) => {
         min = Math.ceil(min);
@@ -63,15 +50,6 @@ class CandidatePanel extends Component {
             ...getButtonStyle(),
             minWidth: '90px',
         };
-
-        const togglePopover = (id) => {
-            this.setState(prevState=>({
-                popovers: {
-                    ...prevState.popovers,
-                    [id]: !prevState.popovers[id],
-                }
-            }))
-        }
         
         return (
             <div className={styles.candidatePanel}>

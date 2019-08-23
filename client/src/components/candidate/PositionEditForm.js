@@ -5,7 +5,6 @@ import {connect} from 'react-redux';
 
 import {Link} from 'react-router-dom';
 import { Button, ButtonGroup, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import {Scrollbars} from 'react-custom-scrollbars';
 
 import styles from './css/PositionEditForm.module.css';
 
