@@ -24,9 +24,9 @@ export class Issues extends Component {
                 <Route exact path={`${match.path}/edit`} component={IssueEditForm} />
                 {this.props.issues.issues.map(issue => {
                     return (
-                        <div className={styles.issue}>
+                        <div key={issue._id} className={styles.issue}>
                             <h3>{issue.name}</h3>
-                            <p className={styles.description}><ReactMarkdown source={issue.description} /></p>
+                            <ReactMarkdown className={styles.description} source={issue.description} />
                         </div>
                     )
                 })}

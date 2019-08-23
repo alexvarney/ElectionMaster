@@ -69,7 +69,7 @@ export class IssueEditForm extends Component {
                                 <Scrollbars style={{borderRadius: '10px'}}>
                                     <div className={styles.issueSelector} onClick={this.createNewIssue}><span><i className="fas fa-plus-circle"></i> New Issue</span></div>
                                     {this.props.issues.issues.map(issue=>(
-                                        <div onClick={()=>this.setSelectedIssue(issue)} className={styles.issueSelector}>{issue.name}</div>
+                                        <div key={issue._id} onClick={()=>this.setSelectedIssue(issue)} className={styles.issueSelector}>{issue.name}</div>
                                     ))}
                                 </Scrollbars>
                             </div>

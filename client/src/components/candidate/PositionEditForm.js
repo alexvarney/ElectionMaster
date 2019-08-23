@@ -197,7 +197,7 @@ class PositionEditForm extends Component {
                             <h2 className={styles.subheading}>Positions</h2>
 
                             <div className={styles.filterButtons}>
-                                <ButtonGroup block>
+                                <ButtonGroup block="true">
                                     {this.getButton('All')}
                                     {this.getButton('Complete')}
                                     {this.getButton('Incomplete')}
@@ -243,7 +243,7 @@ class PositionEditForm extends Component {
                                     
                                     <ol className={styles.links}>
                                         {this.state.position.links ? this.state.position.links.map(item=>{
-                                            return (<li>{item.title}</li>)
+                                            return (<li key={item._id}>{item.title}</li>)
                                         }):null}
                                     </ol>
                                 </form>
