@@ -44,11 +44,11 @@ export default class CandidatePositionCard extends Component {
                 case 'supports':
                     return (<i className="fas fa-circle"></i>)
                 case 'opposed': 
-                    return (<i className="far fa-circle"></i>)
+                    return (<i className="far fa-times-circle"></i>)
                 case 'mixed':
                     return(<i className="fas fa-adjust"></i>)
                 default:
-                    return(<i className="fas fa-circle-notch"></i>)
+                    return (<i className="far fa-circle"></i>)
             }
         }
     

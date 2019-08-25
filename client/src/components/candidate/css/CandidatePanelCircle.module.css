@@ -1,11 +1,6 @@
-.circle_container{
-    width: 90px;
-}
-
 .circle {
   position: relative;
   display: block;
-  margin: 2em 0;
   background-color: transparent;
   color: #fff;
   text-align: center;

@@ -36,31 +36,38 @@ class CandidatePanel extends Component {
 
         const rank = sorted.indexOf(candidate) + 1;
 
-        const {name, state, dob, slogan, polling, description, website, websiteDisplay, partyAffiliation, netWorth} = candidate;
+        const {name, state, dob, slogan, polling, description, website, websiteDisplay, partyAffiliation, netWorth, image} = candidate;
     
         const age = moment().diff(dob, 'years');
-
+        
+        const getSubtleColor = () => `hsla(${this.getRandomIntInclusive(0,360)},42%,22%,1.0)`;
+        
         const getButtonStyle = () => {
-            return {
-                backgroundColor: `hsla(${this.getRandomIntInclusive(0,360)},42%,22%,1.0)`
-            }
-        }
-
-        const circleBg = {
-            ...getButtonStyle(),
-            minWidth: '90px',
+            return {backgroundColor: getSubtleColor()}
         };
+
+        const getCircleStyle = () => {
+            
+            return (image) ? 
+                {
+                    backgroundImage: `url(${process.env.PUBLIC_URL}` + `/headshots/${image})`,
+                    backgroundSize: 'cover',
+                    border: '2px solid black',
+                } 
+            : getButtonStyle();
+        }
         
         return (
             <div className={styles.candidatePanel}>
                 <div className={styles.container}>
                     <Button block outline color="primary" onClick={this.props.toggle} className={styles.mobileSelect}>Select Candidate</Button>
 
-                    <div className={styles.row}>
-                        <CandidatePanelCircle style={circleBg}>
-                            <span className={styles.circlePolling}>{polling}%</span>
-                            <span>#{rank}</span>
-                        </CandidatePanelCircle>
+                    <div className={styles.headingRow}>
+                        <div className={styles.circleContainer}>
+                            <CandidatePanelCircle style={getCircleStyle()} containerStyle={styles.circleContainer}>
+                                <span className={styles.circlePolling}>#{rank}</span>
+                            </CandidatePanelCircle>
+                        </div>
                         <div className={styles.titleContainer}>
                             <h1>{name}</h1>
                             <h3>{slogan}</h3>
@@ -68,19 +75,28 @@ class CandidatePanel extends Component {
                     </div>
                     <div className={styles.buttonRow}>
                         <div>
-                            <PopoverButton tooltipText="Website" style={getButtonStyle()}>
-                                <a className="panel-websiteLink" href={website}>{websiteDisplay}</a>
+                            <PopoverButton tooltipText="Rank" style={getButtonStyle()}>
+                                <span className={styles.rankButton}><i className="fas fa-poll-h"></i> #{rank}</span>
                             </PopoverButton>
                         </div>
-
+                        <div>
+                            <PopoverButton tooltipText="Polling" style={getButtonStyle()}>
+                                <span><i className="fas fa-percentage"></i> {polling}%</span>
+                            </PopoverButton>
+                        </div>
+                        <div>
+                            <PopoverButton tooltipText="Website" style={getButtonStyle()}>
+                                <a className="panel-websiteLink" href={website}><i className="fas fa-window-restore"></i>{websiteDisplay}</a>
+                            </PopoverButton>
+                        </div>
                         <div>
                             <PopoverButton tooltipText="Age" style={getButtonStyle()}>
-                                Age: {age}
+                                <i className="fas fa-birthday-cake"></i> {age}
                             </PopoverButton>
                         </div>
                         <div>
                             <PopoverButton tooltipText="Party Affiliation" style={getButtonStyle()}>
-                                {partyAffiliation}
+                            <i className="fas fa-certificate"></i> {partyAffiliation}
                             </PopoverButton>
                         </div>
                         <div>
