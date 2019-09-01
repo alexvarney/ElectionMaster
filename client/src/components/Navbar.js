@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import Login from './Login';
 import styles from './css/Navbar.module.css';
 import { connect } from 'react-redux';
-import {Dropdown, DropdownMenu, DropdownToggle, DropdownItem} from 'reactstrap';
+import {Dropdown, DropdownMenu, DropdownToggle, DropdownItem, Button} from 'reactstrap';
 
 import {getCandidates} from '../actions/candidateActions';
 import {getIssues} from '../actions/issueActions';
@@ -11,10 +11,13 @@ import {getContests, setSelectedContestId} from '../actions/contestActions';
 
 const Navbar = (props) => {
 
-  useEffect(() => {
+  const refreshData = () => {
     props.getCandidates();
     props.getIssues();
     props.getContests();
+  }
+  useEffect(() => {
+    refreshData();
   }, [])
 
   useEffect(()=>{
@@ -75,6 +78,8 @@ const Navbar = (props) => {
             <Link onClick={closeMobileExpand} to="/editpolls">Polling Editor</Link>
             <Link onClick={closeMobileExpand} to="/editcontests">Contest Editor</Link>
           </Fragment> : null}
+
+        <Button onClick={refreshData} outline><i class="fas fa-sync-alt"></i></Button>
 
         <div className={styles.loginContainer}>
           <Login />
