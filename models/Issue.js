@@ -7,4 +7,3 @@ const IssueSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('Issue', IssueSchema);
-

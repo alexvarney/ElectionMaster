@@ -33,6 +33,7 @@ router.get('/:id', (req, res) =>{
 })
 
 // PUT api/candidates/:id 
+// Body: JSON of new Candidate object
 router.put('/:id', (req, res) =>{
     Candidate.findByIdAndUpdate(req.params.id, req.body).exec((error, doc)=>{
         if (error) {

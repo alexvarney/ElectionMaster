@@ -17,7 +17,7 @@ class CandidateEditForm extends Component {
 
     componentDidMount = () => {
 
-        const candidate = this.props.candidates.candidates ?this.props.candidates.candidates.filter((item)=>item._id === this.props.candidates.selectedCandidateId)[0]:null;
+        const candidate = this.props.candidates.candidates ? this.props.candidates.candidates.filter((item)=>item._id === this.props.candidates.selectedCandidateId)[0]:null;
 
         if(!candidate) return null;
 

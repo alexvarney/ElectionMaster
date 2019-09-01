@@ -5,13 +5,16 @@ const cors = require('cors');
 const path = require('path');
 
 const keys = require('./config/keys');
+
 const candidates = require('./routes/api/candidates');
 const issues = require('./routes/api/issues');
 const users = require('./routes/api/users');
+const contests = require('./routes/api/contests');
+
 const app = express();
 
 
-//Bodyparser Middleware
+//Middleware
 app.use(bodyParser.json());
 app.use(cors());
 //DB Config
@@ -26,6 +29,7 @@ mongoose.connect(db)
 app.use('/api/candidates', candidates);
 app.use('/api/issues', issues);
 app.use('/api/users', users);
+app.use('/api/contests', contests);
 
 //Serve static assets if in production
 if(process.env.NODE_ENV === 'production'){

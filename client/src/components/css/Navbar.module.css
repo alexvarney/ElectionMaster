@@ -63,7 +63,7 @@
       display: block;
     }
 
-    .navbar a, .loginContainer {
+    .navbar a, .loginContainer, .contestDropdown {
       display: none;
     }
 
@@ -71,12 +71,17 @@
       display: block;
     }
 
+    .navbar_expanded .contestDropdown {
+      display: block;
+      order: -2;
+    }
+
     .loginContainer {
       order: -1;
     }
 
     .mobileExpander {
-      order: -2;
+      order: -3;
     }
 
 

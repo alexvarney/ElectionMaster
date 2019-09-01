@@ -12,6 +12,7 @@ import './App.css';
 import CandidateView from './components/candidate/';
 import PollingEditor from './components/PollingEditor';
 import Issues from './components/issues/Issues';
+import ContestEditor from './components/ContestEditor';
 
 export default class App extends Component {
   render() {
@@ -24,9 +25,12 @@ export default class App extends Component {
           <Route path="/candidates/:id" component={CandidateView} />
           <Route path="/editpolls" component={PollingEditor} />
           <Route path="/issues" component={Issues} />
+          <Route path="/editcontests" component={ContestEditor} />
         </div>
       </Provider>
       </Router>
     )
   }
 }
+
+
