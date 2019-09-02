@@ -87,10 +87,14 @@ class PositionEditForm extends Component {
     }
 
     getIssues = () => {
+
+        const selectedContest = this.props.contests.contests.filter(contest=>contest._id === this.props.contests.selectedContestId)[0];
+        const filteredIssues = selectedContest ? this.props.issues.issues.filter(issue=> selectedContest.issues.includes(issue._id)) : [];
+        const sortedIssues = filteredIssues.sort((a, b)=>(a.name > b.name ? 1 : -1));
         
         const getCompletedIssues = () => {
 
-            const getPosition = (position) => this.props.issues.issues.filter(i => i._id === position.issue)[0];
+            const getPosition = (position) => sortedIssues.filter(i => i._id === position.issue)[0];
     
             if (this.state.candidate.positions){
                 return this.state.candidate.positions.map(item=>getPosition(item));
@@ -104,7 +108,7 @@ class PositionEditForm extends Component {
 
             const completedIssueIds = getCompletedIssues().map(issue => issue._id);
 
-            return this.props.issues.issues.filter(issue => {
+            return sortedIssues.filter(issue => {
                 return !completedIssueIds.includes(issue._id);
             })
 
@@ -114,13 +118,13 @@ class PositionEditForm extends Component {
         switch(this.state.selectedFilter){
 
             case('All'):
-                return this.props.issues.issues;
+                return sortedIssues;
             case('Complete'):
                 return getCompletedIssues();
             case('Incomplete'):
                 return getUncompletedIssues();
             default:
-                return this.props.issues.issues;
+                return sortedIssues;
 
         }
 
@@ -267,6 +271,7 @@ const mapStateToProps = (state) => ({
     candidates: state.candidates,
     issues: state.issues,
     user: state.user,
+    contests: state.contests,
 })
 
 export default connect(mapStateToProps, {updateCandidate})(PositionEditForm);
