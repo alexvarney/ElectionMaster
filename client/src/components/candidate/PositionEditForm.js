@@ -89,7 +89,7 @@ class PositionEditForm extends Component {
     getIssues = () => {
 
         const selectedContest = this.props.contests.contests.filter(contest=>contest._id === this.props.contests.selectedContestId)[0];
-        const filteredIssues = selectedContest ? this.props.issues.issues.filter(issue=> selectedContest.issues.includes(issue._id)) : [];
+        const filteredIssues = selectedContest ? this.props.issues.issues.filter(issue=> selectedContest.issues.includes(issue._id)).filter(issue => (issue && issue._id)) : [];
         const sortedIssues = filteredIssues.sort((a, b)=>(a.name > b.name ? 1 : -1));
         
         const getCompletedIssues = () => {
