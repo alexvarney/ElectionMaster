@@ -12,6 +12,7 @@ class CandidateEditForm extends Component {
 
         this.state = {
             formValues: {},
+            hasSaved: false,
         }
     }
 
@@ -42,6 +43,8 @@ class CandidateEditForm extends Component {
 
     submitForm = (event) => {
         event.preventDefault();
+
+        this.setState({hasSaved: true,});
 
         if(!this.props.createNew){
             this.props.updateCandidate(this.state.formValues);
@@ -119,7 +122,7 @@ class CandidateEditForm extends Component {
                             <textarea type="text" name="description" value={this.state.formValues['description'] || ''} onChange={this.handleFormChange}></textarea>
                         </div>
                     </form>
-                    <Button className={styles.formButton} onClick={this.submitForm} type="submit">Submit</Button>
+                    <Button disabled={this.props.createNew && this.state.hasSaved} className={styles.formButton} onClick={this.submitForm} type="submit">{this.props.createNew && this.state.hasSaved ? 'Saved' : 'Save'}</Button>
                     <Button className={styles.formButton} tag={Link} to={`/candidates/${this.state.formValues._id}`}>Close</Button>
                     
                 </div>
