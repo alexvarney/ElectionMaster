@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {setSelected} from '../../actions/candidateActions';
 import {Scrollbars} from 'react-custom-scrollbars';
-
+import {Button} from 'reactstrap';
 
 import CandidateListCard from './CandidateListCard';
 
@@ -19,9 +20,13 @@ const Sidebar = (props) => {
     return (
         <div className={props.className}>
             <Scrollbars autoHide>
+
+                <Button tag={Link} to='/candidates/add/' style={{marginTop:'0.5rem'}} block color="primary" outline>Add Candidate</Button>
+                
                 {(contestCandidates ? contestCandidates.sort((a,b)=>(a.polling>b.polling)?-1:1).map((candidate)=>(
                     <CandidateListCard key={candidate._id} candidate={candidate} selected={selectedCandidateId} onSelect={props.onSelect}/>
                 )):null)}
+
             </Scrollbars>
         </div>
     )

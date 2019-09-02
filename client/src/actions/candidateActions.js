@@ -23,3 +23,11 @@ export const updateCandidate = (candidate) => dispatch => {
             payload: res.data,
         }))
 }
+
+export const createCandidate = (candidate) => dispatch => {
+    axios.post(`/api/candidates/`, candidate)
+        .then(res=>dispatch({
+            type: 'CREATE_CANDIDATE',
+            payload: res.data,
+        }))
+}

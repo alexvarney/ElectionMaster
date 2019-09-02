@@ -13,6 +13,7 @@ import CandidateView from './components/candidate/';
 import PollingEditor from './components/PollingEditor';
 import Issues from './components/issues/Issues';
 import ContestEditor from './components/ContestEditor';
+import CandidateEditForm from './components/candidate/CandidateEditForm';
 
 export default class App extends Component {
   render() {
@@ -22,6 +23,9 @@ export default class App extends Component {
         <div className="app">
           <Navbar />
           <Route exact path="/candidates" component={CandidateView} />
+          <Route exact path="/candidates/add" render={
+            (props) => <CandidateEditForm {...props} createNew={true} />
+          }/>
           <Route path="/candidates/:id" component={CandidateView} />
           <Route path="/editpolls" component={PollingEditor} />
           <Route path="/issues" component={Issues} />

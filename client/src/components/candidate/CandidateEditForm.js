@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {updateCandidate} from '../../actions/candidateActions';
+import {updateCandidate, createCandidate} from '../../actions/candidateActions';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import styles from './css/CandidateEditForm.module.css';
@@ -17,13 +17,15 @@ class CandidateEditForm extends Component {
 
     componentDidMount = () => {
 
-        const candidate = this.props.candidates.candidates ? this.props.candidates.candidates.filter((item)=>item._id === this.props.candidates.selectedCandidateId)[0]:null;
+        if(!this.props.createNew){
+            const candidate = this.props.candidates.candidates ? this.props.candidates.candidates.filter((item)=>item._id === this.props.candidates.selectedCandidateId)[0]:null;
 
-        if(!candidate) return null;
-
-        this.setState({
-            formValues: {...candidate}
-        });
+            if(candidate){
+                this.setState({
+                    formValues: {...candidate}
+                });
+            }
+        }
 
     }
 
@@ -40,7 +42,12 @@ class CandidateEditForm extends Component {
 
     submitForm = (event) => {
         event.preventDefault();
-        this.props.updateCandidate(this.state.formValues);
+
+        if(!this.props.createNew){
+            this.props.updateCandidate(this.state.formValues);
+        } else {
+            this.props.createCandidate(this.state.formValues);
+        }
     }
 
     render() {
@@ -58,7 +65,7 @@ class CandidateEditForm extends Component {
             <div className={styles.overlay}>
                 <div className={styles.container}>
 
-                    <h1>Edit Candidate</h1>
+                    <h1>{this.props.createNew ? 'Add' : 'Edit'} Candidate</h1>
                     
                     <form className={styles.formRow}>
                         <div className={styles.formCol}>
@@ -126,4 +133,4 @@ const mapStateToProps = (state) => ({
     user: state.user,
 })
 
-export default connect(mapStateToProps, {updateCandidate})(CandidateEditForm);
+export default connect(mapStateToProps, {updateCandidate, createCandidate})(CandidateEditForm);

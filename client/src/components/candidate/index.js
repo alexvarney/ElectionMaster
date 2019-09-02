@@ -57,7 +57,9 @@ const CandidateView = (props) => {
 
     /* Fires on URL Change to update selected candidate */
     useEffect(()=>{
-        setSelected(match.params.id);
+        if(candidates.selectedCandidateId !== match.params.id){
+            setSelected(match.params.id);
+        }
     },[match.params.id, setSelected]);
 
     /* Remove trailing '/' from URL */

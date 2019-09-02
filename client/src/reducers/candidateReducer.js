@@ -24,7 +24,14 @@ export default function(state = initialState, action){
                     action.payload,
                 ]
             }
-
+        case 'CREATE_CANDIDATE':
+            return {
+                ...state,
+                candidates: [
+                    ...state.candidates,
+                    action.payload,
+                ]
+            }
         default:
             return state;
     }

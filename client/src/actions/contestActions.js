@@ -1,9 +1,6 @@
 import axios from 'axios';
 
 export const getContests = () => dispatch => {
-
-    console.log('getting contests');
-
     axios.get('/api/contests')
     .then(res=>dispatch({
         type: 'GET_CONTESTS',
