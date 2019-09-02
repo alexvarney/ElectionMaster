@@ -31,3 +31,11 @@ export const createCandidate = (candidate) => dispatch => {
             payload: res.data,
         }))
 }
+
+export const deleteCandidate = (candidate) => dispatch => {
+    axios.delete(`/api/candidates/${candidate._id}`);
+    dispatch({
+        type: 'DELETE_CANDIDATE',
+        payload: candidate,
+    });
+}

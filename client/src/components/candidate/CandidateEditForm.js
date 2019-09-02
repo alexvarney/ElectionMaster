@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import {updateCandidate, createCandidate} from '../../actions/candidateActions';
+import {updateCandidate, createCandidate, deleteCandidate} from '../../actions/candidateActions';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 import styles from './css/CandidateEditForm.module.css';
 import {Button} from 'reactstrap';
 
@@ -50,6 +50,12 @@ class CandidateEditForm extends Component {
             this.props.updateCandidate(this.state.formValues);
         } else {
             this.props.createCandidate(this.state.formValues);
+        }
+    }
+
+    handleDelete = (event) => {
+        if(window.confirm('Are you sure you want to delete this candidate?')){
+            this.props.deleteCandidate({...this.state.formValues});
         }
     }
 
@@ -124,7 +130,8 @@ class CandidateEditForm extends Component {
                     </form>
                     <Button disabled={this.props.createNew && this.state.hasSaved} className={styles.formButton} onClick={this.submitForm} type="submit">{this.props.createNew && this.state.hasSaved ? 'Saved' : 'Save'}</Button>
                     <Button className={styles.formButton} tag={Link} to={`/candidates/${this.state.formValues._id}`}>Close</Button>
-                    
+                    <Button disabled={this.props.createNew} color="danger" onClick={()=>this.handleDelete()}>Delete</Button>
+
                 </div>
             </div>
         )
@@ -136,4 +143,4 @@ const mapStateToProps = (state) => ({
     user: state.user,
 })
 
-export default connect(mapStateToProps, {updateCandidate, createCandidate})(CandidateEditForm);
+export default withRouter(connect(mapStateToProps, {updateCandidate, createCandidate, deleteCandidate})(CandidateEditForm));

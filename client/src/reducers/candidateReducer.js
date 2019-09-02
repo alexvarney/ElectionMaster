@@ -32,6 +32,13 @@ export default function(state = initialState, action){
                     action.payload,
                 ]
             }
+        case 'DELETE_CANDIDATE':
+            const newList = state.candidates.filter(candidate => candidate._id !== action.payload._id);
+            return {
+                ...state,
+                candidates: [...newList],
+            }
+
         default:
             return state;
     }

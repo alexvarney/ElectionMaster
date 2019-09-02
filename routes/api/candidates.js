@@ -47,6 +47,15 @@ router.put('/:id', (req, res) =>{
     })
 })
 
+router.delete('/:id', (req, res)=>{
+    Candidate.findByIdAndDelete(req.params.id).exec((error, doc) => {
+        if(error){
+            console.log(error);
+            return res.send(500);
+        }
+    })
+})
+
 
 
 
