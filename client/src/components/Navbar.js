@@ -47,7 +47,10 @@ const Navbar = (props) => {
   const setSelectedContest = (id) => {
     props.setSelectedContestId(id);
     props.setSelected('');
-    props.history.push('/candidates');
+    
+    if(props.location.pathname.includes('/candidates/')){
+      props.history.push('/candidates');
+    }
   }
 
   //Alert Message
