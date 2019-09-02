@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import styles from './css/IssueEditForm.module.css';
 import {Button} from 'reactstrap';
 import {Scrollbars} from 'react-custom-scrollbars';
-import {createIssue, updateIssue} from '../../actions/issueActions';
+import {createIssue, updateIssue, createIssueAndAssign, deleteIssue} from '../../actions/issueActions';
 
 export class IssueEditForm extends Component {
 
@@ -13,6 +13,10 @@ export class IssueEditForm extends Component {
         this.state = {
             selectedIssue: {},
         }
+    }
+
+    componentDidMount(){
+
     }
 
     setSelectedIssue = (issue) => {
@@ -41,10 +45,34 @@ export class IssueEditForm extends Component {
         if (this.state.selectedIssue._id){
             this.props.updateIssue(this.state.selectedIssue);
         } else {
-            this.props.createIssue(this.state.selectedIssue);
-        }
 
+            const selectedContest = this.getSelectedContest();
+
+            if(!selectedContest){
+                this.props.createIssue(this.state.selectedIssue);
+            } else {
+                this.props.createIssueAndAssign(this.state.selectedIssue, selectedContest);
+            }
+        }
     }
+
+    getSelectedContest = () => {
+        return this.props.contests.contests.filter(contest=>contest._id === this.props.contests.selectedContestId)[0];
+    }
+
+    getContestIssues = () => {
+        const selectedContest = this.getSelectedContest();
+        const filteredIssues = selectedContest ? this.props.issues.issues.filter(issue=> selectedContest.issues.includes(issue._id)) : [];
+        const sortedIssues = filteredIssues.sort((a, b)=>(a.name > b.name ? 1 : -1));
+        return sortedIssues;
+    }
+
+    handleDelete = (event) => {
+        if(window.confirm('Are you sure you want to delete this candidate?')){
+            this.props.deleteIssue({...this.state.selectedIssue});
+        }
+    }
+
 
     render() {
 
@@ -68,7 +96,7 @@ export class IssueEditForm extends Component {
                             <div className={styles.issueSelectContainer}>
                                 <Scrollbars style={{borderRadius: '10px'}}>
                                     <div className={styles.issueSelector} onClick={this.createNewIssue}><span><i className="fas fa-plus-circle"></i> New Issue</span></div>
-                                    {this.props.issues.issues.map(issue=>(
+                                    {this.getContestIssues().map(issue=>(
                                         <div key={issue._id} onClick={()=>this.setSelectedIssue(issue)} className={styles.issueSelector}>{issue.name}</div>
                                     ))}
                                 </Scrollbars>
@@ -83,10 +111,11 @@ export class IssueEditForm extends Component {
                     </div>
 
                     <div className={styles.controlButtons}>
-
-                        <Button onClick={this.saveIssue}>Save</Button>
+                        
+                        <Button disabled={(this.state.selectedIssue._id) ? false: true} color="danger" onClick={()=>this.handleDelete()}>Delete</Button>           
+                        <Button color="primary" onClick={this.saveIssue}>Save</Button>
                         <Button tag={Link} to="/issues">Close</Button>
-
+         
                     </div>
 
                 </div>
@@ -98,6 +127,7 @@ export class IssueEditForm extends Component {
 const mapStateToProps = (state) => ({
     issues: state.issues,
     user: state.user,
+    contests: state.contests,
 })
 
-export default connect(mapStateToProps, {createIssue, updateIssue})(IssueEditForm)
+export default connect(mapStateToProps, {createIssue, updateIssue, createIssueAndAssign, deleteIssue})(IssueEditForm)

@@ -86,7 +86,7 @@ class CandidatePanel extends Component {
                         </div>
                         <div>
                             <PopoverButton tooltipText="Website" style={getButtonStyle()}>
-                                <a className="panel-websiteLink" href={website}><i className="fas fa-window-restore"></i>{websiteDisplay}</a>
+                                <a className="panel-websiteLink" target="_blank" href={website}><i className="fas fa-window-restore"></i>{websiteDisplay}</a>
                             </PopoverButton>
                         </div>
                         <div>

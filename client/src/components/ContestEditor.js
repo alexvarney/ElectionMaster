@@ -118,7 +118,7 @@ const ContestEditor = (props) => {
 
     // -- Code for Issue Selector --
     const getIssueById = (id) => props.issues.filter(item => item._id === id)[0];
-    const getIssueList = () => selectedContest ? selectedContest.issues.map(id => getIssueById(id)) : [];
+    const getIssueList = () => selectedContest ? selectedContest.issues.map(id => getIssueById(id)).filter(item => (item && item._id)) : [];
     const issues = getIssueList().sort((a,b)=> a.name > b.name ? 1 : -1);
 
     const [multiSelectedIssues, setMultiSelectedIssues] = useState([]);

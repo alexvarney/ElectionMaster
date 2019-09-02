@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {updateContest} from './contestActions';
 
 export const getCandidates = () => dispatch => {
     axios.get('/api/candidates')
@@ -30,6 +31,20 @@ export const createCandidate = (candidate) => dispatch => {
             type: 'CREATE_CANDIDATE',
             payload: res.data,
         }))
+}
+
+export const createCandidateAndAssign = (candidate, contest) => {
+    return function(dispatch, getState){
+        axios.post(`/api/candidates/`, candidate)
+        .then(res=>{
+            dispatch({
+                type: 'CREATE_CANDIDATE',
+                payload: res.data,
+            })
+            contest.candidates.push(res.data._id);
+            dispatch(updateContest(contest));
+        }) 
+    }
 }
 
 export const deleteCandidate = (candidate) => dispatch => {

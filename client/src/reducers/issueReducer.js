@@ -15,6 +15,12 @@ export default function(state = initialState, action){
                     ...state.issues.filter(item=>item._id !== action.payload._id)
                 ]
             }
+        case 'DELETE_ISSUE':
+            const newList = state.issues.filter(issue => issue._id !== action.payload._id);
+            return {
+                ...state,
+                issues: [...newList],
+            }
         default:
             return { ...state }
     }
