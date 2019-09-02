@@ -89,7 +89,9 @@ class PositionEditForm extends Component {
     getIssues = () => {
 
         const selectedContest = this.props.contests.contests.filter(contest=>contest._id === this.props.contests.selectedContestId)[0];
-        const filteredIssues = selectedContest ? this.props.issues.issues.filter(issue=> selectedContest.issues.includes(issue._id)).filter(issue => (issue && issue._id)) : [];
+
+        const filteredIssues = selectedContest ? this.props.issues.issues.filter(issue=> selectedContest.issues.includes(issue._id)) : [];
+        
         const sortedIssues = filteredIssues.sort((a, b)=>(a.name > b.name ? 1 : -1));
         
         const getCompletedIssues = () => {
@@ -97,7 +99,13 @@ class PositionEditForm extends Component {
             const getPosition = (position) => sortedIssues.filter(i => i._id === position.issue)[0];
     
             if (this.state.candidate.positions){
-                return this.state.candidate.positions.map(item=>getPosition(item));
+
+
+                return this.state.candidate.positions.map(item=>{
+                    
+                    const position = getPosition(item);
+                    return (position && position._id) ? position : {};
+                });
             }
     
             return [];
