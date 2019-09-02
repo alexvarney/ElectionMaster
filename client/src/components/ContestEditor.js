@@ -79,7 +79,7 @@ const ContestEditor = (props) => {
 
     // -- Code for Candidate Selector --
     const getCandidateById = (id) => props.candidates.filter(item => item._id === id)[0];
-    const getCandidateList = () => selectedContest ? selectedContest.candidates.map(id => getCandidateById(id)) : [];
+    const getCandidateList = () => selectedContest ? selectedContest.candidates.map(id => getCandidateById(id)).filter(item=> (item && item._id)) : [];
     const candidates = getCandidateList().sort((a,b)=> a.name > b.name ? 1 : -1);
 
     const [multiSelectedCandidates, setMultiSelectedCandidates] = useState([]);
