@@ -17,6 +17,7 @@
     overflow-y: scroll;
     border: 1px solid lightgrey;
     padding: 0;
+    flex-grow: 1 !important;
 }
 
 .linkedCandidateList > li {
@@ -44,4 +45,8 @@
 .multiSelect {
     min-height: 600px;
     margin-bottom: 1.0rem;
+}
+
+.buttonRow > * {
+    margin-right: 1rem;
 }

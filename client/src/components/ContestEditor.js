@@ -1,10 +1,11 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useDebugValue} from 'react'
 import {connect} from 'react-redux';
-import {Dropdown, DropdownMenu, DropdownToggle, DropdownItem, InputGroup, InputGroupText, InputGroupAddon, Input, Form, FormGroup, Label, Button, Col} from 'reactstrap';
+import {Dropdown, DropdownMenu, DropdownToggle, DropdownItem, InputGroup, InputGroupText, InputGroupAddon, Input, Form, FormGroup, Label, Button, Col, Table} from 'reactstrap';
 import {getContests, updateContest, addContest} from '../actions/contestActions';
 import {getCandidates} from '../actions/candidateActions';
 import {getIssues} from '../actions/issueActions';
 import styles from './css/ContestEditor.module.css';
+import moment from 'moment';
 
 
 const ContestEditor = (props) => {
@@ -20,6 +21,7 @@ const ContestEditor = (props) => {
         description: '',
         candidates: [],
         issues: [],
+        polling: [],
     }
 
     const [isDropdownOpen, toggleDropdown] = useState(false);
@@ -44,11 +46,13 @@ const ContestEditor = (props) => {
     }
 
     const changeContest = (contest) => {
+        setSelectedPoll(newPoll);
         setPersistantName(contest.name);
         setSelectedContest(contest);
     }
 
     const createNewContest = () => {
+        setSelectedPoll(newPoll);
         setSelectedContest(newContest);
         setPersistantName('New contest');
     }
@@ -78,7 +82,11 @@ const ContestEditor = (props) => {
     }
 
     // -- Code for Candidate Selector --
-    const getCandidateById = (id) => props.candidates.filter(item => item._id === id)[0];
+    const getCandidateById = (id) => {
+        const result = props.candidates.filter(item => item._id === id)[0];
+        return (result) ? result : {unknown: true};
+    }
+
     const getCandidateList = () => selectedContest ? selectedContest.candidates.map(id => getCandidateById(id)).filter(item=> (item && item._id)) : [];
     const candidates = getCandidateList().sort((a,b)=> a.name > b.name ? 1 : -1);
 
@@ -153,6 +161,88 @@ const ContestEditor = (props) => {
             issues: newList,
         });
     }
+
+    // -- Code for polling data --
+
+    const newPoll = {
+        date: moment().format('YYYY-MM-DD'),
+        values: [],
+    }
+
+    const [selectedPoll, _setSelectedPoll] = useState({});
+
+    const setSelectedPoll = (value) => {
+        
+        const dateFixed = {
+            ...value,
+            date: moment(value.date).format('YYYY-MM-DD'),
+        }
+
+        _setSelectedPoll(dateFixed);
+    
+    }
+
+    const setPollDate = (event) => {
+        setSelectedPoll({
+            ...selectedPoll,
+            date: event.target.value,
+        })
+    }
+
+    const getPollingValue = (candidateId) => {    
+        const pollResult = (selectedPoll && selectedPoll.values) ? selectedPoll.values.filter(item=> item.candidate === candidateId)[0] : null;
+        return (pollResult) ? pollResult.value : -1;
+    }
+
+    const setPollingValue = (event) => {
+
+        const newPoll = {
+            candidate: event.target.id,
+            value: event.target.value,
+        }
+
+        const newList = selectedPoll.values.filter(item => item.candidate !== event.target.id);
+        newList.push(newPoll);
+
+        setSelectedPoll({
+            ...selectedPoll,
+            values: newList,
+        });
+    }
+
+    const updatePoll = (event) => {
+        //Adds or updates a poll to a contest
+        event.preventDefault();
+
+        const newList = selectedContest.polling.filter(item => moment(item.date).format('YYYY-MM-DD') !== moment(selectedPoll.date).format('YYYY-MM-DD'));
+        newList.push(selectedPoll);
+
+        setSelectedContest({
+            ...selectedContest,
+            polling: newList,
+        });
+    }
+
+    const deletePoll = (event) => {
+        event.preventDefault();
+        const newList = selectedContest.polling.filter(item => moment(item.date).format('YYYY-MM-DD') !== moment(selectedPoll.date).format('YYYY-MM-DD'));
+        setSelectedContest({
+            ...selectedContest,
+            polling: newList,
+        });
+        setSelectedPoll(newPoll);
+    }
+
+    const getPollingCandidates = () => {
+        const candidates = selectedContest.candidates.map(item => getCandidateById(item)).filter(res => res.unknown !== true);
+        return candidates;
+    }
+
+    const getDateSortedPolls = () => {
+        return selectedContest.polling.sort((a,b) => (moment(a.date).format('YYYY-MM-DD') < moment(b.date).format('YYYY-MM-DD')) ? 1 : -1);
+    }
+
+    useDebugValue(selectedPoll);
 
     return (
         <div className={styles.container}>
@@ -247,6 +337,50 @@ const ContestEditor = (props) => {
                         <Button disabled={!selectedContest}>Add Issues</Button>
                     </Col>
                     
+                </FormGroup>
+            </Form>
+            <hr />
+
+            <h4>Polling</h4>
+            
+            <Form>
+                <FormGroup row>
+                    <Col>
+                        <InputGroup>
+                            <InputGroupAddon addonType="prepend">
+                                <InputGroupText>Date</InputGroupText>
+                            </InputGroupAddon>
+                            <Input disabled={!selectedContest || !selectedPoll.date} value={selectedPoll.date} onChange={setPollDate} type="date"/>
+                        </InputGroup>
+
+                        <Table>
+                            <thead>
+                                <tr>
+                                    <th>Candidate</th>
+                                    <th>Polling</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {selectedContest ? getPollingCandidates().map(candidate=>(
+                                    <tr>
+                                        <th>{candidate.name}</th>
+                                        <td><Input disabled={!selectedPoll.date} key={candidate._id} id={candidate._id} value={getPollingValue(candidate._id)} onChange={setPollingValue} type="number"/></td>
+                                    </tr>
+                                )) : null}
+                            </tbody>
+                        </Table>
+                    </Col>
+                    <Col>
+                        <ul className={styles.linkedCandidateList}>
+                            {selectedContest ? getDateSortedPolls().map(item => (
+                                <li onClick={()=>setSelectedPoll(item)} key={item.date}>{moment(item.date).format('YYYY-MM-DD')}</li>
+                            )):null}
+                        </ul>
+                    </Col>
+                </FormGroup>
+                <FormGroup className={styles.buttonRow} row>
+                    <Button color="danger" onClick={deletePoll} disabled={!selectedContest}>Delete Poll</Button>
+                    <Button disabled={!selectedContest} onClick={updatePoll}>Update Poll</Button>
                 </FormGroup>
             </Form>
             <hr />
