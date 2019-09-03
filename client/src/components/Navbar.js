@@ -103,7 +103,6 @@ const Navbar = (props) => {
 
           {props.user.token !== "" ?
             <Fragment>
-              <Link onClick={closeMobileExpand} to="/editpolls">Polling Editor</Link>
               <Link onClick={closeMobileExpand} to="/editcontests">Contest Editor</Link>
             </Fragment> : null}
 

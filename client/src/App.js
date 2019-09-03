@@ -10,7 +10,6 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import CandidateView from './components/candidate/';
-import PollingEditor from './components/PollingEditor';
 import Issues from './components/issues/Issues';
 import ContestEditor from './components/ContestEditor';
 import CandidateEditForm from './components/candidate/CandidateEditForm';
@@ -27,7 +26,6 @@ export default class App extends Component {
             (props) => <CandidateEditForm {...props} createNew={true} />
           }/>
           <Route path="/candidates/:id" component={CandidateView} />
-          <Route path="/editpolls" component={PollingEditor} />
           <Route path="/issues" component={Issues} />
           <Route path="/editcontests" component={ContestEditor} />
         </div>

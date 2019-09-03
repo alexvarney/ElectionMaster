@@ -295,7 +295,7 @@ const ContestEditor = (props) => {
 
             <FormGroup check>
                 <Label check>
-                    <Input checked={selectedContest && selectedContest.default !== null ? selectedContest.default : false} onChange={toggleDefaultStatus} type="checkbox" />
+                    <Input checked={selectedContest && selectedContest.default !== undefined ? selectedContest.default : false} onChange={toggleDefaultStatus} type="checkbox" />
                     {' '}Make default contest
                 </Label>
             </FormGroup>
