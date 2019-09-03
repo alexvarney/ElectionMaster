@@ -3,7 +3,6 @@ const initialState = {contests: [], selectedContestId: null}
 export default function(state = initialState, action){
     switch(action.type){
         case('GET_CONTESTS'):
-            console.log('Get contests...')
             return {
                 ...state,
                 contests: action.payload,

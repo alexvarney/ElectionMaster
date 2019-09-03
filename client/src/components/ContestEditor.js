@@ -284,7 +284,7 @@ const ContestEditor = (props) => {
 
             <FormGroup check>
                 <Label check>
-                    <Input checked={selectedContest ? selectedContest.default : false} onClick={toggleDefaultStatus} type="checkbox" />
+                    <Input checked={selectedContest ? selectedContest.default : false} onChange={toggleDefaultStatus} type="checkbox" />
                     {' '}Make default contest
                 </Label>
             </FormGroup>
@@ -350,7 +350,7 @@ const ContestEditor = (props) => {
                             <InputGroupAddon addonType="prepend">
                                 <InputGroupText>Date</InputGroupText>
                             </InputGroupAddon>
-                            <Input disabled={!selectedContest || !selectedPoll.date} value={selectedPoll.date} onChange={setPollDate} type="date"/>
+                            <Input disabled={!selectedContest || !selectedPoll.date} value={(selectedPoll.date) ? selectedPoll.date : ''} onChange={setPollDate} type="date"/>
                         </InputGroup>
 
                         <Table>
@@ -362,9 +362,9 @@ const ContestEditor = (props) => {
                             </thead>
                             <tbody>
                                 {selectedContest ? getPollingCandidates().map(candidate=>(
-                                    <tr>
+                                    <tr key={candidate._id}>
                                         <th>{candidate.name}</th>
-                                        <td><Input disabled={!selectedPoll.date} key={candidate._id} id={candidate._id} value={getPollingValue(candidate._id)} onChange={setPollingValue} type="number"/></td>
+                                        <td><Input disabled={!selectedPoll.date} id={candidate._id} value={getPollingValue(candidate._id)} onChange={setPollingValue} type="number"/></td>
                                     </tr>
                                 )) : null}
                             </tbody>
