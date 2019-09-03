@@ -30,3 +30,11 @@ export const setSelectedContestId = (id) => dispatch => {
         payload: id,
     })
 }
+
+export const deleteContest = (contest) => dispatch => {
+    axios.delete(`/api/contests/${contest._id}`);
+    dispatch({
+        type: 'DELETE_CONTEST',
+        payload: contest,
+    });
+}

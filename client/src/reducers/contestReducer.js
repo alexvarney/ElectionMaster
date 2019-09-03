@@ -22,6 +22,12 @@ export default function(state = initialState, action){
                 ...state,
                 selectedContestId: action.payload,
             }
+        case('DELETE_CONTEST'):
+            const newList = state.contests.filter(contest => contest._id !== action.payload._id);
+            return {
+                ...state,
+                contests: [...newList],
+            }
         default:
             return {
                 ...state,

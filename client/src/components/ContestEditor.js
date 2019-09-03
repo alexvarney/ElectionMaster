@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useDebugValue} from 'react'
 import {connect} from 'react-redux';
 import {Dropdown, DropdownMenu, DropdownToggle, DropdownItem, InputGroup, InputGroupText, InputGroupAddon, Input, Form, FormGroup, Label, Button, Col, Table} from 'reactstrap';
-import {getContests, updateContest, addContest} from '../actions/contestActions';
+import {getContests, updateContest, addContest, deleteContest} from '../actions/contestActions';
 import {getCandidates} from '../actions/candidateActions';
 import {getIssues} from '../actions/issueActions';
 import styles from './css/ContestEditor.module.css';
@@ -78,6 +78,17 @@ const ContestEditor = (props) => {
             props.updateContest(selectedContest);
         } else {
             props.addContest(selectedContest);
+        }
+    }
+
+    const deleteContest = () => {
+        if(selectedContest._id){
+            const namePrompt = window.prompt(`Are you sure that you want to delete this contest? If you are sure, type \`${selectedContest.name.trim()}\` `)
+            if (namePrompt.trim() === selectedContest.name.trim()) {
+                props.deleteContest(selectedContest);
+            }
+        } else {
+            setSelectedContest(null);
         }
     }
 
@@ -284,7 +295,7 @@ const ContestEditor = (props) => {
 
             <FormGroup check>
                 <Label check>
-                    <Input checked={selectedContest ? selectedContest.default : false} onChange={toggleDefaultStatus} type="checkbox" />
+                    <Input checked={selectedContest && selectedContest.default !== null ? selectedContest.default : false} onChange={toggleDefaultStatus} type="checkbox" />
                     {' '}Make default contest
                 </Label>
             </FormGroup>
@@ -384,8 +395,10 @@ const ContestEditor = (props) => {
                 </FormGroup>
             </Form>
             <hr />
-
-            <Button color="primary" onClick={saveContest} disabled={!selectedContest}>Save</Button>
+            <div className={styles.buttonRow}>
+                <Button color="danger" onClick={deleteContest} disabled={!selectedContest}>Delete</Button>                    
+                <Button color="primary" onClick={saveContest} disabled={!selectedContest}>Save</Button>
+            </div>
         </div>
     )
 }
@@ -396,4 +409,4 @@ const mapStateToProps = (state) => ({
     issues: state.issues.issues,
 })
 
-export default connect(mapStateToProps, {getContests, updateContest, addContest, getCandidates, getIssues})(ContestEditor);
+export default connect(mapStateToProps, {getContests, updateContest, addContest, getCandidates, getIssues, deleteContest})(ContestEditor);
