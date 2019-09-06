@@ -3,7 +3,9 @@ import {updateCandidate, createCandidate, deleteCandidate} from '../../actions/c
 import {connect} from 'react-redux';
 import {Link, withRouter} from 'react-router-dom';
 import styles from './css/CandidateEditForm.module.css';
-import {Button} from 'reactstrap';
+import {Button, InputGroup, InputGroupAddon, Input, InputGroupText} from 'reactstrap';
+import countries from 'iso-3166-country-list';
+import moment from 'moment';
 
 class CandidateEditForm extends Component {
     
@@ -78,57 +80,61 @@ class CandidateEditForm extends Component {
                     
                     <form className={styles.formRow}>
                         <div className={styles.formCol}>
-                            <div className={styles.formItem}>
-                                <label>Name</label>
-                                <input type="text" name="name" value={this.state.formValues['name'] || ''} onChange={this.handleFormChange}></input>
-                            </div>
-                            <div className={styles.formItem}>
-                                <label>State</label>
-                                <input type="text" name="state" value={this.state.formValues['state'] || ''} onChange={this.handleFormChange}></input>
-                            </div>
-                            <div className={styles.formItem}>
-                                <label>Birthdate</label>
-                                <input type="text" name="dob" value={this.state.formValues['dob'] || ''} onChange={this.handleFormChange}></input>
-                            </div>
-                            <div className={styles.formItem}>
-                                <label>Slogan</label>
-                                <input type="text" name="slogan" value={this.state.formValues['slogan'] || ''} onChange={this.handleFormChange}></input>
-                            </div>
-                            <div className={styles.formItem}>
-                                <label>Polling</label>
-                                <input type="text" name="polling"  value={this.state.formValues['polling'] || ''} onChange={this.handleFormChange}></input>
-                            </div>
-                            <div className={styles.formItem}>
-                                <label>Affiliation</label>
-                                <input type="text" name="partyAffiliation"  value={this.state.formValues['partyAffiliation'] || ''} onChange={this.handleFormChange}></input>
-                            </div>
-                            <div className={styles.formItem}>
-                                <label>Website URL</label>
-                                <input type="text" name="website" value={this.state.formValues['website'] || ''} onChange={this.handleFormChange}></input>
-                            </div>
-                            <div className={styles.formItem}>
-                                <label>Website Name</label>
-                                <input type="text" name="websiteDisplay" value={this.state.formValues['websiteDisplay'] || ''} onChange={this.handleFormChange}></input>
-                            </div>
-                            <div className={styles.formItem}>
-                                <label>Image Name</label>
-                                <input type="text" name="image" value={this.state.formValues['image'] || ''} onChange={this.handleFormChange}></input>
-                            </div>
-                            <div className={styles.formItem}>
-                                <label>Status</label>
-                                <input type="text" name="status" value={this.state.formValues['status'] || ''} onChange={this.handleFormChange}></input>
-                            </div>
-                            <div className={styles.formItem}>
-                                <label>Net Worth</label>
-                                <input type="text" name="netWorth" value={this.state.formValues['netWorth'] || ''} onChange={this.handleFormChange}></input>
-                            </div>
+                            <InputGroup className={styles.formItem}>
+                                <InputGroupAddon addonType="prepend"><InputGroupText>Name</InputGroupText></InputGroupAddon>
+                                <Input type="text" name="name" value={this.state.formValues['name'] || ''} onChange={this.handleFormChange}></Input>
+                            </InputGroup>
+                            <InputGroup className={styles.formItem}>
+                                <InputGroupAddon addonType="prepend"><InputGroupText>State</InputGroupText></InputGroupAddon>
+                                <Input type="text" name="state" value={this.state.formValues['state'] || ''} onChange={this.handleFormChange}></Input>
+                            </InputGroup>
+                            <InputGroup className={styles.formItem}>
+                                <InputGroupAddon addonType="prepend"><InputGroupText>Birthdate</InputGroupText></InputGroupAddon>
+                                <Input type="date" name="dob" value={moment(this.state.formValues['dob']).format('YYYY-MM-DD')|| ''} onChange={this.handleFormChange}></Input>
+                            </InputGroup>
+                            <InputGroup className={styles.formItem}>
+                                <InputGroupAddon addonType="prepend"><InputGroupText>Slogan</InputGroupText></InputGroupAddon>
+                                <Input type="text" name="slogan" value={this.state.formValues['slogan'] || ''} onChange={this.handleFormChange}></Input>
+                            </InputGroup>
+                            <InputGroup className={styles.formItem}>
+                                
+                                <InputGroupAddon addonType="prepend"><InputGroupText>Country Code</InputGroupText></InputGroupAddon>
+                                <Input type="text" name="country"  value={this.state.formValues['country'] || ''} onChange={this.handleFormChange}></Input>
+                                <InputGroupAddon addonType="append">
+                                {countries.name(this.state.formValues['country'] ? this.state.formValues['country'] : '' )}
+                                </InputGroupAddon>
+                            </InputGroup>
+                            <InputGroup className={styles.formItem}>
+                                <InputGroupAddon addonType="prepend"><InputGroupText>Affiliation</InputGroupText></InputGroupAddon>
+                                <Input type="text" name="partyAffiliation"  value={this.state.formValues['partyAffiliation'] || ''} onChange={this.handleFormChange}></Input>
+                            </InputGroup>
+                            <InputGroup className={styles.formItem}>
+                                <InputGroupAddon addonType="prepend"><InputGroupText>Website URL</InputGroupText></InputGroupAddon>
+                                <Input type="text" name="website" value={this.state.formValues['website'] || ''} onChange={this.handleFormChange}></Input>
+                            </InputGroup>
+                            <InputGroup className={styles.formItem}>
+                                <InputGroupAddon addonType="prepend"><InputGroupText>Website Name</InputGroupText></InputGroupAddon>
+                                <Input type="text" name="websiteDisplay" value={this.state.formValues['websiteDisplay'] || ''} onChange={this.handleFormChange}></Input>
+                            </InputGroup>
+                            <InputGroup className={styles.formItem}>
+                                <InputGroupAddon addonType="prepend"><InputGroupText>Image Name</InputGroupText></InputGroupAddon>
+                                <Input type="text" name="image" value={this.state.formValues['image'] || ''} onChange={this.handleFormChange}></Input>
+                            </InputGroup>
+                            <InputGroup className={styles.formItem}>
+                                <InputGroupAddon addonType="prepend"><InputGroupText>Status</InputGroupText></InputGroupAddon>
+                                <Input type="text" name="status" value={this.state.formValues['status'] || ''} onChange={this.handleFormChange}></Input>
+                            </InputGroup>
+                            <InputGroup className={styles.formItem}>
+                                <InputGroupAddon addonType="prepend"><InputGroupText>Net Worth</InputGroupText></InputGroupAddon>
+                                <Input type="text" name="netWorth" value={this.state.formValues['netWorth'] || ''} onChange={this.handleFormChange}></Input>
+                            </InputGroup>
                         </div>
                         <div className={styles.formAbout}>
                             <label>About Candidate</label>
                             <textarea type="text" name="description" value={this.state.formValues['description'] || ''} onChange={this.handleFormChange}></textarea>
                         </div>
                     </form>
-                    <Button disabled={this.props.createNew && this.state.hasSaved} className={styles.formButton} onClick={this.submitForm} type="submit">{this.props.createNew && this.state.hasSaved ? 'Saved' : 'Save'}</Button>
+                    <Button disabled={this.props.createNew && this.state.hasSaved} color="primary" className={styles.formButton} onClick={this.submitForm} type="submit">{this.props.createNew && this.state.hasSaved ? 'Saved' : 'Save'}</Button>
                     <Button className={styles.formButton} tag={Link} to={`/candidates/${this.state.formValues._id}`}>Close</Button>
                     <Button disabled={this.props.createNew} color="danger" onClick={()=>this.handleDelete()}>Delete</Button>
 

@@ -6,6 +6,7 @@ import {getCandidates} from '../actions/candidateActions';
 import {getIssues} from '../actions/issueActions';
 import styles from './css/ContestEditor.module.css';
 import moment from 'moment';
+import countries from 'iso-3166-country-list';
 
 
 const ContestEditor = (props) => {
@@ -19,6 +20,7 @@ const ContestEditor = (props) => {
     const newContest = {
         name: '',
         description: '',
+        country: '',
         candidates: [],
         issues: [],
         polling: [],
@@ -42,6 +44,14 @@ const ContestEditor = (props) => {
         setSelectedContest({
             ...selectedContest,
             description: event.target.value,
+        })
+    }
+
+    const onCountryChange = (event) => {
+        event.persist();
+        setSelectedContest({
+            ...selectedContest,
+            country: event.target.value,
         })
     }
 
@@ -83,8 +93,8 @@ const ContestEditor = (props) => {
 
     const deleteContest = () => {
         if(selectedContest._id){
-            const namePrompt = window.prompt(`Are you sure that you want to delete this contest? If you are sure, type \`${selectedContest.name.trim()}\` `)
-            if (namePrompt.trim() === selectedContest.name.trim()) {
+            const namePrompt = window.prompt(`Are you sure that you want to delete this contest? If you are sure, type \`${selectedContest.name.trim()}\` `);
+            if (namePrompt && namePrompt.trim() === selectedContest.name.trim()) {
                 props.deleteContest(selectedContest);
             }
         } else {
@@ -290,7 +300,21 @@ const ContestEditor = (props) => {
                     <InputGroupText>Description</InputGroupText>
                 </InputGroupAddon>
                 <Input value={selectedContest ? selectedContest.description : ''} onChange={onDescriptionChange} disabled={!selectedContest}/>
-            </InputGroup>  
+            </InputGroup>
+            
+            <br />
+
+            <InputGroup>
+                <InputGroupAddon addonType="prepend">
+                    <InputGroupText>Country</InputGroupText>
+                </InputGroupAddon>
+                <Input value={selectedContest ? selectedContest.country : ''} onChange={onCountryChange} disabled={!selectedContest}/>
+                <InputGroupAddon addonType="prepend">
+                    <InputGroupText>{countries.name(selectedContest && selectedContest.country ? selectedContest.country : '' )}</InputGroupText>
+                </InputGroupAddon>
+            </InputGroup>
+
+
             <br />
 
             <FormGroup check>

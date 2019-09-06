@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
 import styles from './css/IssueEditForm.module.css';
-import {Button} from 'reactstrap';
+import {Button, Input, InputGroup, InputGroupText, InputGroupAddon} from 'reactstrap';
 import {Scrollbars} from 'react-custom-scrollbars';
 import {createIssue, updateIssue, createIssueAndAssign, deleteIssue} from '../../actions/issueActions';
+import countries from 'iso-3166-country-list';
 
 export class IssueEditForm extends Component {
 
@@ -37,6 +38,7 @@ export class IssueEditForm extends Component {
         const newIssue = {
             name: 'New issue',
             description: '',
+            country: 'US',
         }
         this.setSelectedIssue(newIssue);
     }
@@ -73,6 +75,14 @@ export class IssueEditForm extends Component {
         }
     }
 
+    getCountryName = () => {
+        if(this.state.selectedIssue.country){
+            return countries.name(this.state.selectedIssue.country.toString());
+        }
+
+        return '';
+    }
+
 
     render() {
 
@@ -103,9 +113,24 @@ export class IssueEditForm extends Component {
                             </div>
                         </div>
                         <div className={styles.editContainer}>
-                            <h2 className={styles.subheading}>Name</h2>
-                            <input className={styles.nameEditor} onChange={this.editIssue} type="text" name="name" value={this.state.selectedIssue.name}></input>
-                            <h2 className={styles.subheading}>Description</h2>
+                        <h2 className={styles.subheading}>Edit</h2>
+                            <InputGroup>
+                                <InputGroupAddon>
+                                        <InputGroupText>Name</InputGroupText>
+                                </InputGroupAddon>
+                                <Input className={''} onChange={this.editIssue} type="text" name="name" value={this.state.selectedIssue.name}></Input>
+                            </InputGroup>
+                            <InputGroup>
+                                <InputGroupAddon>
+                                        <InputGroupText>Country</InputGroupText>
+                                </InputGroupAddon>
+                                <Input className={''} onChange={this.editIssue} type="text" name="country" value={this.state.selectedIssue.country}></Input>
+                                <InputGroupAddon addonType="append">
+                                <InputGroupText>{this.getCountryName()}</InputGroupText>
+                                </InputGroupAddon>
+                            </InputGroup>
+                            
+                            
                             <textarea className={styles.descriptionEditor} onChange={this.editIssue} name="description" value={this.state.selectedIssue.description}/>
                         </div>
                     </div>
