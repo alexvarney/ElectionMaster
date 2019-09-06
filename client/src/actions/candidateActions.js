@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {updateContest} from './contestActions';
+import ls from 'local-storage';
 
 export const getCandidates = () => dispatch => {
     axios.get('/api/candidates')
@@ -18,7 +19,11 @@ export const setSelected = (id) => dispatch => {
 }
 
 export const updateCandidate = (candidate) => dispatch => {
-    axios.put(`/api/candidates/${candidate._id}`, candidate)
+    const token = ls.get('em-token') || '';
+    axios.put(`/api/candidates/${candidate._id}`, candidate, {headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+    }})
         .then(res=>dispatch({
             type: 'UPDATE_CANDIDATE',
             payload: res.data,
@@ -26,7 +31,11 @@ export const updateCandidate = (candidate) => dispatch => {
 }
 
 export const createCandidate = (candidate) => dispatch => {
-    axios.post(`/api/candidates/`, candidate)
+    const token = ls.get('em-token') || '';
+    axios.post(`/api/candidates/`, candidate, {headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+    }})
         .then(res=>dispatch({
             type: 'CREATE_CANDIDATE',
             payload: res.data,
@@ -34,8 +43,12 @@ export const createCandidate = (candidate) => dispatch => {
 }
 
 export const createCandidateAndAssign = (candidate, contest) => {
+    const token = ls.get('em-token') || '';
     return function(dispatch, getState){
-        axios.post(`/api/candidates/`, candidate)
+        axios.post(`/api/candidates/`, candidate, {headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        }})
         .then(res=>{
             dispatch({
                 type: 'CREATE_CANDIDATE',
@@ -48,7 +61,11 @@ export const createCandidateAndAssign = (candidate, contest) => {
 }
 
 export const deleteCandidate = (candidate) => dispatch => {
-    axios.delete(`/api/candidates/${candidate._id}`);
+    const token = ls.get('em-token') || '';
+    axios.delete(`/api/candidates/${candidate._id}`, {headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+    }});
     dispatch({
         type: 'DELETE_CANDIDATE',
         payload: candidate,

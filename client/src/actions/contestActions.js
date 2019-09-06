@@ -1,4 +1,5 @@
 import axios from 'axios';
+import ls from 'local-storage';
 
 export const getContests = () => dispatch => {
     axios.get('/api/contests')
@@ -9,7 +10,11 @@ export const getContests = () => dispatch => {
 }
 
 export const updateContest = (contest) => dispatch => {
-    axios.put(`/api/contests/${contest._id}`, contest)
+    const token = ls.get('em-token') || '';
+    axios.put(`/api/contests/${contest._id}`, contest, {headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+    }})
         .then(res=>dispatch({
             type: 'UPDATE_CONTEST',
             payload: res.data,
@@ -17,7 +22,11 @@ export const updateContest = (contest) => dispatch => {
 }
 
 export const addContest = (contest) => dispatch => {
-    axios.post(`/api/contests`, contest)
+    const token = ls.get('em-token') || '';
+    axios.post(`/api/contests`, contest, {headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+    }})
         .then(res=> dispatch({
             type: 'UPDATE_CONTEST',
             payload: res.data,
@@ -32,7 +41,11 @@ export const setSelectedContestId = (id) => dispatch => {
 }
 
 export const deleteContest = (contest) => dispatch => {
-    axios.delete(`/api/contests/${contest._id}`);
+    const token = ls.get('em-token') || '';
+    axios.delete(`/api/contests/${contest._id}`, {headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+    }});
     dispatch({
         type: 'DELETE_CONTEST',
         payload: contest,

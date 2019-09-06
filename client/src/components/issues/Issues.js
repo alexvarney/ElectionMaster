@@ -21,10 +21,18 @@ const Issues = (props) => {
         }
     },[])
 
+    const [sortedIssues, setSortedIssues] = useState([]);
+
     //Get selected contest issues
-    const selectedContest = props.contests.contests.filter(contest=>contest._id === props.contests.selectedContestId)[0];
-    const filteredIssues = selectedContest ? props.issues.issues.filter(issue=> selectedContest.issues.includes(issue._id)) : [];
-    const sortedIssues = filteredIssues.sort((a, b)=>(a.name > b.name ? 1 : -1));
+
+    const selectedContest = props.contests.contests.filter(contest=>contest._id === props.contests.selectedContestId)[0] || '';
+
+    useEffect(()=>{
+        const filteredIssues = selectedContest ? props.issues.issues.filter(issue=> selectedContest.issues.includes(issue._id)) : [];
+        const _sortedIssues = filteredIssues.sort((a, b)=>(a.name > b.name ? 1 : -1));
+        setSortedIssues(_sortedIssues);
+
+    },[selectedContest, selectedContest.issues, props.issues.issues])
 
     return (
         <div className={styles.container}>
@@ -43,7 +51,7 @@ const Issues = (props) => {
                         </ul>
                     </Col>
                     <Col>
-                        {filteredIssues.map(issue => {
+                        {sortedIssues.map(issue => {
                             return (
                                 <div key={issue._id} id={issue._id} className={styles.issue}>
                                     <h3>{issue.name}</h3>

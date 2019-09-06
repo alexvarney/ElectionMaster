@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const auth = require('../../middleware/auth');
 
 //Import candidate model
 const Candidate = require('../../models/Candidate');
@@ -13,7 +14,7 @@ router.get('/', (req, res)=>{
 })
 
 /* POST new candidate to the db */
-router.post('/', (req, res) =>{
+router.post('/', auth, (req, res) =>{
     const newItem = new Candidate(req.body);
     newItem.save((error)=>{
         if (error) {console.log("Oh no! An error occured.")}
@@ -24,7 +25,7 @@ router.post('/', (req, res) =>{
 })
 
 //GET api/candidates/:id
-router.get('/:id', (req, res) =>{
+router.get('/:id', auth, (req, res) =>{
     Candidate.findById(req.params.id).exec((error, doc)=>{
         if (error) return "An error occured";
 
@@ -34,7 +35,7 @@ router.get('/:id', (req, res) =>{
 
 // PUT api/candidates/:id 
 // Body: JSON of new Candidate object
-router.put('/:id', (req, res) =>{
+router.put('/:id', auth, (req, res) =>{
     Candidate.findByIdAndUpdate(req.params.id, req.body).exec((error, doc)=>{
         if (error) {
             console.log(error)
@@ -47,7 +48,7 @@ router.put('/:id', (req, res) =>{
     })
 })
 
-router.delete('/:id', (req, res)=>{
+router.delete('/:id', auth, (req, res)=>{
     Candidate.findByIdAndDelete(req.params.id).exec((error, doc) => {
         if(error){
             console.log(error);
@@ -55,8 +56,5 @@ router.delete('/:id', (req, res)=>{
         }
     })
 })
-
-
-
 
 module.exports = router;

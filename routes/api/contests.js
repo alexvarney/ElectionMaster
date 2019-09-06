@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const Contest = require('../../models/Contest');
+const auth = require('../../middleware/auth');
 
 // GET api/contests
 // All Contests
@@ -10,8 +11,8 @@ router.get('/', (req, res)=>{
         .then(items => res.json(items));
 })
 
-/* POST new constest to the db */
-router.post('/', (req, res) =>{
+/* POST new contest to the db */
+router.post('/', auth, (req, res) =>{
     const newItem = new Contest(req.body);
     newItem.save((error)=>{
         if (error) {console.log("Oh no! An error occured.")}
@@ -32,7 +33,7 @@ router.get('/:id', (req, res) =>{
 
 // PUT api/contests/:id
 // Update a contest
-router.put('/:id', (req, res) =>{
+router.put('/:id', auth, (req, res) =>{
 
     Contest.findByIdAndUpdate(req.params.id, req.body).exec((error, doc)=>{
         if (error) {
@@ -47,7 +48,7 @@ router.put('/:id', (req, res) =>{
     })
 })
 
-router.delete('/:id', (req, res)=>{
+router.delete('/:id', auth, (req, res)=>{
 
     Contest.findByIdAndRemove(req.params.id).exec((error, doc)=>{
         if(error){

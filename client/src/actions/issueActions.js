@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {updateContest} from './contestActions';
+import ls from 'local-storage';
 
 export const getIssues = () => dispatch => {
     axios.get('/api/issues')
@@ -11,7 +12,11 @@ export const getIssues = () => dispatch => {
 }
 
 export const createIssue = (issue) => dispatch => {
-    axios.post('/api/issues', issue)
+    const token = ls.get('em-token') || '';
+    axios.post('/api/issues', issue, {headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+    }})
     .then(res=>
         dispatch({
             type: 'UPDATE_ISSUE',
@@ -21,20 +26,34 @@ export const createIssue = (issue) => dispatch => {
 
 export const createIssueAndAssign = (issue, contest) => {
     return function(dispatch, getState){
-        axios.post(`/api/issues/`, issue)
+        const token = ls.get('em-token') || '';
+        axios.post(`/api/issues/`, issue, {headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        }})
         .then(res=>{
             dispatch({
-                type: 'CREATE_CANDIDATE',
+                type: 'UPDATE_ISSUE',
                 payload: res.data,
             })
-            contest.issues.push(res.data._id);
-            dispatch(updateContest(contest));
+            const updatedContest = {
+                ...contest,
+                issues: [
+                    ...contest.issues,
+                    res.data._id
+                ]
+            };
+            dispatch(updateContest(updatedContest));
         }) 
     }
 }
 
 export const updateIssue = (issue) => dispatch => {
-    axios.put(`/api/issues/${issue._id}`, issue)
+    const token = ls.get('em-token') || '';
+    axios.put(`/api/issues/${issue._id}`, issue, {headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+    }})
     .then(res=>
         dispatch({
             type: 'UPDATE_ISSUE',
@@ -43,7 +62,11 @@ export const updateIssue = (issue) => dispatch => {
 }
 
 export const deleteIssue = (issue) => dispatch => {
-    axios.delete(`/api/issues/${issue._id}`)
+    const token = ls.get('em-token') || '';
+    axios.delete(`/api/issues/${issue._id}`, {headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+    }})
     .then(res=>
         dispatch({
             type: 'DELETE_ISSUE',
