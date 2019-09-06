@@ -4,6 +4,7 @@ import styles from './css/CandidatePanel.module.css';
 import moment from 'moment';
 import CandidatePanelCircle from './CandidatePanelCircle';
 import CandidatePositionCard from './CandidatePositionCard';
+import {getPolling} from './_helpers';
 import {Link} from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import NumberFormat from 'react-number-format';
@@ -26,18 +27,25 @@ class CandidatePanel extends Component {
 
         const candidate = this.props.candidates.candidates ?this.props.candidates.candidates.filter((item)=>item._id === this.props.candidates.selectedCandidateId)[0]:null;
 
-        if(!candidate) return (
+        const selectedContest = this.props.contests.contests.filter(item => item._id === this.props.contests.selectedContestId)[0]
+
+        if(!candidate || !selectedContest) return (
             <div>
                 <Button outline color="primary" block onClick={this.props.toggle}  className={styles.mobileSelect}>Select Candidate</Button>
             </div>
         );
+        
+        //Get the rank of the candidate in the polls
+        const pollingValues = selectedContest.candidates.map(candidateId => ({candidateId, value: getPolling(candidateId, selectedContest)})).sort((a,b)=>a.value < b.value ? 1 : -1);
+        
+        const thisPollValue = pollingValues.filter(item => item.candidateId === candidate._id)[0];
 
-        const sorted = this.props.candidates.candidates.sort((a,b)=>(a.polling>b.polling)?-1:1);
+        const rank = pollingValues.indexOf(thisPollValue) + 1;
 
-        const rank = sorted.indexOf(candidate) + 1;
+        const {name, state, dob, slogan, description, website, websiteDisplay, partyAffiliation, netWorth, image} = candidate;
+        
+        const polling = thisPollValue.value;
 
-        const {name, state, dob, slogan, polling, description, website, websiteDisplay, partyAffiliation, netWorth, image} = candidate;
-    
         const age = moment().diff(dob, 'years');
         
         const getSubtleColor = () => `hsla(${this.getRandomIntInclusive(0,360)},42%,22%,1.0)`;
@@ -143,6 +151,7 @@ const mapStateToProps = (state) => ({
     candidates: state.candidates,
     issues: state.issues,
     user: state.user,
+    contests: state.contests,
 })
 
 export default connect(mapStateToProps, {})(CandidatePanel);

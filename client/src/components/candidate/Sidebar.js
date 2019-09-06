@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {setSelected} from '../../actions/candidateActions';
 import {Scrollbars} from 'react-custom-scrollbars';
 import {Button} from 'reactstrap';
+import {getPolling} from './_helpers';
 
 import CandidateListCard from './CandidateListCard';
 
@@ -15,7 +16,12 @@ const Sidebar = (props) => {
     const selectedContest = props.contests.contests.filter(item => item._id === props.contests.selectedContestId)[0]
 
     //filter candidates to the ones in the contest
-    const contestCandidates = candidates && selectedContest ? candidates.filter(candidate => selectedContest.candidates.includes(candidate._id)) : null;
+    let contestCandidates = candidates && selectedContest ? candidates.filter(candidate => selectedContest.candidates.includes(candidate._id)) : null;
+
+    //Get polling values 
+    if(contestCandidates) {
+        contestCandidates = contestCandidates.map(candidate => ({...candidate, polling: getPolling(candidate._id, selectedContest)}));
+    }
 
     return (
         <div className={props.className}>
