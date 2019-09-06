@@ -115,16 +115,16 @@ export class IssueEditForm extends Component {
                         <div className={styles.editContainer}>
                         <h2 className={styles.subheading}>Edit</h2>
                             <InputGroup>
-                                <InputGroupAddon>
+                                <InputGroupAddon addonType="prepend">
                                         <InputGroupText>Name</InputGroupText>
                                 </InputGroupAddon>
-                                <Input className={''} onChange={this.editIssue} type="text" name="name" value={this.state.selectedIssue.name}></Input>
+                                <Input className={''} onChange={this.editIssue} type="text" name="name" value={this.state.selectedIssue.name || ''}></Input>
                             </InputGroup>
                             <InputGroup>
-                                <InputGroupAddon>
+                                <InputGroupAddon addonType="prepend">
                                         <InputGroupText>Country</InputGroupText>
                                 </InputGroupAddon>
-                                <Input className={''} onChange={this.editIssue} type="text" name="country" value={this.state.selectedIssue.country}></Input>
+                                <Input className={''} onChange={this.editIssue} type="text" name="country" value={this.state.selectedIssue.country || ''}></Input>
                                 <InputGroupAddon addonType="append">
                                 <InputGroupText>{this.getCountryName()}</InputGroupText>
                                 </InputGroupAddon>
