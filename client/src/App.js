@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 
-import Navbar from './components/Navbar';
-
 import {Provider} from 'react-redux';
 import store from './store';
 
@@ -9,6 +7,8 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+
+import AppNavbar from './components/Navbar';
 import CandidateView from './components/candidate/';
 import Issues from './components/issues/Issues';
 import ContestEditor from './components/ContestEditor';
@@ -20,7 +20,7 @@ export default class App extends Component {
       <Router>
       <Provider store={store}>
         <div className="app">
-          <Navbar />
+          <AppNavbar />
           <Route exact path="/candidates" component={CandidateView} />
           <Route exact path="/candidates/add" render={
             (props) => <CandidateEditForm {...props} createNew={true} />

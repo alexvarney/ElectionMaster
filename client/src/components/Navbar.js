@@ -3,13 +3,14 @@ import {Link, withRouter} from "react-router-dom";
 import Login from './Login';
 import styles from './css/Navbar.module.css';
 import { connect } from 'react-redux';
-import {Dropdown, DropdownMenu, DropdownToggle, DropdownItem, Button, Alert} from 'reactstrap';
+import {Dropdown, DropdownMenu, DropdownToggle, DropdownItem, Button, Alert, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavLink, NavItem, UncontrolledDropdown} from 
+'reactstrap';
 
 import {getCandidates, setSelected} from '../actions/candidateActions';
 import {getIssues} from '../actions/issueActions';
 import {getContests, setSelectedContestId} from '../actions/contestActions'; 
 
-const Navbar = (props) => {
+const AppNavbar = (props) => {
 
   const refreshData = () => {
     props.getCandidates();
@@ -70,55 +71,52 @@ const Navbar = (props) => {
   const selectedContest = props.contests.contests.filter(item => item._id === props.contests.selectedContestId)[0]
 
   return (
-      <div className={styles.navContainer}>
-        <nav className={isMobileExpanded ? styles.navbar_expanded : styles.navbar}>
-          <div onClick={toggleMobileExpand} className={styles.mobileExpander}>
-            <span className={styles.menuSelect}>
-              <i className="fas fa-bars"></i>
-            </span>
-            <span className={styles.titleStyle}>
-              {isMobileExpanded ? 'Close Menu':'ElectionsMaster'}
-            </span>
-          </div>
-
-          <Link onClick={closeMobileExpand} to="/"><span className={styles.titleStyle}>ElectionsMaster</span></Link>
+    <div className={styles.navbar}>
+    
+    <Navbar color="light" light expand="md">
+      
+      <NavbarBrand tag={Link} to="/">ElectionsMaster</NavbarBrand>
+      <NavbarToggler onClick={toggleMobileExpand} />
+      
+      <Collapse isOpen={isMobileExpanded} navbar>
+        <Nav className="ml-auto" navbar>
           
-          <div className={styles.contestDropdown}>
-            <Dropdown isOpen={isContestDropdownOpen} toggle={()=>setContestDropdownState(!isContestDropdownOpen)}>
-              <DropdownToggle outline caret>
-                {selectedContest ? selectedContest.name : 'No Election Selected'}
-              </DropdownToggle>
-              <DropdownMenu right>
-
-                {props.contests.contests.map(contest => (
-                  <DropdownItem key={contest._id} onClick={()=>setSelectedContest(contest._id)}>{contest.name}</DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>  
-          </div>
-
-          <Link onClick={closeMobileExpand} to="/candidates">Candidates</Link>
-
-          <Link onClick={closeMobileExpand} to="/issues">Issues</Link>
+          <UncontrolledDropdown nav inNavbar>
+            <DropdownToggle nav caret outline>
+              {selectedContest ? selectedContest.name : 'No Election Selected'}
+            </DropdownToggle>
+            <DropdownMenu right>
+            {props.contests.contests.map(contest => (
+              <DropdownItem key={contest._id} onClick={()=>setSelectedContest(contest._id)}>
+                {contest.name}
+              </DropdownItem>
+            ))}
+            </DropdownMenu>
+          </UncontrolledDropdown>
+          
+          <NavItem>
+            <NavLink href="#" onClick={refreshData} outline><i className="fas fa-sync-alt"></i></NavLink>
+          </NavItem>
+          
+          <NavItem>
+            <NavLink tag={Link} to="/candidates/">Candidates</NavLink>
+          </NavItem>
+          
+          <NavItem>
+            <NavLink tag={Link} to="/issues/">Issues</NavLink>
+          </NavItem>
 
           {props.user.token !== "" ?
-            <Fragment>
-              <Link onClick={closeMobileExpand} to="/editcontests">Contest Editor</Link>
-            </Fragment> : null}
+          <NavItem>
+            <NavLink tag={Link} to="/editcontests">Contest Editor</NavLink>
+          </NavItem> : null}
+          
+          <Login />
 
-          <Button size="sm" onClick={refreshData} outline><i className="fas fa-sync-alt"></i></Button>
-
-          <div className={styles.loginContainer}>
-            <Login />
-          </div>
-        </nav>
-        
-        <div className="fixed-top">
-          <Alert className={styles.alert} isOpen={isAlertOpen} toggle={()=>setAlertOpen(!isAlertOpen)} color="primary">
-            {alertMessage}
-          </Alert>
-        </div>
-      </div>
+        </Nav>
+      </Collapse>
+    </Navbar>
+  </div>
   )
 }
 
@@ -134,5 +132,5 @@ export default withRouter(connect(mapStateToProps,
     getContests, 
     setSelectedContestId, 
     setSelected
-  })(Navbar));
+  })(AppNavbar));
 

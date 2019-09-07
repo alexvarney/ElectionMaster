@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
+import {Link, NavLink} from 'react-router-dom';
 
 import {login, logout, auth} from '../actions/userActions';
 
 import styles from './css/Login.module.css';
 
-import {Button, Dropdown, DropdownMenu, DropdownToggle} from 'reactstrap';
+import {Button, InputGroup, InputGroupAddon, InputGroupText, Input, UncontrolledDropdown, DropdownMenu, DropdownToggle} from 'reactstrap';
 
 class Login extends Component {
 
@@ -56,8 +56,8 @@ class Login extends Component {
 
         if(this.props.user.token !== "") {
             return(
-                <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
-                    <DropdownToggle className={styles.toggle} tag="span">
+                <UncontrolledDropdown nav inNavbar>
+                    <DropdownToggle tag={NavLink} nav caret outline>
                         <i className="fas fa-user-alt"></i> {this.props.user.user.name}
                     </DropdownToggle>
                     <DropdownMenu right className={styles.dropdown}>
@@ -67,30 +67,29 @@ class Login extends Component {
                         </div>
                         <div className={styles.triangle}></div>
                     </DropdownMenu>
-                </Dropdown>
+                </UncontrolledDropdown>
             )
         }
 
         return (
-            <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
-                <DropdownToggle className={styles.toggle} tag="span">
+            <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle tag={NavLink} nav caret outline>
                     Login
                 </DropdownToggle>
-                <DropdownMenu className={styles.dropdown} right>
-                    <form onSubmit={this.onFormSubmit} className={styles.form}>
-                        <div className={styles.formItem}>
+                <DropdownMenu right className={styles.dropdown}>
+                    <form onSubmit={this.onFormSubmit}>
+                        <InputGroup className={styles.loginInput}>
                             <label>Email:</label>
                             <input name="email" onChange={this.onFormChange} value={this.state.formValues.email} type="text" />
-                        </div>
-                        <div className={styles.formItem}>
+                        </InputGroup>
+                        <InputGroup className={styles.loginInput}>
                             <label>Password:</label>
                             <input name="password" onChange={this.onFormChange} value={this.state.formValues.password} type="password" />
-                        </div>
+                        </InputGroup>
                         <Button outline color="primary" size="sm" onClick={this.onFormSubmit}>Login</Button>
                     </form>
-                    <div className={styles.triangle}></div>
                 </DropdownMenu>
-            </Dropdown>
+            </UncontrolledDropdown>
         )
     }
 }
