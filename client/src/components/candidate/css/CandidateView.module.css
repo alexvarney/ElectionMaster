@@ -1,7 +1,6 @@
 .candidateView{
     display: flex;
-    max-height: calc(100vh - 50px);
-    height: calc(100vh - 50px);
+    height: calc(100vh - 3.75rem);
     overflow-y: hidden;
 }
 

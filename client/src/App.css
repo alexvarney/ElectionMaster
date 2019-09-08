@@ -10,9 +10,5 @@ body {
   font-family: 'IBM Plex Sans Condensed', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: 100vh;
 }
 
-#root, .app {
-  height: 100vh;
-}
