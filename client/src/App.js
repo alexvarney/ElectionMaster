@@ -21,13 +21,15 @@ export default class App extends Component {
       <Provider store={store}>
         <div className="app">
           <AppNavbar />
-          <Route exact path="/candidates" component={CandidateView} />
-          <Route exact path="/candidates/add" render={
-            (props) => <CandidateEditForm {...props} createNew={true} />
-          }/>
-          <Route path="/candidates/:id" component={CandidateView} />
-          <Route path="/issues" component={Issues} />
-          <Route path="/editcontests" component={ContestEditor} />
+          <div className="appContainer">  
+            <Route exact path="/candidates" component={CandidateView} />
+            <Route exact path="/candidates/add" render={
+              (props) => <CandidateEditForm {...props} createNew={true} />
+            }/>
+            <Route path="/candidates/:id" component={CandidateView} />
+            <Route path="/issues" component={Issues} />
+            <Route path="/editcontests" component={ContestEditor} />
+          </div>
         </div>
       </Provider>
       </Router>
