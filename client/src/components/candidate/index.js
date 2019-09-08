@@ -22,7 +22,7 @@ const CandidateView = (props) => {
 
     const setSelectedCandidate = (id) => {
         
-        props.history.push(`/candidates/${id}`);
+        props.history.push(`/candidates/${id}`);        
         props.setSelected(id);
         expandSelect(false);
         
