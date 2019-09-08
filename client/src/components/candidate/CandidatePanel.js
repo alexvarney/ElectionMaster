@@ -117,20 +117,11 @@ class CandidatePanel extends Component {
                                 <i className="fas fa-search-dollar"></i><NumberFormat value={netWorth} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                             </PopoverButton>
                         </div> : null}
-                        
-                        {this.isLoggedIn() ? <div style={getButtonStyle()} className={styles.panelButton}>
-                                <Link to={`${this.props.match.url}/edit`}>Edit</Link>
-                            </div>: null}
                     </div>
                     <div className={styles.content}>
                         <div className={styles.col}>
                             <div className={styles.headingContainer}>
                                 <h2 className={styles.heading}>Positions</h2>
-
-                                {this.isLoggedIn() ? 
-                                    <div className={styles.positionEdit}>
-                                        <Link style={getButtonStyle()} className={styles.panelButton} to={`${this.props.match.url}/editpositions`}>Edit</Link>
-                                    </div>:null}
                             </div>
                             {candidate.positions.map(position=>{
                                 return (<CandidatePositionCard key={position._id} position={position} issues={this.props.issues.issues}/>)
