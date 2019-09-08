@@ -1,7 +1,9 @@
-/* Container Styles Styles */
+/* Container Styles */
 
 .candidatePanel{
   flex: 1 1 0;
+  height: calc(100vh - 60px);
+  max-height: calc(100vh - 60px);
   overflow-y: scroll;
 }
 

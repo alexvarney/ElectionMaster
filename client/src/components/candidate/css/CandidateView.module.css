@@ -1,11 +1,15 @@
 .candidateView{
     display: flex;
-    height: calc(100vh - 3.75rem);
-    overflow-y: hidden;
+    border-top: 1px solid #d6d6d6;
 }
 
-.sidebar{
-    flex-basis: 350px;
+.sidebar{    
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    flex-basis: 21rem;
+    height: calc(100vh - 60px);
+    border-right: 1px solid #d6d6d6;
 }
 
 @media only screen and (max-width: 800px) {
