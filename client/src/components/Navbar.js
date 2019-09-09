@@ -73,7 +73,7 @@ const AppNavbar = (props) => {
   return (
     <div className={styles.navbar}>
     
-    <Navbar color="light" light expand="md">
+    <Navbar color="light" light expand="md" className="sticky-top">
       
       <NavbarBrand tag={Link} to="/">ElectionsMaster</NavbarBrand>
       <NavbarToggler onClick={toggleMobileExpand} />

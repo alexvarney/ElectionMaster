@@ -1,3 +1,7 @@
 .navbar {
     border-bottom: 1px solid #d6d6d6;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 999;
 }

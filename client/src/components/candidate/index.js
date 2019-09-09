@@ -68,13 +68,11 @@ const CandidateView = (props) => {
     }
 
     return (
-        <div>
+        <div className={styles.candidateView}>
             <Route exact path={`${match.path}/edit`} component={CandidateEditForm} />
             <Route exact path={`${match.path}/editpositions`} component={PositionEditForm} />
-            <div className={styles.candidateView}>
-                <Sidebar onSelect={setSelectedCandidate} className={getSidebarStyle()}/>
-                <CandidatePanel toggle={toggle} match={match}/>
-            </div>
+            <Sidebar onSelect={setSelectedCandidate} className={getSidebarStyle()}/>
+            {!isSelectExpanded ? <CandidatePanel toggle={toggle} match={match}/> : null }
         </div>
     )
 }
