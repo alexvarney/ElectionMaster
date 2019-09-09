@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Route, Link} from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
-import {Container, Row, Col} from 'reactstrap';
+import {Button} from 'reactstrap';
 
 import {getIssues} from '../../actions/issueActions';
 import {getContests} from '../../actions/contestActions';
@@ -36,32 +36,31 @@ const Issues = (props) => {
 
     return (
         <div className={styles.container}>
-            <Route exact path={`${props.match.path}/edit`} component={IssueEditForm} />
-            {props.user.token ? <div className={styles.adminNav}>
-                <Link to="/issues/edit">Issue Editor</Link>
-            </div> : null}
 
-            <Container fluid={true}>
-                <Row noGutters={true}>
-                    <Col md="2">
-                        <ul className={styles.issueSelector}>
-                            {sortedIssues.map(issue => (
-                                <li key={issue._id}><a href={`#${issue._id}`}>{issue.name}</a></li>
-                            ))}
-                        </ul>
-                    </Col>
-                    <Col>
-                        {sortedIssues.map(issue => {
-                            return (
-                                <div key={issue._id} id={issue._id} className={styles.issue}>
-                                    <h3>{issue.name}</h3>
-                                    <ReactMarkdown className={styles.description} source={issue.description} />
-                                </div>
-                            )
-                        })}
-                    </Col>
-                </Row>
-            </Container>
+            <Route exact path={`${props.match.path}/edit`} component={IssueEditForm} />
+
+            <div className={styles.sidebar}>
+                {props.user.token ? <div className={styles.adminNav}>
+                    <Button size="sm" tag={Link} to="/issues/edit" outline>Issue Editor</Button>
+                </div> : null}
+                <ul className={styles.issueSelector}>
+                    {sortedIssues.map(issue => (
+                        <li key={issue._id}><a href={`#${issue._id}`}>{issue.name}</a></li>
+                    ))}
+                </ul>
+            </div>
+
+            <div className={styles.content}>
+                {sortedIssues.map(issue => {
+                    return (
+                        <div key={issue._id} id={issue._id} className={styles.issue}>
+                            <h3>{issue.name}</h3>
+                            <ReactMarkdown className={styles.description} source={issue.description} />
+                        </div>
+                    )
+                })}
+            </div>
+
         </div>
     )
   }

@@ -1,14 +1,14 @@
 .candidateView{
     display: flex;
-    border-top: 1px solid #d6d6d6;
 }
 
 .sidebar{    
     position: -webkit-sticky;
     position: sticky;
-    top: 0;
+    top: var(--nav, 60px);
     flex-basis: 21rem;
-    height: calc(100vh - 60px);
+    height: calc((var(--vh, 1vh) * 100) - var(--nav, 60px));
+    max-height: calc((var(--vh, 1vh) * 100) - var(--nav, 60px));
     border-right: 1px solid #d6d6d6;
 }
 

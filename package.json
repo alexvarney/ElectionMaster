@@ -9,7 +9,7 @@
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
     "dev-remote": "concurrently \"PORT=5001 npm run server\" \"HOST=dev.varney.me DEV_REMOTE=true npm run client\"",
-    "dev": "concurrently \"PORT=5001 npm run server\" \"DEV=true npm run client\"",
+    "dev": "concurrently \"PORT=5001 npm run server\" \"DEV=true HOST=0.0.0.0 npm run client\"",
     "init": "npm install && npm install --prefix client && npm run build --prefix client"
   },
   "author": "Alexander Varney",

@@ -15,6 +15,19 @@ import ContestEditor from './components/ContestEditor';
 import CandidateEditForm from './components/candidate/CandidateEditForm';
 
 export default class App extends Component {
+
+  componentDidMount() {
+    
+    //Fixes viewport height on mobile safari
+    let fixVh = () => {
+      let vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+      document.documentElement.style.setProperty('--nav', '57px');
+    }
+    window.addEventListener('resize', fixVh);
+    fixVh();
+  }
+
   render() {
     return (
       <Router>
@@ -28,7 +41,7 @@ export default class App extends Component {
           <Route path="/candidates/:id" component={CandidateView} />
           <Route path="/issues" component={Issues} />
           <Route path="/editcontests" component={ContestEditor} />
-        </div>
+          </div>
       </Provider>
       </Router>
     )
