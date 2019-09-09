@@ -64,6 +64,10 @@
     padding: 0.5rem;
 }
 
+.issueSelector > li {
+    cursor: pointer;
+}
+
 .issueSelector > li:nth-child(even){
     background-color: #fefefe;
 }
