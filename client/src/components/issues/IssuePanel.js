@@ -1,14 +1,17 @@
 import React, {useState, useDebugValue} from 'react';
 import {connect} from 'react-redux';
+import {Redirect} from 'react-router-dom';
 import styles from './css/IssuePanel.module.css';
 import ReactMarkdown from 'react-markdown';
 import {Container, Row, Col} from 'reactstrap';
+import CandidateListCard from '../candidate/CandidateListCard';
 
 const IssuePanel = (props) => {
 
   const {issue, contest, candidates} = props;
   
   const positions = candidates
+    .filter(candidate => contest.candidates.includes(candidate._id))
     .map(candidate=>{
       const position = candidate.positions.filter(positions => positions.issue === issue._id)[0];
       if(position){
@@ -30,7 +33,13 @@ const IssuePanel = (props) => {
     }, {});
 
     const {supports, mixed, opposed} = positions;
-  
+    
+    const [redirect, setRedirect] = useState(null);
+
+    if(redirect){
+      return <Redirect to={`/candidates/${redirect}`} />
+    }
+
   return (
     <div>
       <h1>{props.issue.name}</h1>
@@ -42,20 +51,20 @@ const IssuePanel = (props) => {
         <Row>
           <Col>
             <h4>Supports</h4>
-            <ul>
-              {supports ? supports.map(item => <li>{item.candidate.name}</li>) : null}
+            <ul className={styles.positionCandidateList}>
+              {supports ? supports.map(item => <li><CandidateListCard onSelect={setRedirect} candidate={item.candidate}/></li>) : null}
             </ul>
           </Col>
           <Col>
             <h4>Mixed</h4>
-            <ul>
-              {mixed ? mixed.map(item => <li>{item.candidate.name}</li>) : null}
+            <ul className={styles.positionCandidateList}>
+              {mixed ? mixed.map(item => <li><CandidateListCard onSelect={setRedirect} candidate={item.candidate}/></li>) : null}
             </ul>
           </Col>
           <Col>
             <h4>Opposed</h4>
-            <ul>
-              {opposed ? opposed.map(item => <li>{item.candidate.name}</li>) : null}
+            <ul className={styles.positionCandidateList}>
+              {opposed ? opposed.map(item => <li><CandidateListCard onSelect={setRedirect} candidate={item.candidate}/></li>) : null}
             </ul>
           </Col>
         </Row>
