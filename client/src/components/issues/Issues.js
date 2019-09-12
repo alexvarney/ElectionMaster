@@ -30,10 +30,6 @@ const Issues = (props) => {
     
     const sortedIssues = selectedContest ? props.issues.issues.filter(issue=> selectedContest.issues.includes(issue._id)).sort((a, b)=>(a.name > b.name ? 1 : -1)) : [];
 
-    useEffect(()=>{
-
-    },[selectedContest, selectedContest.issues, props.issues.issues])
-
     return (
         <div className={styles.container}>
 
@@ -51,7 +47,7 @@ const Issues = (props) => {
             </div>
 
             <div className={styles.content}>
-                {selectedIssue ? <IssuePanel issue={selectedIssue} /> : null}
+                {selectedIssue ? <IssuePanel issue={selectedIssue} contest={selectedContest}/> : null}
             </div>
 
         </div>
