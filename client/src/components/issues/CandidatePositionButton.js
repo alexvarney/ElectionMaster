@@ -1,6 +1,7 @@
 import React, {useState, useRef} from 'react'
 import styles from './css/CandidatePositionButton.module.css';
 import {Tooltip} from 'reactstrap';
+import {getSubtleColor} from '../_helpers';
 
 export default function CandidatePositionButton(props) {
     
@@ -9,13 +10,6 @@ export default function CandidatePositionButton(props) {
 
     const [hoverStatus, onHover] = useState(false);
     const parentRef = useRef(null);
-
-    const getSubtleColor = () => {
-        const min = Math.ceil(0);
-        const max = Math.floor(360);
-        const randomVal = Math.floor(Math.random() * (max - min + 1)) + min; 
-        return `hsla(${randomVal},42%,22%,1.0)`;
-    }
 
     const [backgroundColor, setBackgroundColor] = useState(getSubtleColor);
 

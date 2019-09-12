@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {setSelected} from '../../actions/candidateActions';
 import {Scrollbars} from 'react-custom-scrollbars';
 import {Button} from 'reactstrap';
-import {getPolling} from './_helpers';
+import {getPolling} from '../_helpers';
 import CandidateListCard from './CandidateListCard';
 
 const Sidebar = (props) => {
