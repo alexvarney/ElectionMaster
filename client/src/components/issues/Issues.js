@@ -33,7 +33,8 @@ const Issues = (props) => {
     return (
         <div className={styles.container}>
 
-            <Route exact path={`${props.match.path}/edit`} component={IssueEditForm} />
+            <Route exact path={`${props.match.path}/edit`} 
+                render={(props) => <IssueEditForm {...props} selectedIssue={selectedIssue} />} />
 
             <div className={styles.sidebar}>
                 {props.user.token ? <><div className={styles.adminNav}>
