@@ -42,7 +42,7 @@ export default class CandidatePositionCard extends Component {
         const getIcon = (status) => {
             switch(status){
                 case 'supports':
-                    return (<i className="fas fa-circle"></i>)
+                    return (<i className="far fa-check-circle"></i>)
                 case 'opposed': 
                     return (<i className="far fa-times-circle"></i>)
                 case 'mixed':
