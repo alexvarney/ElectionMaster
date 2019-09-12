@@ -10,7 +10,7 @@
 
 .content {
     flex: 2 1 75%;
-    overflow-y: scroll;
+    overflow-y: auto;
     padding: 2rem;
 }
 
@@ -27,7 +27,7 @@
         position: -webkit-sticky;
         position: sticky;
         top: 0;
-        overflow-y: scroll;  
+        overflow-y: auto;  
     }
 }
 
@@ -39,6 +39,8 @@
     display: flex;
     height: 2.7rem;
     padding: 0.2rem;
+    margin-top: 1rem;
+    border-radius: 0.5rem;
     background-color: #ffcd43;
     width: 100%;
     box-shadow: 0px 4px 11px -2px rgba(0, 0, 0, 0.137);
@@ -60,20 +62,20 @@
 }
 
 .issueSelector > li {
+    border: 1px solid rgba(0,0,0,0);
     list-style-type: none;
     padding: 0.5rem;
-}
-
-.issueSelector > li {
+    margin: 0.25rem;
+    border-radius: 0.5rem;
     cursor: pointer;
 }
 
-.issueSelector > li:nth-child(even){
-    background-color: #fefefe;
+.issueSelector > li:hover {
+    border: 1px solid #9dcde0;
 }
 
 .issueSelector > li:nth-child(odd){
-    background-color: rgb(235, 235, 235);
+    background-color: #f0f0f0;
 }
 
 @media only screen and (max-width: 768px) {

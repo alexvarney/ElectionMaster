@@ -13,10 +13,11 @@ import {setSelectedContestId} from '../../actions/contestActions';
 
 const CandidatePanel = (props) => {
 
-    const getRandomIntInclusive = (min, max) => {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min + 1)) + min; 
+    const getSubtleColor = () => {
+        const min = Math.ceil(0);
+        const max = Math.floor(360);
+        const randomVal = Math.floor(Math.random() * (max - min + 1)) + min; 
+        return `hsla(${randomVal},42%,22%,1.0)`;
     }
 
     const candidate = props.candidates.candidates ? props.candidates.candidates.filter((item)=>item._id === props.candidates.selectedCandidateId)[0]:null;
@@ -51,8 +52,6 @@ const CandidatePanel = (props) => {
     const {name, state, dob, slogan, description, website, websiteDisplay, partyAffiliation, netWorth, image} = candidate;
 
     const age = moment().diff(dob, 'years');
-    
-    const getSubtleColor = () => `hsla(${getRandomIntInclusive(0,360)},42%,22%,1.0)`;
     
     const getButtonStyle = () => {
         return {backgroundColor: getSubtleColor()}

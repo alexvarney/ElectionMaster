@@ -4,9 +4,17 @@ import {Redirect} from 'react-router-dom';
 import styles from './css/IssuePanel.module.css';
 import ReactMarkdown from 'react-markdown';
 import {Container, Row, Col} from 'reactstrap';
-import CandidateListCard from '../candidate/CandidateListCard';
+import CandidatePositionButton from './CandidatePositionButton';
+import PieChart from 'react-minimal-pie-chart';
 
 const IssuePanel = (props) => {
+
+  const getSubtleColor = () => {
+    const min = Math.ceil(0);
+    const max = Math.floor(360);
+    const randomVal = Math.floor(Math.random() * (max - min + 1)) + min; 
+    return `hsla(${randomVal},42%,22%,1.0)`;
+  }
 
   const {issue, contest, candidates} = props;
   
@@ -32,43 +40,59 @@ const IssuePanel = (props) => {
 
     }, {});
 
-    const {supports, mixed, opposed} = positions;
-    
-    const [redirect, setRedirect] = useState(null);
+    const supports = (positions.supports) ? positions.supports : [];
+    const mixed = (positions.mixed) ? positions.mixed : [];
+    const opposed = (positions.opposed) ? positions.opposed : [];
 
-    if(redirect){
-      return <Redirect to={`/candidates/${redirect}`} />
-    }
+    const totalPositions = supports.length + mixed.length + opposed.length;
 
+    const chartData = [
+      {
+        title: `Supports - ${supports.length*100/totalPositions}%`, 
+        value: supports.length,
+        color: '#0d9900',
+      },
+      {
+        title: `Mixed - ${mixed.length*100/totalPositions}%`, 
+        value: mixed.length,
+        color: '#c2bb00',
+      },
+      {
+        title: `Opposed - ${opposed.length*100/totalPositions}%`, 
+        value: opposed.length,
+        color: '#ac2715',
+      }
+    ]
   return (
-    <div>
-      <h1>{props.issue.name}</h1>
-      <ReactMarkdown source={issue.description} />
+    <div className={styles.container}>
       
-      <h3>Candidate Positions</h3>
+      <h1>{props.issue.name}</h1>
 
-      <Container>
-        <Row>
-          <Col>
-            <h4>Supports</h4>
-            <ul className={styles.positionCandidateList}>
-              {supports ? supports.map(item => <li><CandidateListCard onSelect={setRedirect} candidate={item.candidate}/></li>) : null}
-            </ul>
-          </Col>
-          <Col>
-            <h4>Mixed</h4>
-            <ul className={styles.positionCandidateList}>
-              {mixed ? mixed.map(item => <li><CandidateListCard onSelect={setRedirect} candidate={item.candidate}/></li>) : null}
-            </ul>
-          </Col>
-          <Col>
-            <h4>Opposed</h4>
-            <ul className={styles.positionCandidateList}>
-              {opposed ? opposed.map(item => <li><CandidateListCard onSelect={setRedirect} candidate={item.candidate}/></li>) : null}
-            </ul>
-          </Col>
-        </Row>
-      </Container>
+      <div className={styles.positionContainer}>
+        <div className={styles.pieContainer}>
+          <p>Candidate Positions</p><br />
+          <PieChart className={styles.pieChart} data={chartData}/>
+          <div className={styles.pieChartLabels}>
+            <p className={styles.pieLabelSupports}>Supports - {Math.floor(supports.length*100/totalPositions)}%</p>
+            <p className={styles.pieLabelMixed}>Mixed - {Math.floor(mixed.length*100/totalPositions)}%</p>
+            <p className={styles.pieLabelOpposed}>Opposed - {Math.floor(opposed.length*100/totalPositions)}%</p>
+          </div>
+        </div>
+            <div>
+            <h4><i className="far fa-check-circle"></i> Supports - ({supports ? supports.length : 0})</h4>
+              {supports ? supports.map(item =><CandidatePositionButton candidate={item.candidate}/>) : null}
+          </div>
+          <div>
+            <h4><i className="fas fa-adjust"></i> Mixed - ({mixed ? mixed.length : 0})</h4>
+              {mixed ? mixed.map(item =><CandidatePositionButton candidate={item.candidate}/>) : null}
+          </div>
+          <div>
+            <h4><i className="far fa-times-circle"></i> Opposed - ({opposed ? opposed.length : 0})</h4>
+              {opposed ? opposed.map(item =><CandidatePositionButton candidate={item.candidate}/>) : null}
+          </div>
+      </div>
+
+      <ReactMarkdown source={issue.description} />
     
     </div>
   )
