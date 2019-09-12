@@ -25,7 +25,7 @@ router.post('/', auth, (req, res) =>{
 })
 
 //GET api/candidates/:id
-router.get('/:id', auth, (req, res) =>{
+router.get('/:id', (req, res) =>{
     Candidate.findById(req.params.id).exec((error, doc)=>{
         if (error) return "An error occured";
 
