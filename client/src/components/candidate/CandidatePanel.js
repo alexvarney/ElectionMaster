@@ -4,7 +4,7 @@ import styles from './css/CandidatePanel.module.css';
 import moment from 'moment';
 import CandidatePanelCircle from './CandidatePanelCircle';
 import CandidatePositionCard from './CandidatePositionCard';
-import {getPolling} from './_helpers';
+import {getPolling, getSubtleColor} from '../_helpers';
 import ReactMarkdown from 'react-markdown';
 import NumberFormat from 'react-number-format';
 import {Button} from 'reactstrap';
@@ -12,13 +12,6 @@ import PopoverButton from './PopoverButton';
 import {setSelectedContestId} from '../../actions/contestActions';
 
 const CandidatePanel = (props) => {
-
-    const getSubtleColor = () => {
-        const min = Math.ceil(0);
-        const max = Math.floor(360);
-        const randomVal = Math.floor(Math.random() * (max - min + 1)) + min; 
-        return `hsla(${randomVal},42%,22%,1.0)`;
-    }
 
     const candidate = props.candidates.candidates ? props.candidates.candidates.filter((item)=>item._id === props.candidates.selectedCandidateId)[0]:null;
 

@@ -6,15 +6,9 @@ import ReactMarkdown from 'react-markdown';
 import {Container, Row, Col} from 'reactstrap';
 import CandidatePositionButton from './CandidatePositionButton';
 import PieChart from 'react-minimal-pie-chart';
+import {getSubtleColor} from '../_helpers';
 
 const IssuePanel = (props) => {
-
-  const getSubtleColor = () => {
-    const min = Math.ceil(0);
-    const max = Math.floor(360);
-    const randomVal = Math.floor(Math.random() * (max - min + 1)) + min; 
-    return `hsla(${randomVal},42%,22%,1.0)`;
-  }
 
   const {issue, contest, candidates} = props;
   
@@ -40,9 +34,9 @@ const IssuePanel = (props) => {
 
     }, {});
 
-    const supports = (positions.supports) ? positions.supports : [];
-    const mixed = (positions.mixed) ? positions.mixed : [];
-    const opposed = (positions.opposed) ? positions.opposed : [];
+    const supports = (positions.supports) ? positions.supports.sort((a, b)=>a.candidate.status > b.candidate.status ? 1 : -1) : [];
+    const mixed = (positions.mixed) ? positions.mixed.sort((a, b)=>a.candidate.status > b.candidate.status ? 1 : -1) : [];
+    const opposed = (positions.opposed) ? positions.opposed.sort((a, b)=>a.candidate.status > b.candidate.status ? 1 : -1) : [];
 
     const totalPositions = supports.length + mixed.length + opposed.length;
 
@@ -68,30 +62,41 @@ const IssuePanel = (props) => {
       
       <h1>{props.issue.name}</h1>
 
+      <hr />
+
       <div className={styles.positionContainer}>
+        
         <div className={styles.pieContainer}>
+          
           <p>Candidate Positions</p><br />
+          
           <PieChart className={styles.pieChart} data={chartData}/>
-          <div className={styles.pieChartLabels}>
+          
+          <div className={styles.pieChartLabels}>      
             <p className={styles.pieLabelSupports}>Supports - {Math.floor(supports.length*100/totalPositions)}%</p>
             <p className={styles.pieLabelMixed}>Mixed - {Math.floor(mixed.length*100/totalPositions)}%</p>
             <p className={styles.pieLabelOpposed}>Opposed - {Math.floor(opposed.length*100/totalPositions)}%</p>
           </div>
+        
         </div>
-            <div>
-            <h4><i className="far fa-check-circle"></i> Supports - ({supports ? supports.length : 0})</h4>
-              {supports ? supports.map(item =><CandidatePositionButton candidate={item.candidate}/>) : null}
-          </div>
-          <div>
-            <h4><i className="fas fa-adjust"></i> Mixed - ({mixed ? mixed.length : 0})</h4>
-              {mixed ? mixed.map(item =><CandidatePositionButton candidate={item.candidate}/>) : null}
-          </div>
-          <div>
-            <h4><i className="far fa-times-circle"></i> Opposed - ({opposed ? opposed.length : 0})</h4>
-              {opposed ? opposed.map(item =><CandidatePositionButton candidate={item.candidate}/>) : null}
-          </div>
-      </div>
+        
+        <div>
+          <h4><i className="far fa-check-circle"></i> Supports - ({supports ? supports.length : 0})</h4>
+          {supports ? supports.map(item =><CandidatePositionButton candidate={item.candidate}/>) : null}
+        </div>
+        
+        <div>
+          <h4><i className="fas fa-adjust"></i> Mixed - ({mixed ? mixed.length : 0})</h4>
+          {mixed ? mixed.map(item =><CandidatePositionButton candidate={item.candidate}/>) : null}
+        </div>
+        
+        <div>
+          <h4><i className="far fa-times-circle"></i> Opposed - ({opposed ? opposed.length : 0})</h4>
+          {opposed ? opposed.map(item =><CandidatePositionButton candidate={item.candidate}/>) : null}
+        </div>
 
+      </div>
+      <hr />
       <ReactMarkdown source={issue.description} />
     
     </div>

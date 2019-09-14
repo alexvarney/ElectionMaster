@@ -12,12 +12,8 @@ export class IssueEditForm extends Component {
     constructor(props){
         super(props);
         this.state = {
-            selectedIssue: {},
+            selectedIssue: props.selectedIssue ? props.selectedIssue : {},
         }
-    }
-
-    componentDidMount(){
-
     }
 
     setSelectedIssue = (issue) => {

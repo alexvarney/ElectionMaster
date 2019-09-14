@@ -57,7 +57,7 @@ class Login extends Component {
         if(this.props.user.token !== "") {
             return(
                 <UncontrolledDropdown nav inNavbar>
-                    <DropdownToggle tag={NavLink} nav caret outline>
+                    <DropdownToggle nav caret outline="true">
                         <i className="fas fa-user-alt"></i> {this.props.user.user.name}
                     </DropdownToggle>
                     <DropdownMenu right className={styles.dropdown}>
@@ -73,7 +73,7 @@ class Login extends Component {
 
         return (
             <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle tag={NavLink} nav caret outline>
+                <DropdownToggle nav caret outline="true">
                     Login
                 </DropdownToggle>
                 <DropdownMenu right className={styles.dropdown}>

@@ -14,3 +14,9 @@ export const getPolling = (candidateId, contest) => {
 
 }
 
+export const getSubtleColor = () => {
+    const min = Math.ceil(0);
+    const max = Math.floor(360);
+    const randomVal = Math.floor(Math.random() * (max - min + 1)) + min; 
+    return `hsla(${randomVal},42%,22%,1.0)`;
+}

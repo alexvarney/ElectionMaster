@@ -33,12 +33,16 @@ const Issues = (props) => {
     return (
         <div className={styles.container}>
 
-            <Route exact path={`${props.match.path}/edit`} component={IssueEditForm} />
+            <Route exact path={`${props.match.path}/edit`} 
+                render={(props) => <IssueEditForm {...props} selectedIssue={selectedIssue} />} />
 
             <div className={styles.sidebar}>
-                {props.user.token ? <><div className={styles.adminNav}>
-                    <Button size="sm" tag={Link} to="/issues/edit" outline>Issue Editor</Button>
-                </div> <hr /></>: null}
+                {props.user.token ? <>
+                    <div className={styles.adminNav}>
+                        <Button size="sm" tag={Link} to="/issues/edit" outline>Issue Editor</Button>
+                    </div> 
+                    <hr />
+                </>: null}
                 <ul className={styles.issueSelector}>
                     {sortedIssues.map(issue => (
                         <li onClick={()=>setSelectedIssue(issue)} key={issue._id}>{issue.name}</li>

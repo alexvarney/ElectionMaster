@@ -82,7 +82,7 @@ const AppNavbar = (props) => {
         <Nav className="ml-auto" navbar>
           
           <UncontrolledDropdown nav inNavbar>
-            <DropdownToggle nav caret outline>
+            <DropdownToggle nav caret outline="true">
               {selectedContest ? selectedContest.name : 'No Election Selected'}
             </DropdownToggle>
             <DropdownMenu right>
@@ -95,7 +95,7 @@ const AppNavbar = (props) => {
           </UncontrolledDropdown>
           
           <NavItem>
-            <NavLink href="#" onClick={refreshData} outline><i className="fas fa-sync-alt"></i></NavLink>
+            <NavLink href="#" onClick={refreshData} outline="true"><i className="fas fa-sync-alt"></i></NavLink>
           </NavItem>
           
           <NavItem>
