@@ -6,6 +6,7 @@ import {Scrollbars} from 'react-custom-scrollbars';
 import {Button} from 'reactstrap';
 import {getPolling} from '../_helpers';
 import CandidateListCard from './CandidateListCard';
+import styles from './css/Sidebar.module.css';
 
 const Sidebar = (props) => {
 
@@ -24,7 +25,7 @@ const Sidebar = (props) => {
 
     return (
         <div className={props.className}>
-            <Scrollbars autoHide>
+            <Scrollbars className={styles.scrollContainer} autoHide>
 
                 {props.user.token ? 
                     <Button 
@@ -35,8 +36,22 @@ const Sidebar = (props) => {
                             Add Candidate
                     </Button> : null}
                 
-                {(contestCandidates ? contestCandidates.sort((a,b)=>(a.polling>b.polling)?-1:1).map((candidate)=>(
-                    <CandidateListCard key={candidate._id} candidate={candidate} selected={selectedCandidateId} onSelect={props.onSelect}/>
+                <h3 className={styles.statusHeading}>Active Candidates</h3>
+                
+                {(contestCandidates ? contestCandidates
+                    .filter(candidate => candidate.status.toLowerCase() === 'active' || candidate.status.toLowerCase() === 'declared')
+                    .sort((a,b)=>(a.polling>b.polling)?-1:1)
+                    .map((candidate)=>(
+                        <CandidateListCard key={candidate._id} candidate={candidate} selected={selectedCandidateId} onSelect={props.onSelect}/>
+                )):null)}
+
+                <h3 className={styles.statusHeading}>Inactive Candidates</h3>
+
+                {(contestCandidates ? contestCandidates
+                    .filter(candidate => candidate.status.toLowerCase() !== 'active' && candidate.status.toLowerCase() !== 'declared')
+                    .sort((a,b)=>(a.polling>b.polling)?-1:1)
+                    .map((candidate)=>(
+                        <CandidateListCard key={candidate._id} candidate={candidate} selected={selectedCandidateId} onSelect={props.onSelect}/>
                 )):null)}
 
             </Scrollbars>

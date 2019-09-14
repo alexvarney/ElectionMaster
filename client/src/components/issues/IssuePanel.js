@@ -34,9 +34,9 @@ const IssuePanel = (props) => {
 
     }, {});
 
-    const supports = (positions.supports) ? positions.supports : [];
-    const mixed = (positions.mixed) ? positions.mixed : [];
-    const opposed = (positions.opposed) ? positions.opposed : [];
+    const supports = (positions.supports) ? positions.supports.sort((a, b)=>a.candidate.status > b.candidate.status ? 1 : -1) : [];
+    const mixed = (positions.mixed) ? positions.mixed.sort((a, b)=>a.candidate.status > b.candidate.status ? 1 : -1) : [];
+    const opposed = (positions.opposed) ? positions.opposed.sort((a, b)=>a.candidate.status > b.candidate.status ? 1 : -1) : [];
 
     const totalPositions = supports.length + mixed.length + opposed.length;
 
