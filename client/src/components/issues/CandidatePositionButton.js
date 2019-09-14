@@ -21,7 +21,8 @@ export default function CandidatePositionButton(props) {
             className={styles.container}
             onMouseEnter={()=>onHover(true)}
             onMouseLeave={()=>onHover(false)}
-            ref={parentRef}>
+            ref={parentRef}
+        >
 
             {image ? 
                 <img alt={name} className={styles.imgStyle} src={process.env.PUBLIC_URL + `/headshots/${image}`} /> 

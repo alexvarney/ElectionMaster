@@ -122,7 +122,11 @@ class CandidateEditForm extends Component {
                             </InputGroup>
                             <InputGroup className={styles.formItem}>
                                 <InputGroupAddon addonType="prepend"><InputGroupText>Status</InputGroupText></InputGroupAddon>
-                                <Input type="text" name="status" value={this.state.formValues['status'] || ''} onChange={this.handleFormChange}></Input>
+                                <Input type="select" name="status" value={this.state.formValues['status'] || ''} onChange={this.handleFormChange}>
+                                    <option value="active">Active</option>
+                                    <option value="suspended">Suspended</option>
+                                    <option value="undeclared">Undeclared</option>
+                                </Input>
                             </InputGroup>
                             <InputGroup className={styles.formItem}>
                                 <InputGroupAddon addonType="prepend"><InputGroupText>Net Worth</InputGroupText></InputGroupAddon>
