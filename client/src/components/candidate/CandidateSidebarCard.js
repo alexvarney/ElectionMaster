@@ -2,14 +2,17 @@ import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {Redirect, Link} from 'react-router-dom';
 import {withRouter} from 'react-router';
+import {ContestContext} from '../contest/ContestProvider';
 
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
 import styles from './css/CandidateListCard.module.css'
 
-function CandidateListCard(props) {
+function CandidateSidebarCard(props) {
 
-    const {image, name, polling, _id} = props.candidate;
+    const {location, match, candidate} = props;
+
+    const {image, name, polling, _id} = candidate;
 
     const [redirect, setRedirect] = useState(null);
 
@@ -29,7 +32,9 @@ function CandidateListCard(props) {
     }
 
     return (
-        <div 
+        <ContestContext.Consumer>
+        {(selectedContest) => (
+            <div 
             className={props.selected === props.candidate._id ? styles.active : styles.container} 
             onClick={()=>props.onSelect(_id)}
             onMouseEnter={()=>setMouseState(true)}
@@ -60,10 +65,10 @@ function CandidateListCard(props) {
                         <i className="fas fa-ellipsis-h"></i>
                     </DropdownToggle>
                     <DropdownMenu>
-                        <DropdownItem tag={Link} onClick={()=>props.onSelect(_id)} to={`/candidates/${_id}/edit`}>
+                        <DropdownItem tag={Link} onClick={()=>props.onSelect(_id)} to={`${match.url}/edit`}>
                             Edit Data
                         </DropdownItem>
-                        <DropdownItem tag={Link} onClick={()=>props.onSelect(_id)} to={`/candidates/${_id}/editpositions`}>
+                        <DropdownItem tag={Link} onClick={()=>props.onSelect(_id)} to={`${match.url}/editpositions`}>
                             Edit Positions
                         </DropdownItem>
                     </DropdownMenu>
@@ -71,6 +76,8 @@ function CandidateListCard(props) {
             </div>
             : null}
         </div>
+        )}
+        </ContestContext.Consumer>
     )
 }
 
@@ -78,4 +85,4 @@ const mapStateToProps = (state) => ({
     user: state.user,
 })
 
-export default withRouter(connect(mapStateToProps, {})(CandidateListCard));
+export default withRouter(connect(mapStateToProps, {})(CandidateSidebarCard));

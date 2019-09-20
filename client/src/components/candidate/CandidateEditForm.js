@@ -21,7 +21,7 @@ class CandidateEditForm extends Component {
     componentDidMount = () => {
 
         if(!this.props.createNew){
-            const candidate = this.props.candidates.candidates ? this.props.candidates.candidates.filter((item)=>item._id === this.props.candidates.selectedCandidateId)[0]:null;
+            const candidate = this.props.selectedCandidate;
 
             if(candidate){
                 this.setState({
@@ -85,6 +85,10 @@ class CandidateEditForm extends Component {
                                 <Input type="text" name="name" value={this.state.formValues['name'] || ''} onChange={this.handleFormChange}></Input>
                             </InputGroup>
                             <InputGroup className={styles.formItem}>
+                                <InputGroupAddon addonType="prepend"><InputGroupText>URL Slug</InputGroupText></InputGroupAddon>
+                                <Input type="text" name="urlSlug" value={this.state.formValues['urlSlug'] || ''} onChange={this.handleFormChange}></Input>
+                            </InputGroup>
+                            <InputGroup className={styles.formItem}>
                                 <InputGroupAddon addonType="prepend"><InputGroupText>State</InputGroupText></InputGroupAddon>
                                 <Input type="text" name="state" value={this.state.formValues['state'] || ''} onChange={this.handleFormChange}></Input>
                             </InputGroup>
@@ -139,7 +143,7 @@ class CandidateEditForm extends Component {
                         </div>
                     </form>
                     <Button disabled={this.props.createNew && this.state.hasSaved} color="primary" className={styles.formButton} onClick={this.submitForm} type="submit">{this.props.createNew && this.state.hasSaved ? 'Saved' : 'Save'}</Button>
-                    <Button className={styles.formButton} tag={Link} to={`/candidates/${this.state.formValues._id}`}>Close</Button>
+                    <Button className={styles.formButton} onClick={()=>this.props.history.goBack()}>Close</Button>
                     <Button disabled={this.props.createNew} color="danger" onClick={()=>this.handleDelete()}>Delete</Button>
 
                 </div>

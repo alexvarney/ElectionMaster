@@ -11,12 +11,12 @@ export const getCandidates = () => dispatch => {
         }))
 }
 
-export const setSelected = (id) => dispatch => {
+/* export const setSelected = (id) => dispatch => {
     dispatch({
         type: 'SET_SELECTED_CANDIDATE',
         payload: id,
     })
-}
+} */
 
 export const updateCandidate = (candidate) => dispatch => {
     const token = ls.get('em-token') || '';

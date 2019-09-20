@@ -135,7 +135,7 @@ export class IssueEditForm extends Component {
                         
                         <Button disabled={(this.state.selectedIssue._id) ? false: true} color="danger" onClick={()=>this.handleDelete()}>Delete</Button>           
                         <Button color="primary" onClick={this.saveIssue}>Save</Button>
-                        <Button tag={Link} to="/issues">Close</Button>
+                        <Button onClick={()=>this.props.history.goBack()}>Close</Button>
          
                     </div>
 

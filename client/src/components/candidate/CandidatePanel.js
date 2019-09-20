@@ -13,16 +13,18 @@ import {setSelectedContestId} from '../../actions/contestActions';
 
 const CandidatePanel = (props) => {
 
-    const candidate = props.candidates.candidates ? props.candidates.candidates.filter((item)=>item._id === props.candidates.selectedCandidateId)[0]:null;
+    const candidate = props.selectedCandidate;
 
-    let selectedContest = props.contests.contests ? props.contests.contests.filter(item => item._id === props.contests.selectedContestId)[0] : null;
+    let selectedContest = props.selectedContest || null;
 
     if(!candidate || !selectedContest) return (
         <div>
             <Button outline color="primary" block onClick={props.toggle}  className={styles.mobileSelect}>Select Candidate</Button>
         </div>
     );
-
+    
+    /*
+    Probably unncessary after contest routing changes
     if(!Array.from(selectedContest.candidates).includes(candidate._id)){
         
         const newContest = props.contests.contests.filter(item => Array.from(item.candidates).includes(candidate._id))[0]
@@ -33,6 +35,7 @@ const CandidatePanel = (props) => {
         props.setSelectedContestId(newContest._id);
 
     }
+    */
     
     //Get the rank of the candidate in the polls
     const pollingValues = selectedContest.candidates.map(candidateId => ({candidateId, value: getPolling(candidateId, selectedContest)})).sort((a,b)=>a.value < b.value ? 1 : -1);

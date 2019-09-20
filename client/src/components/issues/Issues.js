@@ -5,13 +5,19 @@ import {Button} from 'reactstrap';
 
 import {getIssues} from '../../actions/issueActions';
 import {getContests} from '../../actions/contestActions';
+import {ContestContext} from '../contest/ContestProvider';
 
 import IssueEditForm from './IssueEditForm';
 import IssuePanel from './IssuePanel';
+import IssueSidebar from './IssueSidebar';
 
 import styles from './css/Issues.module.css';
 
 const Issues = (props) => {
+
+    const {match} = props;
+
+    const [selectedIssue, setSelectedIssue] = useState(null);
 
     useEffect(()=>{
         if(!props.issues.issues){
@@ -22,39 +28,45 @@ const Issues = (props) => {
         }
     },[])
 
-    const [selectedIssue, setSelectedIssue] = useState(null);
-
-    //Get selected contest issues
-
-    const selectedContest = props.contests.contests.filter(contest=>contest._id === props.contests.selectedContestId)[0] || '';
-    
-    const sortedIssues = selectedContest ? props.issues.issues.filter(issue=> selectedContest.issues.includes(issue._id)).sort((a, b)=>(a.name > b.name ? 1 : -1)) : [];
+    useEffect(() => {
+        if(selectedIssue){
+            const updatedIssue = props.issues.issues.filter(item => item._id === selectedIssue._id)[0];
+            if(updatedIssue){
+                setSelectedIssue(updatedIssue);
+            }
+        }
+    }, [props.issues.issues])
 
     return (
+        <ContestContext.Consumer>
+        {selectedContest => (
+
         <div className={styles.container}>
 
-            <Route exact path={`${props.match.path}/edit`} 
+            <Route path={`${props.match.path}/edit`} 
                 render={(props) => <IssueEditForm {...props} selectedIssue={selectedIssue} />} />
 
             <div className={styles.sidebar}>
                 {props.user.token ? <>
                     <div className={styles.adminNav}>
-                        <Button size="sm" tag={Link} to="/issues/edit" outline>Issue Editor</Button>
+                        <Button size="sm" tag={Link} to={`${match.url}`+ `edit`} outline>Issue Editor</Button>
                     </div> 
                     <hr />
                 </>: null}
-                <ul className={styles.issueSelector}>
-                    {sortedIssues.map(issue => (
-                        <li onClick={()=>setSelectedIssue(issue)} key={issue._id}>{issue.name}</li>
-                    ))}
-                </ul>
-            </div>
 
-            <div className={styles.content}>
-                {selectedIssue ? <IssuePanel issue={selectedIssue} contest={selectedContest}/> : null}
-            </div>
+                <IssueSidebar issues={props.issues.issues} selectedContest={selectedContest} setSelectedIssue={setSelectedIssue} />      
+                    
+                </div>
+
+                <div className={styles.content}>
+                    {selectedIssue ? <IssuePanel issue={selectedIssue} contest={selectedContest}/> : null}
+                </div>
 
         </div>
+
+        )}
+        </ContestContext.Consumer>
+
     )
   }
 
