@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {Redirect, Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {withRouter} from 'react-router';
 import {ContestContext} from '../contest/ContestProvider';
 
@@ -10,11 +10,10 @@ import styles from './css/CandidateListCard.module.css'
 
 function CandidateSidebarCard(props) {
 
-    const {location, match, candidate} = props;
+    const {match, candidate} = props;
 
     const {image, name, polling, _id} = candidate;
 
-    const [redirect, setRedirect] = useState(null);
 
     const isLoggedIn = () => {
         return props.user.token && props.user.token !== "";

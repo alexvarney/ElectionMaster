@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useDebugValue} from 'react'
 import {connect} from 'react-redux';
-import {Dropdown, DropdownMenu, DropdownToggle, DropdownItem, InputGroup, InputGroupText, InputGroupAddon, Input, Form, FormGroup, Label, Button, Col, Table} from 'reactstrap';
+import {InputGroup, InputGroupText, InputGroupAddon, Input, Form, FormGroup, Label, Button, Col, Table} from 'reactstrap';
 import {getContests, updateContest, addContest, deleteContest} from '../../actions/contestActions';
 import {getCandidates} from '../../actions/candidateActions';
 import {getIssues} from '../../actions/issueActions';

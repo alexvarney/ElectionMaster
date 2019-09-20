@@ -113,7 +113,7 @@ class PositionEditForm extends Component {
                     
                     const position = getPosition(item);
                     return (position && position._id) ? position : {};
-                });
+                }).filter(item => (item && item._id));
             }
     
             return [];

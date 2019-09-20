@@ -1,12 +1,9 @@
-import React, {useState, useDebugValue} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
-import {Redirect} from 'react-router-dom';
 import styles from './css/IssuePanel.module.css';
 import ReactMarkdown from 'react-markdown';
-import {Container, Row, Col} from 'reactstrap';
 import CandidatePositionButton from './CandidatePositionButton';
 import PieChart from 'react-minimal-pie-chart';
-import {getSubtleColor} from '../_helpers';
 
 const IssuePanel = (props) => {
 
@@ -16,12 +13,12 @@ const IssuePanel = (props) => {
     .filter(candidate => contest.candidates.includes(candidate._id))
     .map(candidate=>{
       const position = candidate.positions.filter(positions => positions.issue === issue._id)[0];
-      if(position){
-        return {
-          candidate: candidate,
-          position: position,
-        }
-      }
+      return (position) 
+        ? {
+          candidate,
+          position
+        } 
+        : null;
     })
     .filter(item => item)
     .reduce( (accumulator, currentValue) => {
@@ -82,17 +79,17 @@ const IssuePanel = (props) => {
         
         <div>
           <h4><i className="far fa-check-circle"></i> Supports - ({supports ? supports.length : 0})</h4>
-          {supports ? supports.map(item =><CandidatePositionButton candidate={item.candidate}/>) : null}
+          {supports ? supports.map(item =><CandidatePositionButton key={item.candidate._id} candidate={item.candidate}/>) : null}
         </div>
         
         <div>
           <h4><i className="fas fa-adjust"></i> Mixed - ({mixed ? mixed.length : 0})</h4>
-          {mixed ? mixed.map(item =><CandidatePositionButton candidate={item.candidate}/>) : null}
+          {mixed ? mixed.map(item =><CandidatePositionButton key={item.candidate._id} candidate={item.candidate}/>) : null}
         </div>
         
         <div>
           <h4><i className="far fa-times-circle"></i> Opposed - ({opposed ? opposed.length : 0})</h4>
-          {opposed ? opposed.map(item =><CandidatePositionButton candidate={item.candidate}/>) : null}
+          {opposed ? opposed.map(item =><CandidatePositionButton key={item.candidate._id} candidate={item.candidate}/>) : null}
         </div>
 
       </div>

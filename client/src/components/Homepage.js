@@ -18,7 +18,7 @@ const Homepage = (props) => {
 
             <ul>
                 {props.contests.contests.map(contest => (
-                    <li><Link to={`/${contest.country}/${contest.url}`}>{contest.name}</Link></li>
+                    <li key={contest._id}><Link to={`/${contest.country}/${contest.url}`}>{contest.name}</Link></li>
                 ))}
             </ul>
         </div>

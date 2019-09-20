@@ -1,10 +1,9 @@
-import React, {Component, Fragment, useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Link, withRouter} from "react-router-dom";
 import Login from './Login';
 import styles from './css/Navbar.module.css';
 import { connect } from 'react-redux';
-import {Dropdown, DropdownMenu, DropdownToggle, DropdownItem, Button, Alert, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavLink, NavItem, UncontrolledDropdown} from 
-'reactstrap';
+import {DropdownMenu, DropdownToggle, DropdownItem, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavLink, NavItem, UncontrolledDropdown} from 'reactstrap';
 
 import {getCandidates} from '../actions/candidateActions';
 import {getIssues} from '../actions/issueActions';
@@ -57,7 +56,7 @@ const AppNavbar = (props) => {
 
           {props.user.token !== "" ?
           <NavItem>
-            <NavLink disabled={!selectedContest} tag={Link} to={selectedContest?`/${selectedContest.country}/${selectedContest.url}/edit`:null}>Edit</NavLink>
+            <NavLink disabled={!selectedContest} tag={Link} to={selectedContest?`/${selectedContest.country}/${selectedContest.url}/edit`:'#'}>Edit</NavLink>
           </NavItem> : null}
           
           <NavItem>
@@ -65,11 +64,11 @@ const AppNavbar = (props) => {
           </NavItem>
           
           <NavItem >
-            <NavLink disabled={!selectedContest} tag={Link} to={selectedContest?`/${selectedContest.country}/${selectedContest.url}/candidates`:null}>Candidates</NavLink>
+            <NavLink disabled={!selectedContest} tag={Link} to={selectedContest?`/${selectedContest.country}/${selectedContest.url}/candidates`:"#"}>Candidates</NavLink>
           </NavItem>
           
           <NavItem>
-            <NavLink disabled={!selectedContest} tag={Link} to={selectedContest?`/${selectedContest.country}/${selectedContest.url}/issues`:null}>Issues</NavLink>
+            <NavLink disabled={!selectedContest} tag={Link} to={selectedContest?`/${selectedContest.country}/${selectedContest.url}/issues`:'#'}>Issues</NavLink>
           </NavItem>
 
 

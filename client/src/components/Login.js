@@ -6,7 +6,7 @@ import {login, logout, auth} from '../actions/userActions';
 
 import styles from './css/Login.module.css';
 
-import {Button, InputGroup, InputGroupAddon, InputGroupText, Input, UncontrolledDropdown, DropdownMenu, DropdownToggle} from 'reactstrap';
+import {Button, InputGroup, UncontrolledDropdown, DropdownMenu, DropdownToggle} from 'reactstrap';
 
 class Login extends Component {
 

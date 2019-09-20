@@ -42,9 +42,13 @@ export default function CandidatePositionButton(props) {
             : null}
 
             <span>{initials}</span>
-            <Tooltip placement="auto" isOpen={hoverStatus} target={parentRef.current}>
-                {name}
-            </Tooltip>
+            
+            {parentRef.current ? 
+                <Tooltip placement="auto" isOpen={hoverStatus} target={parentRef.current}>
+                    {name}
+                </Tooltip>
+            : null}
+
         </div>
     )
 }

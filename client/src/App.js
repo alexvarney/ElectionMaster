@@ -1,4 +1,4 @@
-import React, {Component, useEffect} from 'react';
+import React, {useEffect} from 'react';
 
 import {Provider} from 'react-redux';
 import store from './store';
@@ -8,7 +8,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
-import AppNavbar from './components/Navbar';
 import ContestProvider from './components/contest/ContestProvider';
 import Homepage from './components/Homepage';
 
