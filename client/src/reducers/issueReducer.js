@@ -11,8 +11,8 @@ export default function(state = initialState, action){
             return {
                 ...state,
                 issues: [
+                    ...state.issues.filter(item=>item._id !== action.payload._id),
                     action.payload,
-                    ...state.issues.filter(item=>item._id !== action.payload._id)
                 ]
             }
         case 'DELETE_ISSUE':

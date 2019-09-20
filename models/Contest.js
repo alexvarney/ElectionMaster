@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const ContestSchema = new mongoose.Schema({
     name: String,
     description: String,
+    url: String,
     country: String,
     candidates: [mongoose.Schema.Types.ObjectId],
     issues: [mongoose.Schema.Types.ObjectId],

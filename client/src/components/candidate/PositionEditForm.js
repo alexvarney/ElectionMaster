@@ -23,9 +23,15 @@ class PositionEditForm extends Component {
         }
     }
 
+    componentDidUpdate(prevProps){
+        if(prevProps.selectedCandidate !== this.props.selectedCandidate){
+            this.setState({candidate: this.props.selectedCandidate})
+        }   
+    }
+
     componentDidMount = () => {
 
-        const candidate = this.props.candidates.candidates ?this.props.candidates.candidates.filter((item)=>item._id === this.props.candidates.selectedCandidateId)[0]:null;
+        const candidate = this.props.selectedCandidate;
 
         if(!candidate) return null;
 
@@ -34,6 +40,8 @@ class PositionEditForm extends Component {
         });
 
     }
+
+
 
     handleFormChange = (event) => {
         event.persist();
@@ -88,7 +96,7 @@ class PositionEditForm extends Component {
 
     getIssues = () => {
 
-        const selectedContest = this.props.contests.contests.filter(contest=>contest._id === this.props.contests.selectedContestId)[0];
+        const selectedContest = this.props.selectedContest;
 
         const filteredIssues = selectedContest ? this.props.issues.issues.filter(issue=> selectedContest.issues.includes(issue._id)) : [];
         
@@ -266,7 +274,7 @@ class PositionEditForm extends Component {
 
                     <div className={styles.controlButtons}>
                         <Button color="info" className={styles.formButton} onClick={this.submitForm} type="submit">Submit</Button>
-                        <Button color="danger" className={styles.formButton} tag={Link} to={`/candidates/${this.state.candidate._id}`}>Close</Button>
+                        <Button color="danger" className={styles.formButton} onClick={()=>this.props.history.goBack()}>Close</Button>
                     </div>
 
                 </div>

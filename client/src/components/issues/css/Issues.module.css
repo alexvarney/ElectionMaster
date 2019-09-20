@@ -14,27 +14,6 @@
     padding: 2rem;
 }
 
-@media only screen and (min-width: 800px){
-    .container{
-        flex-direction: row;
-    }
-
-    .sidebar, .content {
-        max-height: calc((var(--vh, 1vh) * 100) - var(--nav, 60px));
-    }
-
-    .sidebar {
-        position: -webkit-sticky;
-        position: sticky;
-        top: 0;
-        overflow-y: auto;  
-    }
-}
-
-.description{
-    font-family: 'Open Sans', sans-serif;
-}
-
 .adminNav {
     display: flex;
     height: 2.7rem;
@@ -56,26 +35,25 @@
     font-weight: 500;    
 }
 
-.issueSelector {
-    padding: 0rem 0 0 0;
-    border-radius: 10px;
+@media only screen and (min-width: 800px){
+    .container{
+        flex-direction: row;
+    }
+
+    .sidebar, .content {
+        max-height: calc((var(--vh, 1vh) * 100) - var(--nav, 60px));
+    }
+
+    .sidebar {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        overflow-y: auto;  
+    }
 }
 
-.issueSelector > li {
-    border: 1px solid rgba(0,0,0,0);
-    list-style-type: none;
-    padding: 0.5rem;
-    margin: 0.25rem;
-    border-radius: 0.5rem;
-    cursor: pointer;
-}
-
-.issueSelector > li:hover {
-    border: 1px solid #9dcde0;
-}
-
-.issueSelector > li:nth-child(odd){
-    background-color: #f0f0f0;
+.description{
+    font-family: 'Open Sans', sans-serif;
 }
 
 @media only screen and (max-width: 768px) {

@@ -1,9 +1,9 @@
 import React, {useState, useEffect, useDebugValue} from 'react'
 import {connect} from 'react-redux';
 import {Dropdown, DropdownMenu, DropdownToggle, DropdownItem, InputGroup, InputGroupText, InputGroupAddon, Input, Form, FormGroup, Label, Button, Col, Table} from 'reactstrap';
-import {getContests, updateContest, addContest, deleteContest} from '../actions/contestActions';
-import {getCandidates} from '../actions/candidateActions';
-import {getIssues} from '../actions/issueActions';
+import {getContests, updateContest, addContest, deleteContest} from '../../actions/contestActions';
+import {getCandidates} from '../../actions/candidateActions';
+import {getIssues} from '../../actions/issueActions';
 import styles from './css/ContestEditor.module.css';
 import moment from 'moment';
 import countries from 'iso-3166-country-list';
@@ -21,6 +21,7 @@ const ContestEditor = (props) => {
         name: '',
         description: '',
         country: '',
+        url: '',
         candidates: [],
         issues: [],
         polling: [],
@@ -28,8 +29,15 @@ const ContestEditor = (props) => {
 
     const [isDropdownOpen, toggleDropdown] = useState(false);
 
-    const [selectedContest, setSelectedContest] = useState(null);
-    const [persistantName, setPersistantName] = useState('');
+    const [selectedContest, setSelectedContest] = useState(props.contest);
+    const [persistantName, setPersistantName] = useState(props.contest ? props.contest.name : null);
+
+    useEffect(() => {
+        if(props.contest){
+            setSelectedContest(props.contest)
+            setPersistantName(props.contest.name)
+        }
+    }, [props.contest])
 
     const onNameChange = (event) => {
         event.persist();
@@ -52,6 +60,14 @@ const ContestEditor = (props) => {
         setSelectedContest({
             ...selectedContest,
             country: event.target.value,
+        })
+    }
+
+    const onUrlChange = (event) => {
+        event.persist();
+        setSelectedContest({
+            ...selectedContest,
+            url: event.target.value,
         })
     }
 
@@ -271,21 +287,6 @@ const ContestEditor = (props) => {
             <h1>Contest Editor</h1>
             <h3 className={styles.selectedContestTitle}>{persistantName ? persistantName: 'No Contest Selected'}</h3>
 
-            {/* Contest Selector */}
-            <Dropdown color="primary" className={styles.contestSelector} isOpen={isDropdownOpen} toggle={()=>toggleDropdown(!isDropdownOpen)}>
-                <DropdownToggle outline color="primary" caret>Select a contest</DropdownToggle>
-                <DropdownMenu>
-                    {props.contests.contests.map(item => 
-                        <DropdownItem key={item._id} onClick={()=>changeContest(item)}>
-                            {item.name}
-                        </DropdownItem>)}
-                    <DropdownItem divider/>
-                    <DropdownItem onClick={createNewContest}>
-                        Create New...
-                    </DropdownItem>
-                </DropdownMenu>
-            </Dropdown>
-
             {/* Contest Detail Editor*/}
             <InputGroup>
                 <InputGroupAddon addonType="prepend">
@@ -300,6 +301,14 @@ const ContestEditor = (props) => {
                     <InputGroupText>Description</InputGroupText>
                 </InputGroupAddon>
                 <Input value={selectedContest ? selectedContest.description : ''} onChange={onDescriptionChange} disabled={!selectedContest}/>
+            </InputGroup>
+            <br />
+            
+            <InputGroup>
+                <InputGroupAddon addonType="prepend">
+                    <InputGroupText>URL</InputGroupText>
+                </InputGroupAddon>
+                <Input value={selectedContest ? selectedContest.url : ''} onChange={onUrlChange} disabled={!selectedContest}/>
             </InputGroup>
             
             <br />

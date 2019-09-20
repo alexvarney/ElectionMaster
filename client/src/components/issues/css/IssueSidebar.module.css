@@ -1,0 +1,23 @@
+
+
+.issueSelector {
+    padding: 0rem 0 0 0;
+    border-radius: 10px;
+}
+
+.issueSelector > li {
+    border: 1px solid rgba(0,0,0,0);
+    list-style-type: none;
+    padding: 0.5rem;
+    margin: 0.25rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.issueSelector > li:hover {
+    border: 1px solid #9dcde0;
+}
+
+.issueSelector > li:nth-child(odd){
+    background-color: #f0f0f0;
+}

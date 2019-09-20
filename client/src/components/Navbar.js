@@ -6,9 +6,9 @@ import { connect } from 'react-redux';
 import {Dropdown, DropdownMenu, DropdownToggle, DropdownItem, Button, Alert, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavLink, NavItem, UncontrolledDropdown} from 
 'reactstrap';
 
-import {getCandidates, setSelected} from '../actions/candidateActions';
+import {getCandidates} from '../actions/candidateActions';
 import {getIssues} from '../actions/issueActions';
-import {getContests, setSelectedContestId} from '../actions/contestActions'; 
+import {getContests} from '../actions/contestActions'; 
 
 const AppNavbar = (props) => {
 
@@ -16,7 +16,6 @@ const AppNavbar = (props) => {
     props.getCandidates();
     props.getIssues();
     props.getContests();
-    showAlertMessage('Refreshed...', 2700);
   }
 
   useEffect(() => {
@@ -25,50 +24,12 @@ const AppNavbar = (props) => {
     props.getContests();
   }, [])
 
-  useEffect(()=>{
-
-    if(!props.contests.selectedContestId){
-
-      //search for default contest
-      const defaultContest = props.contests.contests.filter(item => item.default === true)[0];
-
-      if (defaultContest) props.setSelectedContestId(defaultContest._id);
-
-    }
-
-  },[props.contests.contests])
-
   //menu expansion for mobile layouts
   const [isMobileExpanded, setMobileExpanded] = useState(false);
   const toggleMobileExpand = () => setMobileExpanded(!isMobileExpanded);
   const closeMobileExpand = () => setMobileExpanded(false);
 
-  //Election Switcher
-  const [isContestDropdownOpen, setContestDropdownState] = useState(false);
-  const setSelectedContest = (id) => {
-    props.setSelectedContestId(id);
-    props.setSelected('');
-    
-    if(props.location.pathname.includes('/candidates/')){
-      props.history.push('/candidates');
-    }
-  }
-
-  //Alert Message
-  const [isAlertOpen, setAlertOpen] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
-
-  const showAlertMessage = (message, duration) => {
-    setAlertMessage(message);
-    setAlertOpen(true);
-
-    setTimeout(()=>{
-      setAlertOpen(false);
-    }, duration);
-
-  }
-
-  const selectedContest = props.contests.contests.filter(item => item._id === props.contests.selectedContestId)[0]
+  const {match, selectedContest} = props;
 
   return (
     <div className={styles.navbar}>
@@ -83,33 +44,35 @@ const AppNavbar = (props) => {
           
           <UncontrolledDropdown nav inNavbar>
             <DropdownToggle nav caret outline="true">
-              {selectedContest ? selectedContest.name : 'No Election Selected'}
+              {selectedContest ? selectedContest.name : 'Select a contest...'}
             </DropdownToggle>
             <DropdownMenu right>
             {props.contests.contests.map(contest => (
-              <DropdownItem key={contest._id} onClick={()=>setSelectedContest(contest._id)}>
+              <DropdownItem tag={Link} key={contest._id} to={`/${contest.country}/${contest.url}`}>
                 {contest.name}
               </DropdownItem>
             ))}
             </DropdownMenu>
           </UncontrolledDropdown>
+
+          {props.user.token !== "" ?
+          <NavItem>
+            <NavLink disabled={!selectedContest} tag={Link} to={selectedContest?`/${selectedContest.country}/${selectedContest.url}/edit`:null}>Edit</NavLink>
+          </NavItem> : null}
           
           <NavItem>
             <NavLink href="#" onClick={refreshData} outline="true"><i className="fas fa-sync-alt"></i></NavLink>
           </NavItem>
           
-          <NavItem>
-            <NavLink tag={Link} to="/candidates/">Candidates</NavLink>
+          <NavItem >
+            <NavLink disabled={!selectedContest} tag={Link} to={selectedContest?`/${selectedContest.country}/${selectedContest.url}/candidates`:null}>Candidates</NavLink>
           </NavItem>
           
           <NavItem>
-            <NavLink tag={Link} to="/issues/">Issues</NavLink>
+            <NavLink disabled={!selectedContest} tag={Link} to={selectedContest?`/${selectedContest.country}/${selectedContest.url}/issues`:null}>Issues</NavLink>
           </NavItem>
 
-          {props.user.token !== "" ?
-          <NavItem>
-            <NavLink tag={Link} to="/editcontests">Contest Editor</NavLink>
-          </NavItem> : null}
+
           
           <Login />
 
@@ -129,8 +92,6 @@ export default withRouter(connect(mapStateToProps,
   {
     getCandidates, 
     getIssues, 
-    getContests, 
-    setSelectedContestId, 
-    setSelected
+    getContests,
   })(AppNavbar));
 

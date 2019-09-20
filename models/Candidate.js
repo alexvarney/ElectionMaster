@@ -5,7 +5,11 @@ const CandidateSchema = new mongoose.Schema({
     state: String,
     dob: Date,
     slogan: String,
-    status: String,
+    status: {
+        type: String,
+        default: 'undeclared',
+    },
+    urlSlug: String,
     country: String,
     image: String,
     description: String,
