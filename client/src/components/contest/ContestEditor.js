@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux';
-import {Button} from 'reactstrap';
+import {Button, Nav, NavItem, NavLink, TabContent, TabPane} from 'reactstrap';
+import classnames from 'classnames';
 
 import {getContests, updateContest, addContest, deleteContest} from '../../actions/contestActions';
 import {getCandidates} from '../../actions/candidateActions';
@@ -21,7 +22,7 @@ const ContestEditor = (props) => {
         props.getIssues();
     },[])
 
-    const [isDropdownOpen, toggleDropdown] = useState(false);
+    const [activeTab, setActiveTab] = useState('details');
 
     const [selectedContest, setSelectedContest] = useState(props.contest);
     const [persistantName, setPersistantName] = useState(props.contest ? props.contest.name : null);
@@ -111,39 +112,70 @@ const ContestEditor = (props) => {
                 {persistantName ? persistantName: 'No Contest Selected'}
             </h3>
 
-            <ContestDetailEditor 
-                selectedContest={selectedContest} 
-                eventHandlers={detailEventHandlers} />
+            <Nav className={styles.navContainer} tabs>
+                <NavItem>
+                    <NavLink
+                        className={classnames({ active: activeTab === 'details' })}
+                        onClick={() => { setActiveTab('details'); }} >
+                        Details
+                    </NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink
+                        className={classnames({ active: activeTab === 'candidates' })}
+                        onClick={() => { setActiveTab('candidates'); }} >
+                        Candidates
+                    </NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink
+                        className={classnames({ active: activeTab === 'issues' })}
+                        onClick={() => { setActiveTab('issues'); }} >
+                        Issues
+                    </NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink
+                        className={classnames({ active: activeTab === 'polling' })}
+                        onClick={() => { setActiveTab('polling'); }} >
+                        Polling
+                    </NavLink>
+                </NavItem>
 
-            <br />
+                <TabContent activeTab={activeTab}>
+                    <TabPane tabId="details">
+                        <ContestDetailEditor 
+                            selectedContest={selectedContest} 
+                            eventHandlers={detailEventHandlers} />
+                    </TabPane>
+                    <TabPane tabId="candidates">
+                        <ContestCandidateEditor 
+                            styles={styles} 
+                            candidates={props.candidates}
+                            selectedContest={selectedContest}
+                            setSelectedContest={setSelectedContest} />
+                    </TabPane>
+                    <TabPane tabId="issues">
+                        <ContestIssueEditor
+                            styles={styles}
+                            issues={props.issues}
+                            selectedContest={selectedContest}
+                            setSelectedContest={setSelectedContest} />
+                    </TabPane>
+                    <TabPane tabId="polling">
+                        <ContestPollingEditor
+                            styles={styles}
+                            selectedContest={selectedContest}
+                            setSelectedContest={setSelectedContest}
+                            getCandidateById={getCandidateById} />
+                    </TabPane>
 
-            <h4>Candidates</h4>
-            <ContestCandidateEditor 
-                styles={styles} 
-                candidates={props.candidates}
-                selectedContest={selectedContest}
-                setSelectedContest={setSelectedContest} />
-            <hr />
-
-            <h4>Issues</h4>
-            <ContestIssueEditor
-                styles={styles}
-                issues={props.issues}
-                selectedContest={selectedContest}
-                setSelectedContest={setSelectedContest} />
-            <hr />
-
-            <h4>Polling</h4>
-            <ContestPollingEditor
-                styles={styles}
-                selectedContest={selectedContest}
-                setSelectedContest={setSelectedContest}
-                getCandidateById={getCandidateById} />
-            <hr/>
+                </TabContent>
+            </Nav>
             
             <div className={styles.buttonRow}>
-                <Button color="danger" onClick={deleteContest} disabled={!selectedContest}>Delete</Button>                    
                 <Button color="primary" onClick={saveContest} disabled={!selectedContest}>Save</Button>
+                <Button color="danger" onClick={deleteContest} disabled={!selectedContest}>Delete</Button>
             </div> 
         </div>
     )

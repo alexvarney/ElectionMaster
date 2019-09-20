@@ -1,16 +1,24 @@
 .container {
     padding: 2rem;
     max-height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
     overflow-y: scroll;
 }
-
-.selectedContestTitle {
-    float: left;
-    margin: 1rem 1rem 2rem 0rem;
+.navContainer{
+    display: flex;
+    flex-wrap: wrap;
 }
 
-.contestSelector {
-    margin: 1.4rem 0 0 0;
+.navContainer > div {
+    flex-basis: 100%;
+    padding-top: 1rem;
+    margin-bottom: 1rem;
+    border-top: 1px solid #d6d6d6;
+}
+
+.navContainer > li {
+    cursor: pointer;
 }
 
 .linkedCandidateList{
@@ -47,6 +55,13 @@
 .multiSelect {
     min-height: 600px;
     margin-bottom: 1.0rem;
+}
+
+.buttonRow {
+    margin-top: 1rem;
+    display: flex;
+    width: 100%;
+    flex-direction: row-reverse;
 }
 
 .buttonRow > * {
