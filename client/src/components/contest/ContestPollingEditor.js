@@ -121,8 +121,9 @@ export default function ContestPollingEditor(props) {
                     </Col>
                 </FormGroup>
                 <FormGroup className={styles.buttonRow} row>
+                    <Button color="primary" disabled={!selectedContest} onClick={updatePoll}>Update Poll</Button>
                     <Button color="danger" onClick={deletePoll} disabled={!selectedContest}>Delete Poll</Button>
-                    <Button disabled={!selectedContest} onClick={updatePoll}>Update Poll</Button>
+                    <Button disabled={!selectedContest} onClick={()=>setSelectedPoll(newPoll)}>New Poll</Button>
                 </FormGroup>
             </Form>
     )
