@@ -108,7 +108,7 @@ const ContestEditor = (props) => {
             
             <h1>Contest Editor</h1>
             
-            <h3 className={styles.selectedContestTitle}>
+            <h3>
                 {persistantName ? persistantName: 'No Contest Selected'}
             </h3>
 
