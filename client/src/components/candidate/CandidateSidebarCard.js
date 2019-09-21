@@ -34,7 +34,7 @@ function CandidateSidebarCard(props) {
         <ContestContext.Consumer>
         {(selectedContest) => (
             <div 
-            className={props.selected === props.candidate._id ? styles.active : styles.container} 
+            className={props.selected ? styles.active : styles.container} 
             onClick={()=>props.onSelect(_id)}
             onMouseEnter={()=>setMouseState(true)}
             onMouseLeave={mouseLeave}

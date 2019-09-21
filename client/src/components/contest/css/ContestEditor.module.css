@@ -5,6 +5,16 @@
     flex-direction: column;
     overflow-y: scroll;
 }
+
+.container > h1 {
+    margin: 0 0 1.5rem 0;
+}
+
+.container > h3 {
+    margin: 0 0 2.0rem 0;
+    color: rgb(73, 73, 73);
+}
+
 .navContainer{
     display: flex;
     flex-wrap: wrap;

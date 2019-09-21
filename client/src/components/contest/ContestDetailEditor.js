@@ -1,6 +1,7 @@
 import React from 'react'
-import {InputGroup, InputGroupText, InputGroupAddon, Input, Form, FormGroup, Label, Button, Col, Table} from 'reactstrap';
+import {InputGroup, InputGroupText, InputGroupAddon, Input, FormText, FormGroup, Label, Button, Col, Table} from 'reactstrap';
 import countries from 'iso-3166-country-list';
+import styles from './css/ContestDetailEditor.module.css';
 
 export default function ContestDetailEditor(props) {
 
@@ -18,7 +19,8 @@ export default function ContestDetailEditor(props) {
     } = eventHandlers;
 
     return (
-        <div>
+        <div className={styles.container}>
+
             <InputGroup>
                 <InputGroupAddon addonType="prepend">
                     <InputGroupText>Name</InputGroupText>
@@ -30,7 +32,7 @@ export default function ContestDetailEditor(props) {
                 <InputGroupAddon addonType="prepend">
                     <InputGroupText>Description</InputGroupText>
                 </InputGroupAddon>
-                <Input value={selectedContest ? selectedContest.description : ''} onChange={onDescriptionChange} disabled={!selectedContest}/>
+                <Input type="textarea" value={selectedContest ? selectedContest.description : ''} onChange={onDescriptionChange} disabled={!selectedContest}/>
             </InputGroup>
             
             <InputGroup>

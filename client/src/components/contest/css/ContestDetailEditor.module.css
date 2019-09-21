@@ -1,0 +1,15 @@
+.container {
+    margin: 0rem 1rem 0rem 1rem;
+    border: 1px solid lightgrey;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 3px 3px 10px rgba(124, 124, 124, 0.185);
+}
+
+.container textarea {
+    height: 16rem;
+}
+
+.container > * {
+    margin: 0 0 1rem 0;
+}

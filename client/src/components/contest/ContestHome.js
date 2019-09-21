@@ -1,4 +1,8 @@
-import React from 'react'
+import React from 'react';
+import Sidebar from '../candidate/Sidebar';
+import styles from './css/ContestHome.module.css';
+import ReactMarkdown from 'react-markdown';
+
 
 export default function ContestHome(props) {
 
@@ -11,9 +15,12 @@ export default function ContestHome(props) {
     )
 
     return (
-        <div>
-            <h1>{contest.name}</h1>
-            <p>{contest.description}</p>
+        <div className={styles.container}>
+            <Sidebar className={styles.sidebar} selectedContest={contest} />
+            <div className={styles.panel}>
+                <h1>{contest.name}</h1>
+                <ReactMarkdown source={contest.description} />
+            </div>
         </div>
     )
 }

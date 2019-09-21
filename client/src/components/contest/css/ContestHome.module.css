@@ -1,0 +1,18 @@
+.container{
+    display: flex;
+}
+
+.sidebar{    
+    position: -webkit-sticky;
+    position: sticky;
+    top: var(--nav, 60px);
+    flex: 1 1 21rem;
+    height: calc((var(--vh, 1vh) * 100) - var(--nav, 60px));
+    max-height: calc((var(--vh, 1vh) * 100) - var(--nav, 60px));
+    border-right: 1px solid #d6d6d6;
+}
+
+.panel{
+    margin: 2rem;
+    flex: 2 1 80%;
+}

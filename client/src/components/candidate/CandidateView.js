@@ -63,6 +63,7 @@ const CandidateView = (props) => {
             }
         }
     }, [match.params.id, candidates.candidates, props.contests.contests])
+    
 
     return (
         <ContestContext.Consumer> 
@@ -82,7 +83,8 @@ const CandidateView = (props) => {
                     (props) => <PositionEditForm {...props} selectedContest={selectedContest} selectedCandidate={selectedCandidate} />
                 } />
 
-                <Sidebar onSelect={setSelectedCandidateID} selectedContest={selectedContest} className={getSidebarStyle()}/>
+                <Sidebar onSelect={setSelectedCandidateID} selectedCandidate={selectedCandidate} selectedContest={selectedContest} className={getSidebarStyle()}/>
+
                 {!isSelectExpanded ? 
                     <CandidatePanel toggle={toggle} match={match} selectedContest={selectedContest} selectedCandidate={selectedCandidate}/> 
                     : null}
