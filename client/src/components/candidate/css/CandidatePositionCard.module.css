@@ -6,7 +6,13 @@
 }
 
 .container{
-    margin-bottom: 0.5rem;
+    transition: all 0.15s ease;
+    box-sizing: border-box;
+    box-shadow: 2px 2px 4px rgba(211, 211, 211, 0.5);
+}
+
+.container:hover{
+    box-shadow: 2px 2px 4px rgba(175, 175, 175, 0.5);
 }
 
 .title{

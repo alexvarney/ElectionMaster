@@ -67,7 +67,11 @@ export default class CandidatePositionCard extends Component {
 
         const getContainerStyle = () => {
 
-            const cursor = {cursor: this.state.isExpanded ? 'default' : 'pointer',}
+            const cursor = {
+                cursor: this.state.isExpanded ? 'default' : 'pointer',
+                marginBottom: '0.5rem',
+                borderRadius: '0.5rem',
+            }
             return {...cursor, ...getContainerColors(this.props.position.status)}
 
         }
