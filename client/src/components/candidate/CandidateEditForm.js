@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {updateCandidate, createCandidate, deleteCandidate} from '../../actions/candidateActions';
+import {updateCandidate, createCandidate, deleteCandidate, createCandidateAndAssign} from '../../actions/candidateActions';
 import {connect} from 'react-redux';
 import {Link, withRouter} from 'react-router-dom';
 import styles from './css/CandidateEditForm.module.css';
@@ -8,28 +8,48 @@ import countries from 'iso-3166-country-list';
 import moment from 'moment';
 
 class CandidateEditForm extends Component {
-    
+
     constructor(props){
         super(props);
 
         this.state = {
             formValues: {},
+            createNew: false,
             hasSaved: false,
         }
     }
 
-    componentDidMount = () => {
+    componentDidMount(){
 
-        if(!this.props.createNew){
-            const candidate = this.props.selectedCandidate;
+        if(this.props.selectedCandidate){
 
-            if(candidate){
-                this.setState({
-                    formValues: {...candidate}
-                });
-            }
+            this.setState({
+                formValues: {...this.props.selectedCandidate}
+            });
+        } else {
+            this.setState({
+                createNew: true,
+            })
         }
+    }
 
+    componentDidUpdate(prevProps){
+
+        if(!prevProps.selectedCandidate && this.props.selectedCandidate){
+            this.setState({
+                formValues: {...this.props.selectedCandidate}
+            })
+            this.setState({createNew: false})
+        } else if (this.props.selectedCandidate && this.props.selectedCandidate !== prevProps.selectedCandidate){
+            this.setState({
+                formValues: {...this.props.selectedCandidate}
+            })
+            this.setState({createNew: false})
+        }
+    }
+
+    createNew = () => {
+        this.setState({createNew: true, formValues: {}, hasSaved: false})
     }
 
     handleFormChange = (event) => {
@@ -46,12 +66,16 @@ class CandidateEditForm extends Component {
     submitForm = (event) => {
         event.preventDefault();
 
-        this.setState({hasSaved: true,});
+        this.setState({hasSaved: true,})
 
-        if(!this.props.createNew){
-            this.props.updateCandidate(this.state.formValues);
+        if(this.state.createNew){
+            if(this.props.contest) {
+                this.props.createCandidateAndAssign(this.state.formValues, this.props.contest)
+            } else {
+                this.props.createCandidate(this.state.formValues);
+            }
         } else {
-            this.props.createCandidate(this.state.formValues);
+            this.props.updateCandidate(this.state.formValues);
         }
     }
 
@@ -64,20 +88,14 @@ class CandidateEditForm extends Component {
     render() {
         if(!this.props.user.token) {
             return(
-                <div className={styles.overlay}>
-                    <div className={styles.container}>
-                        <h2 className={styles.subheading}>You must be logged in to view this page.</h2>
-                        <Button tag={Link} to="/candidates">Close</Button>
-                    </div>
+                <div className={styles.container}>
+                    <h2 className={styles.subheading}>You must be logged in to view this page.</h2>
+                    <Button tag={Link} to="/candidates">Close</Button>
                 </div>
         )}
 
         return (
-            <div className={styles.overlay}>
                 <div className={styles.container}>
-
-                    <h1>{this.props.createNew ? 'Add' : 'Edit'} Candidate</h1>
-                    
                     <form className={styles.formRow}>
                         <div className={styles.formCol}>
                             <InputGroup className={styles.formItem}>
@@ -136,18 +154,14 @@ class CandidateEditForm extends Component {
                                 <InputGroupAddon addonType="prepend"><InputGroupText>Net Worth</InputGroupText></InputGroupAddon>
                                 <Input type="text" name="netWorth" value={this.state.formValues['netWorth'] || ''} onChange={this.handleFormChange}></Input>
                             </InputGroup>
-                        </div>
-                        <div className={styles.formAbout}>
-                            <label>About Candidate</label>
-                            <textarea type="text" name="description" value={this.state.formValues['description'] || ''} onChange={this.handleFormChange}></textarea>
+                            <div>
+                            <h5>About Candidate</h5>
+                            <textarea className={styles.aboutInput} type="text" name="description" value={this.state.formValues['description'] || ''} onChange={this.handleFormChange}></textarea></div>
                         </div>
                     </form>
-                    <Button disabled={this.props.createNew && this.state.hasSaved} color="primary" className={styles.formButton} onClick={this.submitForm} type="submit">{this.props.createNew && this.state.hasSaved ? 'Saved' : 'Save'}</Button>
-                    <Button className={styles.formButton} onClick={()=>this.props.history.goBack()}>Close</Button>
-                    <Button disabled={this.props.createNew} color="danger" onClick={()=>this.handleDelete()}>Delete</Button>
-
+                    <Button disabled={this.state.createNew} color="secondary" className={styles.formButton} onClick={this.createNew}>New Candidate</Button>
+                    <Button disabled={this.state.createNew && this.state.hasSaved} color="primary" className={styles.formButton} onClick={this.submitForm} type="submit">{this.props.createNew && this.state.hasSaved ? 'Saved' : 'Save Candidate'}</Button>
                 </div>
-            </div>
         )
     }
 }
@@ -157,4 +171,4 @@ const mapStateToProps = (state) => ({
     user: state.user,
 })
 
-export default withRouter(connect(mapStateToProps, {updateCandidate, createCandidate, deleteCandidate})(CandidateEditForm));
+export default withRouter(connect(mapStateToProps, {updateCandidate, createCandidate, deleteCandidate, createCandidateAndAssign})(CandidateEditForm));
