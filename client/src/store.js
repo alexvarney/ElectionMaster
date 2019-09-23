@@ -1,19 +1,26 @@
-import {createStore, applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
+import { createStore, applyMiddleware, compose } from 'redux'
+import thunk from 'redux-thunk'
 import rootReducer from './reducers'
 
-const initialState = {candidates: []};
+const initialState = { candidates: [] }
 
-const middleware = [thunk];
+const middleware = [thunk]
 
-let devTools = window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__ : {};
+const devTools = window.__REDUX_DEVTOOLS_EXTENSION__
+  ? window.__REDUX_DEVTOOLS_EXTENSION__
+  : {}
 
-let devToolsFunc = window.__REDUX_DEVTOOLS_EXTENSION__
-? window.__REDUX_DEVTOOLS_EXTENSION__()
-: f => f;
+const devToolsFunc = window.__REDUX_DEVTOOLS_EXTENSION__
+  ? window.__REDUX_DEVTOOLS_EXTENSION__()
+  : f => f
 
-const store = createStore(rootReducer, initialState, compose(applyMiddleware(...middleware), devTools && devToolsFunc));
+const store = createStore(
+  rootReducer,
+  initialState,
+  compose(
+    applyMiddleware(...middleware),
+    devTools && devToolsFunc
+  )
+)
 
-
-
-export default store;
+export default store

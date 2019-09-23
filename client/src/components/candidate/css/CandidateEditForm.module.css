@@ -1,12 +1,13 @@
-.container{
+.container {
   width: 100%;
 }
 
-.formItem label, .formAbout label{
+.formItem label,
+.formAbout label {
   display: block;
   margin: 0;
   padding: 0;
-  font-family: 'IBM Plex Sans';
+  font-family: "IBM Plex Sans";
   font-style: normal;
   font-weight: 600;
   font-size: 18px;
@@ -23,29 +24,29 @@
   margin-top: 1rem;
 }
 
-.formItem input{
+.formItem input {
   width: 100%;
-  background: #FFFFFF;
-  border: 1px solid #C9C9C9;
+  background: #ffffff;
+  border: 1px solid #c9c9c9;
   box-sizing: border-box;
   box-shadow: 1px 1px 3px rgba(134, 134, 134, 0.3);
   border-radius: 10px;
   padding: 0.5rem 0.5rem 0.5rem 0.5rem;
-  font-family: 'Open-Sans', sans-serif;
+  font-family: "Open-Sans", sans-serif;
   max-height: 24rem;
   overflow: hidden;
 }
 
-.aboutInput{
+.aboutInput {
   width: 100%;
   min-height: 22rem;
-  background: #FFFFFF;
-  border: 1px solid #C9C9C9;
+  background: #ffffff;
+  border: 1px solid #c9c9c9;
   box-sizing: border-box;
   box-shadow: 1px 1px 3px rgba(134, 134, 134, 0.3);
   border-radius: 10px;
   padding: 0.5rem 1rem 0.5rem 1rem;
-  font-family: 'Open-Sans', sans-serif;
+  font-family: "Open-Sans", sans-serif;
 }
 
 .formButton {

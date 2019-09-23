@@ -1,48 +1,44 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react'
 
-import {Provider} from 'react-redux';
-import store from './store';
+import { Provider } from 'react-redux'
+import store from './store'
 
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './App.css'
 
-import ContestProvider from './components/contest/ContestProvider';
-import Homepage from './components/Homepage';
+import ContestProvider from './components/contest/ContestProvider'
+import Homepage from './components/Homepage'
 
-export default function App() {
-
+export default function App () {
   useEffect(() => {
-    //Fixes viewport height on mobile safari
+    // Fixes viewport height on mobile safari
     const fixVh = () => {
-      let vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
-      document.documentElement.style.setProperty('--nav', '57px');
+      const vh = window.innerHeight * 0.01
+      document.documentElement.style.setProperty('--vh', `${vh}px`)
+      document.documentElement.style.setProperty('--nav', '57px')
     }
 
-    window.addEventListener('resize', fixVh);
-    
-    fixVh();
-    
-    return () => {
-      window.removeEventListener('resize', fixVh);
-    };
+    window.addEventListener('resize', fixVh)
 
+    fixVh()
+
+    return () => {
+      window.removeEventListener('resize', fixVh)
+    }
   }, [])
 
-    return (
-      <Router>
+  return (
+    <Router>
       <Provider store={store}>
-        <div className="app">
+        <div className='app'>
           <Switch>
-            <Route exact path="/" component={Homepage} />
-            <Route path="/:countryID/:contestURL" component={ContestProvider} />
+            <Route exact path='/' component={Homepage} />
+            <Route path='/:countryID/:contestURL' component={ContestProvider} />
           </Switch>
         </div>
       </Provider>
-      </Router>
-    )
+    </Router>
+  )
 }
-
-

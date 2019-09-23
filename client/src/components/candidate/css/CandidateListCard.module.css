@@ -1,53 +1,53 @@
 .container {
-    display: flex;
-    align-items: center;
-    min-height: 80px;
-    color: #00050f;
-    border-radius: 10px;
-    margin: 0.5rem 0.5rem 0.5rem 0.5rem;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  min-height: 80px;
+  color: #00050f;
+  border-radius: 10px;
+  margin: 0.5rem 0.5rem 0.5rem 0.5rem;
+  cursor: pointer;
 }
 
-.imgContainer { 
-    padding-left: 0.5rem;
+.imgContainer {
+  padding-left: 0.5rem;
 }
 
 .imgStyle {
-    max-width: 4rem;
-    border-radius: 50%;
-    border: 2px solid #000;
+  max-width: 4rem;
+  border-radius: 50%;
+  border: 2px solid #000;
 }
 
 .textContainer {
-    flex-grow: 1;
-    padding: 0 0 0 1rem;
+  flex-grow: 1;
+  padding: 0 0 0 1rem;
 }
 
 .menuContainer {
-    padding-right: 0.6rem;
+  padding-right: 0.6rem;
 }
 
 .textContainer > p {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 .nameStyle {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .percentageText {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 .sloganText {
-    text-align: right;
-    float: right;
-    padding: 0px 15px 0px 0px;
-    font-size: 12px;
+  text-align: right;
+  float: right;
+  padding: 0px 15px 0px 0px;
+  font-size: 12px;
 }
 
 .active {
-    composes: container;
-    background-color: #ededed;
+  composes: container;
+  background-color: #ededed;
 }

@@ -1,45 +1,45 @@
 .parentRow > * {
-    margin: 0.5rem;
+  margin: 0.5rem;
 }
 
 .navContainer {
-    width: 100%;
+  width: 100%;
 }
 
 .navContainer > li {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .linkedCandidateList {
-    list-style: none;
-    padding: 0;
-    border: 1px solid #d6d6d6;
-    display: block;
-    width: 100%;
-    border-radius: 0.5rem;
-    max-height: 51rem;
-    overflow: auto;
+  list-style: none;
+  padding: 0;
+  border: 1px solid #d6d6d6;
+  display: block;
+  width: 100%;
+  border-radius: 0.5rem;
+  max-height: 51rem;
+  overflow: auto;
 }
 
 .linkedCandidateList > li {
-    padding: 0.6rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    box-shadow: 0px 1px 3px rgba(134, 134, 134, 0.3);
-    border-bottom: 2px solid rgb(0, 0, 0, 0);
-    transition: all 0.1s ease-out;
+  padding: 0.6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  box-shadow: 0px 1px 3px rgba(134, 134, 134, 0.3);
+  border-bottom: 2px solid rgb(0, 0, 0, 0);
+  transition: all 0.1s ease-out;
 }
 
 .listItemActive {
-    background-color: rgb(225, 240, 255);
+  background-color: rgb(225, 240, 255);
 }
 
 .linkedCandidateList > li:hover {
-    border-bottom: 2px solid rgb(188, 221, 253);
-    cursor: pointer;
+  border-bottom: 2px solid rgb(188, 221, 253);
+  cursor: pointer;
 }
 
 .linkedCandidateList > li > span {
-    margin-right: 2rem;
+  margin-right: 2rem;
 }

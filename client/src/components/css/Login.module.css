@@ -1,8 +1,8 @@
 .dropdown {
-    box-shadow: 3px 3px 17px 0px rgba(0,0,0,0.28);
-    padding: 0.5rem;
+  box-shadow: 3px 3px 17px 0px rgba(0, 0, 0, 0.28);
+  padding: 0.5rem;
 }
 
-.loginInput{
-    margin-bottom: 1rem;
+.loginInput {
+  margin-bottom: 1rem;
 }

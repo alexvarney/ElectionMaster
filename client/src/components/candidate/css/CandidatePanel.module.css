@@ -1,10 +1,10 @@
 /* Container Styles */
 
-.candidatePanel{
+.candidatePanel {
   flex: 1 1 0;
 }
 
-.container{
+.container {
   margin-left: 3rem;
   margin-right: 3rem;
   display: flex;
@@ -13,14 +13,14 @@
 
 /* Flex Rows and Columns */
 
-.row{
+.row {
   display: flex;
   flex-direction: row;
   width: 100%;
   padding: 0;
 }
 
-.row > *{
+.row > * {
   padding: 1em;
 }
 
@@ -33,7 +33,7 @@
 
 /* Circle Percentage Text */
 
-.circlePolling{
+.circlePolling {
   font-weight: 700;
   font-size: 48px;
   display: block;
@@ -53,7 +53,7 @@
   text-shadow: 2px 1px 2px #f1f1f1;
 }
 
-.circleContainer{
+.circleContainer {
   flex-basis: 150px;
   flex-shrink: 0;
 }
@@ -66,12 +66,12 @@
   margin: 1em 0 1em 0;
 }
 
-.titleContainer{
+.titleContainer {
   padding: 1.5rem 0 0 2rem;
 }
 
 .titleContainer h1 {
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 48px;
@@ -81,7 +81,7 @@
 }
 
 .titleContainer h3 {
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 24px;
@@ -91,22 +91,21 @@
   margin-bottom: 1.5rem;
 }
 
-.buttonRow{
-    margin: 0.5em 0 0 0;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: center;
+.buttonRow {
+  margin: 0.5em 0 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
 }
 
 .buttonRow > * {
   padding-bottom: 0.5rem;
 }
 
-
 .panelButton {
   display: inline !important;
-  font-family: 'Open Sans';
+  font-family: "Open Sans";
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -127,7 +126,7 @@
   color: #fff;
 }
 
-.panelButton a:hover{
+.panelButton a:hover {
   color: #d4d4d4;
   text-decoration: none;
 }
@@ -139,7 +138,7 @@
 /* Content Styles */
 
 .heading {
-  font-family: 'IBM Plex Sans';
+  font-family: "IBM Plex Sans";
   font-style: normal;
   font-weight: 600;
   font-size: 36px;
@@ -148,17 +147,17 @@
   letter-spacing: -0.03em;
 }
 
-.aboutContainer{
-    composes: col;
+.aboutContainer {
+  composes: col;
 }
 
-.content{
-    composes: row;
-    margin: 1em 0 0 0;
+.content {
+  composes: row;
+  margin: 1em 0 0 0;
 }
 
 p {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 .headingContainer {
@@ -168,7 +167,7 @@ p {
   margin-right: 3rem;
 }
 
-.positionEdit{
+.positionEdit {
   margin: 1rem 0 0 0;
 }
 
@@ -178,10 +177,8 @@ p {
 
 /* Mobile Styling */
 
-
 /* Breakpoint 1: Tablet (801-1100px) */
 @media only screen and (max-width: 1100px) {
-
   .container {
     margin: 0 2rem 0 2rem;
   }
@@ -190,11 +187,11 @@ p {
     margin: 0.5rem 0rem 1rem 0rem;
   }
 
-  .content{
+  .content {
     flex-direction: column;
   }
 
-  .content .col:nth-child(1){
+  .content .col:nth-child(1) {
     order: 1;
   }
 
@@ -216,21 +213,21 @@ p {
     padding: 0;
   }
 
-  .titleContainer{
+  .titleContainer {
     flex-basis: 100%;
     text-align: center;
     padding: 0;
     margin: 0 0 1em 0;
   }
-  
-  .circlePolling{
+
+  .circlePolling {
     font-size: 72px;
   }
 }
 
 /* Breakpoint 2: Mobile (<801px) */
-@media only screen and (max-width: 800px){
-  .mobileSelect{
+@media only screen and (max-width: 800px) {
+  .mobileSelect {
     margin-top: 2rem;
     display: block;
     width: 90%;

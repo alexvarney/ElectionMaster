@@ -1,15 +1,14 @@
-import { connect } from 'react-redux';
-import React from 'react';
-import styles from './css/CandidatePanel.module.css';
-import moment from 'moment';
-import CandidatePanelCircle from './CandidatePanelCircle';
-import CandidatePositionCard from './CandidatePositionCard';
-import { getPolling, getSubtleColor } from '../_helpers';
-import ReactMarkdown from 'react-markdown';
-import NumberFormat from 'react-number-format';
-import { Button } from 'reactstrap';
-import PopoverButton from './PopoverButton';
-import { setSelectedContestId } from '../../actions/contestActions';
+import { connect } from 'react-redux'
+import React from 'react'
+import styles from './css/CandidatePanel.module.css'
+import moment from 'moment'
+import CandidatePanelCircle from './CandidatePanelCircle'
+import CandidatePositionCard from './CandidatePositionCard'
+import { getPolling, getSubtleColor } from '../_helpers'
+import ReactMarkdown from 'react-markdown'
+import NumberFormat from 'react-number-format'
+import { Button } from 'reactstrap'
+import PopoverButton from './PopoverButton'
 
 const CandidatePanel = props => {
   const candidate = props.selectedCandidate
@@ -31,20 +30,6 @@ const CandidatePanel = props => {
       </div>
     )
   }
-
-  /*
-    Probably unncessary after contest routing changes
-    if(!Array.from(selectedContest.candidates).includes(candidate._id)){
-
-        const newContest = props.contests.contests.filter(item => Array.from(item.candidates).includes(candidate._id))[0]
-
-        if(!newContest) return null;
-
-        selectedContest = newContest;
-        props.setSelectedContestId(newContest._id);
-
-    }
-    */
 
   // Get the rank of the candidate in the polls
   const pollingValues = selectedContest.candidates
@@ -208,5 +193,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { setSelectedContestId }
+  {}
 )(CandidatePanel)

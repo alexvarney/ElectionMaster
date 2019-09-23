@@ -1,27 +1,27 @@
 .panelButton {
-    display: inline !important;
-    font-family: 'Open Sans';
-    font-style: normal;
-    font-weight: normal;
-    font-size: 14px;
-    line-height: 19px;
-    /* identical to box height */
-    letter-spacing: -0.03em;
-    color: #fff;
-    padding: 0.3em 1em 0.3em 1em;
-    border-radius: 10px;
-    margin: 0 0.6em 0.6em 0;
-  }
-  
-  .panelButton i {
-    padding-right: 0.3rem;
-  }
-  
-  .panelButton a {
-    color: #fff;
-  }
-  
-  .panelButton a:hover{
-    color: #d4d4d4;
-    text-decoration: none;
-  }
+  display: inline !important;
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+  /* identical to box height */
+  letter-spacing: -0.03em;
+  color: #fff;
+  padding: 0.3em 1em 0.3em 1em;
+  border-radius: 10px;
+  margin: 0 0.6em 0.6em 0;
+}
+
+.panelButton i {
+  padding-right: 0.3rem;
+}
+
+.panelButton a {
+  color: #fff;
+}
+
+.panelButton a:hover {
+  color: #d4d4d4;
+  text-decoration: none;
+}

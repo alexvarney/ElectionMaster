@@ -1,14 +1,12 @@
-.sidebar{
-    height: inherit;
-    max-height: inherit;
-    flex-direction: column;
-    background-color: red;
+.sidebar {
+  height: inherit;
+  max-height: inherit;
+  flex-direction: column;
+  background-color: red;
 }
 
 @media only screen and (max-width: 800px) {
-
-    .sidebar{
-        background-color: red;
-    }
-
+  .sidebar {
+    background-color: red;
+  }
 }

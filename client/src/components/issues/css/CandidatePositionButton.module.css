@@ -1,19 +1,19 @@
 .container {
-    padding: 0.2rem;
-    border-radius: 2rem;
-    font-weight: 600;
-    font-size: 20px;
-    margin: 0.3rem;
-    letter-spacing: 0.025em;
+  padding: 0.2rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  font-size: 20px;
+  margin: 0.3rem;
+  letter-spacing: 0.025em;
 }
 
 .container > span {
-    margin-right: 0.5rem;
+  margin-right: 0.5rem;
 }
 
 .imgStyle {
-    max-width: 2rem;
-    border-radius: 50%;
-    border: 2px solid rgba(0, 0, 0, 0.5);
-    margin: 0 0.4rem 0 0.1rem;
+  max-width: 2rem;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.5);
+  margin: 0 0.4rem 0 0.1rem;
 }

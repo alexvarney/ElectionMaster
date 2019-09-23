@@ -1,30 +1,29 @@
-.candidateView{
-    display: flex;
+.candidateView {
+  display: flex;
 }
 
-.sidebar{    
-    position: -webkit-sticky;
-    position: sticky;
-    top: var(--nav, 60px);
-    flex-basis: 21rem;
-    height: calc((var(--vh, 1vh) * 100) - var(--nav, 60px));
-    max-height: calc((var(--vh, 1vh) * 100) - var(--nav, 60px));
-    border-right: 1px solid #d6d6d6;
+.sidebar {
+  position: -webkit-sticky;
+  position: sticky;
+  top: var(--nav, 60px);
+  flex-basis: 21rem;
+  height: calc((var(--vh, 1vh) * 100) - var(--nav, 60px));
+  max-height: calc((var(--vh, 1vh) * 100) - var(--nav, 60px));
+  border-right: 1px solid #d6d6d6;
 }
 
 @media only screen and (max-width: 800px) {
-    .candidateView{
-        flex-direction: column;
-    }
+  .candidateView {
+    flex-direction: column;
+  }
 
-    .sidebar_expanded{
-        composes: sidebar;
-        flex-basis: 100%;
-    }
+  .sidebar_expanded {
+    composes: sidebar;
+    flex-basis: 100%;
+  }
 
-    .sidebar_hidden {
-        composes: sidebar;
-        display: none;
-    }
-
+  .sidebar_hidden {
+    composes: sidebar;
+    display: none;
+  }
 }

@@ -24,18 +24,17 @@
   border: 2px solid rgba(0, 0, 0, 0);
 }
 
-.positionSelector:nth-child(even){
+.positionSelector:nth-child(even) {
   background-color: rgb(245, 245, 245);
 }
 
-.positionSelector:nth-child(odd){
-  background-color: #F9F9F9;
+.positionSelector:nth-chißld(odd) {
+  background-color: #f9f9f9;
 }
 
 .positionSelector_active {
   composes: positionSelector;
   background-color: rgb(225, 240, 255) !important;
-
 }
 
 .positionSelector:hover {
@@ -43,7 +42,7 @@
 }
 
 /* Save + Close Controls */
-.controlButtons{
+.controlButtons {
   display: flex;
   flex-basis: 100%;
   justify-content: flex-end;
@@ -56,7 +55,7 @@
 /* Element Styles */
 
 .container h1 {
-  font-family: 'IBM Plex Sans';
+  font-family: "IBM Plex Sans";
   font-style: normal;
   font-weight: 600;
   font-size: 48px;
@@ -66,7 +65,7 @@
 
 .positionSelector h3 {
   color: #595959;
-  font-family: 'IBM Plex Sans';
+  font-family: "IBM Plex Sans";
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
@@ -76,7 +75,7 @@
 }
 
 .subheading {
-  font-family: 'IBM Plex Sans';
+  font-family: "IBM Plex Sans";
   font-style: normal;
   font-weight: 600;
   font-size: 28px;
@@ -94,7 +93,7 @@
 }
 
 .headingContainer > h1 {
-  flex: 1 0 50%
+  flex: 1 0 50%;
 }
 
 .headingContainer > h2 {
@@ -108,10 +107,9 @@
   align-items: center;
 }
 
-
 /* Form Styles */
 
-.textAreaContainer{
+.textAreaContainer {
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.15);
@@ -127,5 +125,5 @@
   border: none;
   padding: 0.5rem;
   resize: none;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }

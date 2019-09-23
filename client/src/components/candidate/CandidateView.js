@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import Sidebar from './Sidebar';
-import CandidatePanel from './CandidatePanel';
+import React, { useEffect, useState } from 'react'
+import { connect } from 'react-redux'
+import Sidebar from './Sidebar'
+import CandidatePanel from './CandidatePanel'
 
-import { ContestContext } from '../contest/ContestProvider';
+import { ContestContext } from '../contest/ContestProvider'
 
-import { getIssues } from '../../actions/issueActions';
-import { getCandidates } from '../../actions/candidateActions';
-import { getContests } from '../../actions/contestActions';
+import { getIssues } from '../../actions/issueActions'
+import { getCandidates } from '../../actions/candidateActions'
+import { getContests } from '../../actions/contestActions'
 
-import styles from './css/CandidateView.module.css';
+import styles from './css/CandidateView.module.css'
 
 const CandidateView = props => {
   const { match, candidates } = props

@@ -1,6 +1,14 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { Col, Row, Nav, NavItem, NavLink, TabPane, TabContent } from 'reactstrap'
+import {
+  Col,
+  Row,
+  Nav,
+  NavItem,
+  NavLink,
+  TabPane,
+  TabContent
+} from 'reactstrap'
 import classnames from 'classnames'
 import styles from './css/ContestCandidateEditor.module.css'
 import CandidateSearch from './CandidateSearch'
@@ -10,11 +18,14 @@ import PositionEditForm from '../candidate/PositionEditForm'
 const ContestCandidateEditor = props => {
   const { candidates, selectedContest, setSelectedContest } = props
 
-  const sortCandidates = (list) => list.sort((a, b) => (a.name > b.name) ? 1 : -1)
+  const sortCandidates = list =>
+    list.sort((a, b) => (a.name > b.name ? 1 : -1))
 
   const candidateActions = {
     add: id => {
-      const candidateList = [...selectedContest.candidates.filter(item => item !== id)]
+      const candidateList = [
+        ...selectedContest.candidates.filter(item => item !== id)
+      ]
       candidateList.push(id)
       setSelectedContest({
         ...selectedContest,
@@ -30,7 +41,7 @@ const ContestCandidateEditor = props => {
     }
   }
 
-  const toggleCandidate = (id) => {
+  const toggleCandidate = id => {
     console.log(id)
 
     if (selectedContest.candidates.includes(id)) {
@@ -49,7 +60,9 @@ const ContestCandidateEditor = props => {
     <div>
       <Row className={styles.parentRow}>
         <Col size='4'>
-          <Row><h4>Select and Assign Candidates</h4></Row>
+          <Row>
+            <h4>Select and Assign Candidates</h4>
+          </Row>
           <Row className={styles.searchField}>
             <CandidateSearch
               candidates={candidates}
@@ -64,7 +77,11 @@ const ContestCandidateEditor = props => {
                 <li
                   key={candidate._id}
                   onClick={() => setSelectedCandidate(candidate)}
-                  className={selectedCandidate && candidate._id === selectedCandidate._id ? styles.listItemActive : ''}
+                  className={
+                    selectedCandidate && candidate._id === selectedCandidate._id
+                      ? styles.listItemActive
+                      : ''
+                  }
                 >
                   <span>{candidate.name}</span>
                   <input
@@ -83,7 +100,9 @@ const ContestCandidateEditor = props => {
               <NavItem>
                 <NavLink
                   className={classnames({ active: activeTab === 'details' })}
-                  onClick={() => { setActiveTab('details') }}
+                  onClick={() => {
+                    setActiveTab('details')
+                  }}
                 >
                   <span>Details</span>
                 </NavLink>
@@ -91,7 +110,9 @@ const ContestCandidateEditor = props => {
               <NavItem>
                 <NavLink
                   className={classnames({ active: activeTab === 'positions' })}
-                  onClick={() => { setActiveTab('positions') }}
+                  onClick={() => {
+                    setActiveTab('positions')
+                  }}
                 >
                   <span>Positions</span>
                 </NavLink>
@@ -99,10 +120,16 @@ const ContestCandidateEditor = props => {
 
               <TabContent style={{ width: '100%' }} activeTab={activeTab}>
                 <TabPane tabId='details'>
-                  <CandidateEditForm contest={selectedContest} selectedCandidate={selectedCandidate} />
+                  <CandidateEditForm
+                    contest={selectedContest}
+                    selectedCandidate={selectedCandidate}
+                  />
                 </TabPane>
                 <TabPane tabId='positions'>
-                  <PositionEditForm selectedContest={selectedContest} selectedCandidate={selectedCandidate} />
+                  <PositionEditForm
+                    selectedContest={selectedContest}
+                    selectedCandidate={selectedCandidate}
+                  />
                 </TabPane>
               </TabContent>
             </Nav>
@@ -111,7 +138,7 @@ const ContestCandidateEditor = props => {
       </Row>
     </div>
   )
-}
+};
 
 const mapStateToProps = state => ({
   candidates: state.candidates.candidates
