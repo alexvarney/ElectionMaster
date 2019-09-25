@@ -88,6 +88,20 @@ const AppNavbar = props => {
                 <i className='fas fa-sync-alt' />
               </NavLink>
             </NavItem>
+            
+            <NavItem>
+              <NavLink
+                disabled={!selectedContest}
+                tag={Link}
+                to={
+                  selectedContest
+                    ? `/${selectedContest.country}/${selectedContest.url}`
+                    : '#'
+                }
+              >
+                Contest Home
+              </NavLink>
+            </NavItem>
 
             <NavItem>
               <NavLink
