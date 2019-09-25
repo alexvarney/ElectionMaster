@@ -3,7 +3,6 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const path = require('path')
-const formidable = require('express-formidable')
 
 const keys = require('./config/keys')
 
@@ -17,7 +16,6 @@ const app = express()
 // Middleware
 app.use(bodyParser.json())
 app.use(cors())
-app.use(formidable())
 
 // DB Config
 const db = keys.mongoURI

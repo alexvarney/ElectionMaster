@@ -59,6 +59,8 @@ const CandidatePanel = props => {
     image
   } = candidate
 
+  const imageUrl = image.charAt(0) === '/' ? image : process.env.PUBLIC_URL + `/headshots/${image}`
+
   const age = moment().diff(dob, 'years')
 
   const getButtonStyle = () => {
@@ -69,7 +71,7 @@ const CandidatePanel = props => {
     return image
       ? {
         backgroundImage:
-            `url(${process.env.PUBLIC_URL}` + `/headshots/${image})`,
+            `url(${imageUrl}`,
         backgroundSize: 'cover',
         border: '2px solid black'
       }
