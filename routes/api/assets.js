@@ -28,13 +28,13 @@ router.get('/file/:shortId', (req, res) => {
       return res.send('Document not found!')
     }
 
-    const { filename, thumbnailFilename } = doc[0]
+    const { shortId, filename, thumbnailFilename } = doc[0]
 
     if (req.query.thumbnail) {
       if (thumbnailFilename) {
         return res.sendFile(path.join(filePath, thumbnailFilename))
       } else {
-        const newThumbFilename = `${filename}_${shortid.generate()}.jpeg`
+        const newThumbFilename = `${shortId}_${shortid.generate()}.jpeg`
 
         sharp(path.join(filePath, filename))
           .resize(256)
