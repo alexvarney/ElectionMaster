@@ -6,6 +6,7 @@ const auth = require('../../middleware/auth')
 const shortid = require('shortid')
 const path = require('path')
 const fs = require('fs')
+const sharp = require('sharp')
 
 const filePath = require('../../config/keys').assetPath
 
@@ -27,9 +28,31 @@ router.get('/file/:shortId', (req, res) => {
       return res.send('Document not found!')
     }
 
-    const { filename } = doc[0]
-    res.status(200)
-    return res.sendFile(path.join(filePath, filename))
+    const { filename, thumbnailFilename } = doc[0]
+
+    if (req.query.thumbnail) {
+      if (thumbnailFilename) {
+        return res.sendFile(path.join(filePath, thumbnailFilename))
+      } else {
+        const newThumbFilename = `${filename}_${shortid.generate()}.jpeg`
+
+        sharp(path.join(filePath, filename))
+          .resize(256)
+          .toFormat('jpeg')
+          .toBuffer()
+          .then(data => {
+            fs.writeFile(path.join(filePath, newThumbFilename), data, err => {
+              doc[0].thumbnailFilename = newThumbFilename
+              doc[0].save()
+              return res
+                .status(200)
+                .sendFile(path.join(filePath, newThumbFilename))
+            })
+          })
+      }
+    } else {
+      return res.sendFile(path.join(filePath, filename))
+    }
   })
 })
 
