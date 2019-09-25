@@ -31,7 +31,12 @@ class PositionEditForm extends Component {
   componentDidUpdate(prevProps) {
     if (prevProps.selectedCandidate !== this.props.selectedCandidate) {
       this.setState({ candidate: this.props.selectedCandidate });
+    } else if (prevProps.selectedCandidate && this.props.selectedCandidate){
+      if (prevProps.selectedCandidate.positions !== this.props.selectedCandidate.positions) {
+        this.setState({candidate: this.props.selectedCandidate})
+      }
     }
+
   }
 
   componentDidMount = () => {

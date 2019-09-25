@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import {
   Col,
@@ -53,6 +53,15 @@ const ContestCandidateEditor = props => {
 
   const [searchResults, setSearchResults] = useState([])
   const [selectedCandidate, setSelectedCandidate] = useState(null)
+
+  useEffect(() => {
+    if (selectedCandidate) {
+      const result = props.candidates.filter(item => item._id === selectedCandidate._id)[0]
+      if (result) {
+        setSelectedCandidate(result)
+      }
+    }
+  }, [props.candidates])
 
   const [activeTab, setActiveTab] = useState('details')
 
@@ -138,7 +147,7 @@ const ContestCandidateEditor = props => {
       </Row>
     </div>
   )
-};
+}
 
 const mapStateToProps = state => ({
   candidates: state.candidates.candidates
