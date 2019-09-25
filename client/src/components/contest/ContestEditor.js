@@ -18,6 +18,7 @@ import ContestDetailEditor from './ContestDetailEditor'
 import ContestCandidateEditor from './ContestCandidateEditor'
 import ContestIssueEditor from './ContestIssueEditor'
 import ContestPollingEditor from './ContestPollingEditor'
+import AssetManager from './AssetManager'
 
 const ContestEditor = props => {
   useEffect(() => {
@@ -157,6 +158,16 @@ const ContestEditor = props => {
             Polling
           </NavLink>
         </NavItem>
+        <NavItem>
+          <NavLink
+            className={classnames({ active: activeTab === 'assets' })}
+            onClick={() => {
+              setActiveTab('assets')
+            }}
+          >
+            Assets
+          </NavLink>
+        </NavItem>
 
         <TabContent activeTab={activeTab}>
           <TabPane tabId='details'>
@@ -187,6 +198,9 @@ const ContestEditor = props => {
               setSelectedContest={setSelectedContest}
               getCandidateById={getCandidateById}
             />
+          </TabPane>
+          <TabPane tabId='assets'>
+            <AssetManager />
           </TabPane>
         </TabContent>
       </Nav>
