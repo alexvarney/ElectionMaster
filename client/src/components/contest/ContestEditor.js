@@ -107,7 +107,7 @@ const ContestEditor = props => {
   }
 
   const getCandidateById = id => {
-    const result = props.candidates.filter(item => item._id === id)[0]
+    const result = props.candidates ? props.candidates.filter(item => item._id === id)[0] : null
     return result || { unknown: true }
   };
 
