@@ -23,7 +23,7 @@ class PositionEditForm extends Component {
       candidate: {},
       selectedIssueId: "",
       position: {},
-      selectedFilter: "Complete",
+      selectedFilter: "All",
       statusDropdownOpen: false
     };
   }

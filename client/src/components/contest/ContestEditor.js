@@ -41,50 +41,6 @@ const ContestEditor = props => {
     }
   }, [props.contest])
 
-  const detailEventHandlers = {
-    onNameChange: event => {
-      event.persist()
-      setSelectedContest({
-        ...selectedContest,
-        name: event.target.value
-      })
-    },
-    onDescriptionChange: event => {
-      event.persist()
-      setSelectedContest({
-        ...selectedContest,
-        description: event.target.value
-      })
-    },
-    onCountryChange: event => {
-      event.persist()
-      setSelectedContest({
-        ...selectedContest,
-        country: event.target.value
-      })
-    },
-    onUrlChange: event => {
-      event.persist()
-      setSelectedContest({
-        ...selectedContest,
-        url: event.target.value
-      })
-    },
-    toggleDefaultStatus: () => {
-      if (!selectedContest.default) {
-        setSelectedContest({
-          ...selectedContest,
-          default: true
-        })
-      } else {
-        setSelectedContest({
-          ...selectedContest,
-          default: false
-        })
-      }
-    }
-  }
-
   const saveContest = () => {
     if (selectedContest._id) {
       props.updateContest(selectedContest)
@@ -173,7 +129,7 @@ const ContestEditor = props => {
           <TabPane tabId='details'>
             <ContestDetailEditor
               selectedContest={selectedContest}
-              eventHandlers={detailEventHandlers}
+              setSelectedContest={setSelectedContest}
             />
           </TabPane>
           <TabPane tabId='candidates'>
@@ -204,21 +160,20 @@ const ContestEditor = props => {
           </TabPane>
         </TabContent>
       </Nav>
-
       <div className={styles.buttonRow}>
         <Button
           color='primary'
           onClick={saveContest}
           disabled={!selectedContest}
         >
-          Save
+          Save Contest
         </Button>
         <Button
           color='danger'
           onClick={deleteContest}
           disabled={!selectedContest}
         >
-          Delete
+          Delete Contest
         </Button>
       </div>
     </div>

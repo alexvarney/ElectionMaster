@@ -109,20 +109,6 @@ const AppNavbar = props => {
                 tag={Link}
                 to={
                   selectedContest
-                    ? `/${selectedContest.country}/${selectedContest.url}/candidates`
-                    : '#'
-                }
-              >
-                Candidates
-              </NavLink>
-            </NavItem>
-
-            <NavItem>
-              <NavLink
-                disabled={!selectedContest}
-                tag={Link}
-                to={
-                  selectedContest
                     ? `/${selectedContest.country}/${selectedContest.url}/issues`
                     : '#'
                 }

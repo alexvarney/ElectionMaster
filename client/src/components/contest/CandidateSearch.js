@@ -40,7 +40,7 @@ export default function CandidateSearch (props) {
     contest: 'CONTEST',
     all: 'ALL'
   }
-  const [searchMode, setSearchMode] = useState(searchModes.all)
+  const [searchMode, setSearchMode] = useState(searchModes.contest)
 
   const getSearchResults = () => {
     const searchResults =

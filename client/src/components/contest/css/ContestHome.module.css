@@ -13,6 +13,37 @@
 }
 
 .panel {
-  margin: 2rem;
-  flex: 2 1 80%;
+  margin: 3rem;
+  flex: 2 3 80%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.panel > h1 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.bannerContainer{
+  flex-basis: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.bannerContainer > img {
+  max-height: 350px;
+}
+
+.links {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.links > li {
+  display: inline;
+  margin: 0 0.5rem 0 0.5rem;
 }

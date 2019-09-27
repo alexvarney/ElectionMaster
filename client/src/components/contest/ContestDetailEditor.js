@@ -11,15 +11,16 @@ import countries from 'iso-3166-country-list'
 import styles from './css/ContestDetailEditor.module.css'
 
 export default function ContestDetailEditor (props) {
-  const { selectedContest, eventHandlers } = props
 
-  const {
-    onNameChange,
-    onDescriptionChange,
-    onUrlChange,
-    onCountryChange,
-    toggleDefaultStatus
-  } = eventHandlers
+  const { selectedContest, setSelectedContest } = props
+
+  const handleFieldChange = event => {
+    event.persist()
+    setSelectedContest({
+      ...selectedContest,
+      [event.target.name]: event.target.value
+    })
+  }
 
   return (
     <div className={styles.container}>
@@ -29,7 +30,8 @@ export default function ContestDetailEditor (props) {
         </InputGroupAddon>
         <Input
           value={selectedContest ? selectedContest.name : ''}
-          onChange={onNameChange}
+          name='name'
+          onChange={handleFieldChange}
           disabled={!selectedContest}
         />
       </InputGroup>
@@ -41,7 +43,8 @@ export default function ContestDetailEditor (props) {
         <Input
           type='textarea'
           value={selectedContest ? selectedContest.description : ''}
-          onChange={onDescriptionChange}
+          name='description'
+          onChange={handleFieldChange}
           disabled={!selectedContest}
         />
       </InputGroup>
@@ -52,7 +55,8 @@ export default function ContestDetailEditor (props) {
         </InputGroupAddon>
         <Input
           value={selectedContest ? selectedContest.url : ''}
-          onChange={onUrlChange}
+          name='url'
+          onChange={handleFieldChange}
           disabled={!selectedContest}
         />
       </InputGroup>
@@ -63,7 +67,8 @@ export default function ContestDetailEditor (props) {
         </InputGroupAddon>
         <Input
           value={selectedContest ? selectedContest.country : ''}
-          onChange={onCountryChange}
+          name='country'
+          onChange={handleFieldChange}
           disabled={!selectedContest}
         />
         <InputGroupAddon addonType='prepend'>
@@ -77,20 +82,17 @@ export default function ContestDetailEditor (props) {
         </InputGroupAddon>
       </InputGroup>
 
-      <FormGroup check>
-        <Label check>
-          <Input
-            checked={
-              selectedContest && selectedContest.default !== undefined
-                ? selectedContest.default
-                : false
-            }
-            onChange={toggleDefaultStatus}
-            type='checkbox'
-          />{' '}
-          Make default contest
-        </Label>
-      </FormGroup>
+      <InputGroup>
+        <InputGroupAddon addonType='prepend'>
+          <InputGroupText>Banner Image</InputGroupText>
+        </InputGroupAddon>
+        <Input
+          value={selectedContest ? selectedContest.bannerImage : ''}
+          name='bannerImage'
+          onChange={handleFieldChange}
+          disabled={!selectedContest}
+        />
+      </InputGroup>
     </div>
   )
 }
