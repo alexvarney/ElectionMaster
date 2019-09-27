@@ -7,7 +7,7 @@ const PollingGraph = (props) => {
   const { contest } = props
 
   const getCandidateById = id => {
-    const result = props.candidates.filter(item => item._id === id)[0]
+    const result = props.candidate ? props.candidates.filter(item => item._id === id)[0] : null
     return result || 'Unknown Candidate'
   }
 
