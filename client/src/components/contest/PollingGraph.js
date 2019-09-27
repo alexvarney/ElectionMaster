@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Line } from 'react-chartjs-2'
 import { connect } from 'react-redux'
 import { getSubtleColor } from '../_helpers'
@@ -7,60 +7,67 @@ const PollingGraph = (props) => {
   const { contest } = props
 
   const getCandidateById = id => {
-    const result = props.candidate ? props.candidates.filter(item => item._id === id)[0] : null
+    const result = props.candidates ? props.candidates.filter(item => item._id === id)[0] : null
     return result || 'Unknown Candidate'
   }
 
-  const candidatePolling = contest.polling.reduce((acc, current) => {
-    /*
+  const [chartData, setChartData] = useState(null)
 
-      This function generates a dataset for each candidate id in pairs of {x: time, y: polling}
+  const makeChart = () => {
+    const candidatePolling = contest.polling.reduce((acc, current) => {
+      /*
 
-      current = {
-        date,
-        values: [{
-          candidate,
-          value
-        }]
-      }
-    */
+        This function generates a dataset for each candidate id in pairs of {x: time, y: polling}
 
-    const date = current.date
+        current = {
+          date,
+          values: [{
+            candidate,
+            value
+          }]
+        }
+      */
 
-    const accReturn = { ...acc }
+      const date = current.date
 
-    current.values.forEach(item => {
-      const candidate = item.candidate
+      const accReturn = { ...acc }
 
-      if (!accReturn[`${candidate}`]) {
-        accReturn[`${candidate}`] = []
-      }
+      current.values.forEach(item => {
+        const candidateId = item.candidate
+        if (!accReturn[`${candidateId}`]) {
+          accReturn[`${candidateId}`] = []
+        }
 
-      accReturn[`${candidate}`].push({
-        t: date,
-        y: item.value
+        accReturn[`${candidateId}`].push({
+          t: date,
+          y: item.value
+        })
       })
-    })
 
-    return accReturn
-  }, {})
+      return accReturn
+    }, {})
 
-  const datasets = []
+    const datasets = []
 
-  for (const [key, value] of Object.entries(candidatePolling)) {
-    const candidate = getCandidateById(key)
+    for (const [key, value] of Object.entries(candidatePolling)) {
+      const candidate = getCandidateById(key)
+      console.log(candidate.status)
+      if (candidate && candidate.status && ['active', 'declared'].includes(candidate.status.toLowerCase().trim())) {
+        datasets.push({
+          label: candidate.name,
+          data: value,
+          borderColor: getSubtleColor(),
+          backgroundColor: 'rgba(0,0,0,0)'
+        })
+      }
+    }
 
-    datasets.push({
-      label: candidate.name,
-      data: value,
-      borderColor: getSubtleColor(),
-      backgroundColor: 'rgba(0,0,0,0)'
-    })
+    return ({ datasets })
   }
 
-  const dataObj = {
-    datasets
-  }
+  useEffect(() => {
+    setChartData(makeChart())
+  }, [props.candidates, contest])
 
   const options = {
     responsive: true,
@@ -75,11 +82,13 @@ const PollingGraph = (props) => {
     }
   }
 
-  console.log(datasets)
+  if (!chartData) {
+    return <></>
+  }
 
   return (
-    <div style={{ height: '500px', maxWidth: '70vw' }}>
-      <Line options={options} data={dataObj} />
+    <div style={{ height: '500px', maxWidth: 'calc(90vw - 21rem)', marginLeft: 'auto', marginRight: 'auto' }}>
+      <Line options={options} data={chartData} />
     </div>
   )
 }
