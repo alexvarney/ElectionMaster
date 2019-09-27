@@ -1,7 +1,7 @@
 import React from 'react'
 import { Line } from 'react-chartjs-2'
 import { connect } from 'react-redux'
-import {getSubtleColor} from '../_helpers'
+import { getSubtleColor } from '../_helpers'
 
 const PollingGraph = (props) => {
   const { contest } = props
@@ -63,6 +63,8 @@ const PollingGraph = (props) => {
   }
 
   const options = {
+    responsive: true,
+    maintainAspectRatio: true,
     scales: {
       xAxes: [{
         type: 'time',
@@ -76,7 +78,7 @@ const PollingGraph = (props) => {
   console.log(datasets)
 
   return (
-    <div>
+    <div style={{ height: '500px', maxWidth: '70vw' }}>
       <Line options={options} data={dataObj} />
     </div>
   )

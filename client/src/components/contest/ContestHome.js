@@ -28,7 +28,9 @@ export default function ContestHome (props) {
           <li><Link to={`/${contest.country}/${contest.url}/`}>Candidates</Link></li>
           <li><Link to={`/${contest.country}/${contest.url}/issues`}>View the Issues</Link></li>
         </ul>
+        
         <ReactMarkdown source={contest.description} />
+        <h3>Polling Data</h3>
         <PollingGraph contest={contest} />
       </div>
     </div>
