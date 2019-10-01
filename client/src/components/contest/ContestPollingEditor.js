@@ -11,13 +11,14 @@ import {
   Col,
   Table
 } from 'reactstrap'
+import { getCandidateById } from '../_helpers'
 
-export default function ContestPollingEditor (props) {
+function ContestPollingEditor (props) {
   const {
     styles,
     selectedContest,
     setSelectedContest,
-    getCandidateById
+    candidates
   } = props
 
   const newPoll = {
@@ -100,13 +101,14 @@ export default function ContestPollingEditor (props) {
   }
 
   const getPollingCandidates = () => {
-    const candidates =
+    const pollingCandidates =
       selectedContest && selectedContest.candidates
         ? selectedContest.candidates
-          .map(item => getCandidateById(item))
+          .map(item => getCandidateById(item, candidates))
           .filter(res => res.unknown !== true)
+          .filter(item => item.status.toLowerCase().trim() === 'active' || item.status.toLowerCase().trim() === 'declared')
         : {}
-    return candidates
+    return pollingCandidates
   };
 
   const getDateSortedPolls = () => {
@@ -193,3 +195,6 @@ export default function ContestPollingEditor (props) {
     </Form>
   )
 }
+
+export default ContestPollingEditor
+

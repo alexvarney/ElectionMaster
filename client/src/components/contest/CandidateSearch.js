@@ -10,20 +10,17 @@ import {
   DropdownItem
 } from 'reactstrap'
 
+import { getCandidateById } from '../_helpers'
+
 export default function CandidateSearch (props) {
   const { contest, candidates, setSearchResults } = props
-
-  const getCandidateById = id => {
-    const result = candidates.filter(item => item._id === id)[0]
-    return result || { unknown: true }
-  };
 
   const sortCandidates = list =>
     list.sort((a, b) => (a.name > b.name ? 1 : -1))
 
   const getCandidateList = () =>
     contest.candidates
-      .map(id => getCandidateById(id))
+      .map(id => getCandidateById(id, candidates))
       .filter(item => item && item._id)
 
   const [searchFieldValue, _setSearchFieldValue] = useState('')
@@ -31,7 +28,7 @@ export default function CandidateSearch (props) {
   const setSearchFieldValue = event => {
     _setSearchFieldValue(event.target.value)
     setSearchResults(getSearchResults())
-  };
+  }
 
   const [searchDropdownOpen, setSearchDropdown] = useState(false)
   const toggleSearchDropdown = () => setSearchDropdown(!searchDropdownOpen)
@@ -60,13 +57,21 @@ export default function CandidateSearch (props) {
           )
         )
     return searchResults
-  };
+  }
 
+  // Refresh candidates when the search mode changes
   useEffect(() => {
     if (contest && contest.candidates && searchFieldValue === '') {
       setSearchResults(getSearchResults())
     }
   }, [contest, searchMode])
+
+  // Refresh candidates when the Redux store updates
+  useEffect(() => {
+    if (contest && contest.candidates) {
+      setSearchResults(getSearchResults())
+    }
+  }, [candidates])
 
   return (
     <InputGroup>

@@ -62,11 +62,6 @@ const ContestEditor = props => {
     }
   }
 
-  const getCandidateById = id => {
-    const result = props.candidates ? props.candidates.filter(item => item._id === id)[0] : null
-    return result || { unknown: true }
-  };
-
   return (
     <div className={styles.container}>
       <h1>Contest Editor</h1>
@@ -152,7 +147,7 @@ const ContestEditor = props => {
               styles={styles}
               selectedContest={selectedContest}
               setSelectedContest={setSelectedContest}
-              getCandidateById={getCandidateById}
+              candidates={props.candidates}
             />
           </TabPane>
           <TabPane tabId='assets'>

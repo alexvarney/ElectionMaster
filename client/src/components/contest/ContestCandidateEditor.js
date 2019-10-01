@@ -42,8 +42,6 @@ const ContestCandidateEditor = props => {
   }
 
   const toggleCandidate = id => {
-    console.log(id)
-
     if (selectedContest.candidates.includes(id)) {
       candidateActions.remove(id)
     } else {

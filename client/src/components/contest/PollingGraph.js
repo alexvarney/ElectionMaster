@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Line } from 'react-chartjs-2'
 import { connect } from 'react-redux'
-import { getSubtleColor } from '../_helpers'
+import { getSubtleColor, getCandidateById } from '../_helpers'
 
 const PollingGraph = (props) => {
-  const { contest } = props
-
-  const getCandidateById = id => {
-    const result = props.candidates ? props.candidates.filter(item => item._id === id)[0] : null
-    return result || 'Unknown Candidate'
-  }
+  const { contest, candidates } = props
 
   const [chartData, setChartData] = useState(null)
 
@@ -50,8 +45,7 @@ const PollingGraph = (props) => {
     const datasets = []
 
     for (const [key, value] of Object.entries(candidatePolling)) {
-      const candidate = getCandidateById(key)
-      console.log(candidate.status)
+      const candidate = getCandidateById(key, candidates)
       if (candidate && candidate.status && ['active', 'declared'].includes(candidate.status.toLowerCase().trim())) {
         datasets.push({
           label: candidate.name,

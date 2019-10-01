@@ -5,16 +5,17 @@ import { Scrollbars } from 'react-custom-scrollbars'
 import { getPolling } from '../_helpers'
 import CandidateSidebarCard from './CandidateSidebarCard'
 import styles from './css/Sidebar.module.css'
+import { getCandidateById } from '../_helpers.js'
 
 const Sidebar = props => {
   const [redirect, setRedirect] = React.useState(null)
 
-  const { selectedContest } = props
+  const { selectedContest, candidates } = props
 
   const onSelect = props.onSelect
     ? props.onSelect
     : id => {
-      const candidate = getCandidateById(id)
+      const candidate = getCandidateById(id, candidates)
 
       if (candidate) {
         const url = candidate.urlSlug ? candidate.urlSlug : candidate._id
@@ -26,11 +27,6 @@ const Sidebar = props => {
         )
       }
     }
-
-  const getCandidateById = id => {
-    const result = props.candidates.filter(item => item._id === id)[0]
-    return result || { unknown: true }
-  }
 
   // filter candidates to the ones in the contest
   let contestCandidates =
@@ -71,7 +67,7 @@ const Sidebar = props => {
                   !!(
                     props.selectedCandidate &&
                       props.selectedCandidate._id === candidate._id
-                  )
+                )
                 }
               />
             ))

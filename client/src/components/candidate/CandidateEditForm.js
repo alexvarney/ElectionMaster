@@ -64,7 +64,6 @@ class CandidateEditForm extends Component {
 
   handleFormChange = event => {
     event.persist();
-    console.log(event.target.name);
     this.setState(prevState => ({
       formValues: {
         ...prevState.formValues,

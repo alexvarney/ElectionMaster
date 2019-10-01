@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from 'react';
 
-import { updateCandidate } from "../../actions/candidateActions";
-import { connect } from "react-redux";
+import { updateCandidate } from '../../actions/candidateActions';
+import { connect } from 'react-redux';
 
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import {
   Button,
   ButtonGroup,
@@ -11,277 +11,257 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem
-} from "reactstrap";
+} from 'reactstrap';
 
-import styles from "./css/PositionEditForm.module.css";
+import styles from './css/PositionEditForm.module.css';
 
-class PositionEditForm extends Component {
-  constructor(props) {
-    super(props);
+const PositionEditForm = props => {
+  const {
+    user,
+    issues,
+    selectedContest,
+    selectedCandidate,
+    updateCandidate
+  } = props
 
-    this.state = {
-      candidate: {},
-      selectedIssueId: "",
-      position: {},
-      selectedFilter: "All",
-      statusDropdownOpen: false
-    };
+  const POSITION_STATUS = {
+    SUPPORTS: 'supports',
+    MIXED: 'mixed',
+    OPPOSED: 'opposed',
+    UNKNOWN: 'unknown'
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.selectedCandidate !== this.props.selectedCandidate) {
-      this.setState({ candidate: this.props.selectedCandidate });
-    } else if (prevProps.selectedCandidate && this.props.selectedCandidate){
-      if (prevProps.selectedCandidate.positions !== this.props.selectedCandidate.positions) {
-        this.setState({candidate: this.props.selectedCandidate})
-      }
-    }
+  const [selectedPosition, setSelectedPosition] = useState(null)
 
+  const getIssues = () => {
+    if (!issues) return []
+
+    // Get the issues that are assigned to the selected contest
+    const contestIssues = issues
+      .filter(issue => selectedContest.issues.includes(issue._id))
+      .sort((a, b) => (a.name > b.name ? 1 : -1))
+
+    // Create list of Issue ID's for candidate's completed positions
+    const completedIssues = selectedCandidate
+      ? selectedCandidate.positions.map(position => position.issue)
+      : []
+
+    switch (selectedFilter) {
+      case FILTERS.incomplete:
+        return contestIssues.filter(
+          issue => !completedIssues.includes(issue._id)
+        )
+      case FILTERS.completed:
+        return contestIssues.filter(issue =>
+          completedIssues.includes(issue._id)
+        )
+      case FILTERS.all:
+      default:
+        return contestIssues
+    }
   }
 
-  componentDidMount = () => {
-    const candidate = this.props.selectedCandidate;
-
-    if (!candidate) return null;
-
-    this.setState({
-      candidate: candidate
-    });
+  const getIssueById = id => {
+    return issues ? issues.filter(item => item._id === id)[0] : null
   };
 
-  handleFormChange = event => {
-    event.persist();
-    console.log(event.target.name);
-    this.setState(prevState => ({
-      formValues: {
-        ...prevState.formValues,
-        [event.target.name]: event.target.value
+  const getCandidatePositionByIssueId = id => {
+    // check if candidate has a position on this issue or create a new object with defaults
+    return (
+      selectedCandidate.positions.filter(item => item.issue === id)[0] || {
+        issue: id,
+        status: POSITION_STATUS.UNKNOWN
       }
-    }));
+    )
   };
 
-  getPositionName = position => {
-    const issue = this.props.issues.issues.filter(
-      i => i._id === position.issue
-    )[0];
-
-    if (issue) {
-      return issue.name;
-    }
-
-    return "Unknown Issue";
+  const setSelectedIssue = issue => {
+    setSelectedPosition(getCandidatePositionByIssueId(issue._id))
   };
 
-  submitForm = event => {
-    event.preventDefault();
+  const updatePosition = event => {
+    event.persist()
 
-    const positions = this.state.candidate.positions.filter(
-      position => position._id !== this.state.position._id
-    );
+    setSelectedPosition({
+      ...selectedPosition,
+      [event.target.name]: event.target.value
+    })
+  };
+
+  const setPositionStatus = status => {
+    setSelectedPosition({
+      ...selectedPosition,
+      status
+    })
+  };
+
+  const FILTERS = {
+    all: 'All',
+    completed: 'Complete',
+    incomplete: 'Incomplete'
+  }
+
+  const [selectedFilter, setSelectedFilter] = useState(FILTERS.all)
+
+  const getFilterButtons = () => {
+    return (
+      <>
+        <Button
+          color='primary'
+          onClick={() => setSelectedFilter(FILTERS.all)}
+          name={FILTERS.all}
+          outline={selectedFilter === FILTERS.all}
+        >
+          {FILTERS.all}
+        </Button>
+        <Button
+          color='primary'
+          onClick={() => setSelectedFilter(FILTERS.completed)}
+          name={FILTERS.completed}
+          outline={selectedFilter === FILTERS.completed}
+        >
+          {FILTERS.completed}
+        </Button>
+        <Button
+          color='primary'
+          onClick={() => setSelectedFilter(FILTERS.incomplete)}
+          name={FILTERS.incomplete}
+          outline={selectedFilter === FILTERS.incomplete}
+        >
+          {FILTERS.incomplete}
+        </Button>
+      </>
+    )
+  };
+
+  const [statusDropdownOpen, setStatusDropdownOpen] = useState(false)
+
+  const savePosition = () => {
+    const filteredPositions = selectedCandidate.positions.filter(
+      item => item.issue !== selectedPosition.issue
+    )
 
     const updatedCandidate = {
-      ...this.state.candidate,
-      positions: [this.state.position, ...positions]
-    };
-
-    this.props.updateCandidate(updatedCandidate);
-  };
-
-  getButton = name => {
-    if (this.state.selectedFilter === name) {
-      return (
-        <Button color="primary" name={name} outline>
-          {name}
-        </Button>
-      );
+      ...selectedCandidate,
+      positions: [selectedPosition, ...filteredPositions]
     }
-
-    return (
-      <Button
-        color="primary"
-        onClick={() => this.setState({ selectedFilter: name })}
-        name={name}
-      >
-        {name}
-      </Button>
-    );
+    updateCandidate(updatedCandidate)
   };
 
-  getIssue = id => {
-    return this.props.issues.issues.filter(item => item._id === id)[0];
-  };
-
-  getIssues = () => {
-    const selectedContest = this.props.selectedContest;
-
-    const filteredIssues = selectedContest
-      ? this.props.issues.issues.filter(issue =>
-          selectedContest.issues.includes(issue._id)
-        )
-      : [];
-
-    const sortedIssues = filteredIssues.sort((a, b) =>
-      a.name > b.name ? 1 : -1
-    );
-
-    const getCompletedIssues = () => {
-      const getPosition = position =>
-        sortedIssues.filter(i => i._id === position.issue)[0];
-
-      if (this.state.candidate.positions) {
-        return this.state.candidate.positions
-          .map(item => {
-            const position = getPosition(item);
-            return position && position._id ? position : {};
-          })
-          .filter(item => item && item._id);
+  const deletePosition = () => {
+    if (window.confirm('Are you sure?')) {
+      const filteredPositions = selectedCandidate.positions.filter(
+        item => item.issue !== selectedPosition.issue
+      )
+      const updatedCandidate = {
+        ...selectedCandidate,
+        positions: [...filteredPositions]
       }
-
-      return [];
-    };
-
-    const getUncompletedIssues = () => {
-      const completedIssueIds = getCompletedIssues().map(issue => issue._id);
-
-      return sortedIssues.filter(issue => {
-        return !completedIssueIds.includes(issue._id);
-      });
-    };
-
-    switch (this.state.selectedFilter) {
-      case "All":
-        return sortedIssues;
-      case "Complete":
-        return getCompletedIssues();
-      case "Incomplete":
-        return getUncompletedIssues();
-      default:
-        return sortedIssues;
+      updateCandidate(updatedCandidate)
     }
-  };
+  }
 
-  setSelectedIssueId = id => {
-    let position = this.state.candidate.positions.filter(
-      position => position.issue === id
-    )[0];
+  const submitForm = () => savePosition()
 
-    if (!position) {
-      position = {
-        description: "",
-        issue: id,
-        links: [],
-        status: "unknown"
-      };
+  useEffect(() => {
+    if (selectedPosition && selectedPosition.issue) {
+      setSelectedPosition(
+        getCandidatePositionByIssueId(selectedPosition.issue)
+      )
     }
+  }, [selectedCandidate])
 
-    this.setState({ selectedIssueId: id, position: position });
-  };
+  /* JSX Result Below */
 
-  toggleSelectDropdown = () => {
-    this.setState(prevState => ({
-      statusDropdownOpen: !prevState.statusDropdownOpen
-    }));
-  };
-
-  setPositionStatus = status => {
-    this.setState(prevState => ({
-      position: {
-        ...prevState.position,
-        status: status
-      }
-    }));
-  };
-
-  handleDescriptionChange = event => {
-    event.persist();
-    this.setState(prevState => ({
-      position: {
-        ...prevState.position,
-        description: event.target.value
-      }
-    }));
-  };
-
-  render() {
-    if (!this.props.user.token) {
-      return (
-        <div className={styles.container}>
-          <h2 className={styles.subheading}>
-            You must be logged in to view this page.
-          </h2>
-          <Button tag={Link} to="/candidates">
-            Close
-          </Button>
-        </div>
-      );
-    }
-
-    if (!this.props.selectedCandidate) {
-      return <h3>You must select a candidate.</h3>;
-    }
-
-    const selectedIssue = this.getIssue(this.state.selectedIssueId);
-
+  if (!user.token) {
     return (
       <div className={styles.container}>
-        <div className={styles.positionSelectorBorder}>
-          <div className={styles.positionSelectorContainer}>
-            {this.getIssues()
-              ? this.getIssues().map(issue => (
-                  <div
-                    key={issue._id}
-                    onClick={() => this.setSelectedIssueId(issue._id)}
-                    className={
-                      issue._id === this.state.selectedIssueId
-                        ? styles.positionSelector_active
-                        : styles.positionSelector
-                    }
-                  >
-                    <h3>{issue.name} </h3>
-                  </div>
-                ))
-              : null}
-          </div>
-          <ButtonGroup className={styles.filterButtons} block="true">
-            {this.getButton("All")}
-            {this.getButton("Complete")}
-            {this.getButton("Incomplete")}
-          </ButtonGroup>
-        </div>
+        <h2 className={styles.subheading}>
+          You must be logged in to view this page.
+        </h2>
+        <Button tag={Link} to='/candidates'>
+          Close
+        </Button>
+      </div>
+    )
+  }
 
-        {selectedIssue ? (
+  if (!selectedCandidate) {
+    return <h3>You must select a candidate.</h3>
+  }
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.positionSelectorBorder}>
+        <div className={styles.positionSelectorContainer}>
+          {getIssues()
+            ? getIssues().map(issue => (
+              <div
+                key={issue._id}
+                onClick={() => setSelectedIssue(issue)}
+                className={
+                  issue &&
+                    selectedPosition &&
+                    issue._id === selectedPosition.issue
+                    ? styles.positionSelector_active
+                    : styles.positionSelector
+                }
+              >
+                <h3>{issue.name} </h3>
+              </div>
+            ))
+            : null}
+        </div>
+        <ButtonGroup className={styles.filterButtons} block='true'>
+          {getFilterButtons()}
+        </ButtonGroup>
+      </div>
+
+      {selectedPosition ? (
+        <>
           <div className={styles.positionColumn}>
             <form className={styles.positionForm}>
-              <h2 className={styles.subheading}>Status</h2>
+              <h4 className={styles.subheading}>
+                {getIssueById(selectedPosition.issue).name}
+              </h4>
 
               <div className={styles.dropdown}>
                 <Dropdown
-                  color="primary"
-                  isOpen={this.state.statusDropdownOpen}
-                  toggle={this.toggleSelectDropdown}
+                  color='primary'
+                  isOpen={statusDropdownOpen}
+                  toggle={() => {
+                    setStatusDropdownOpen(!statusDropdownOpen)
+                  }}
                 >
-                  <DropdownToggle color="primary" outline block caret>
-                    {this.state.position.status.charAt(0).toUpperCase() +
-                      this.state.position.status.slice(1)}
+                  <DropdownToggle
+                    color='primary'
+                    outline
+                    block
+                    caret
+                    disabled={!selectedPosition}
+                  >
+                    {selectedPosition.status.charAt(0).toUpperCase() +
+                      selectedPosition.status.slice(1) || 'Unknown'}
                   </DropdownToggle>
                   <DropdownMenu>
                     <DropdownItem
-                      onClick={() => this.setPositionStatus("supports")}
+                      onClick={() =>
+                        setPositionStatus(POSITION_STATUS.SUPPORTS)}
                     >
                       Supports
                     </DropdownItem>
                     <DropdownItem
-                      onClick={() => this.setPositionStatus("mixed")}
+                      onClick={() => setPositionStatus(POSITION_STATUS.MIXED)}
                     >
                       Mixed
                     </DropdownItem>
                     <DropdownItem
-                      onClick={() => this.setPositionStatus("opposed")}
+                      onClick={() => setPositionStatus(POSITION_STATUS.OPPOSED)}
                     >
                       Opposed
                     </DropdownItem>
                     <DropdownItem
-                      onClick={() => this.setPositionStatus("unknown")}
+                      onClick={() => setPositionStatus(POSITION_STATUS.UNKNOWN)}
                     >
                       Unknown
                     </DropdownItem>
@@ -289,44 +269,47 @@ class PositionEditForm extends Component {
                 </Dropdown>
               </div>
 
-              <h2 className={styles.subheading}>Description</h2>
-
               <div className={styles.textAreaContainer}>
                 <textarea
                   className={styles.descriptionEditor}
-                  type="text"
-                  name="description"
-                  value={this.state.position.description || ""}
-                  onChange={this.handleDescriptionChange}
+                  type='text'
+                  name='description'
+                  value={selectedPosition.description || ''}
+                  onChange={updatePosition}
                 />
               </div>
             </form>
           </div>
-        ) : null}
 
-        <div className={styles.controlButtons}>
-          <Button
-            color="primary"
-            className={styles.formButton}
-            onClick={this.submitForm}
-            type="submit"
-          >
-            Save Position
-          </Button>
-        </div>
-      </div>
-    );
-  }
-}
+          <div className={styles.controlButtons}>
+            <Button
+              color='danger'
+              className={styles.formButton}
+              onClick={deletePosition}
+            >
+              Delete Position
+            </Button>
+            <Button
+              color='primary'
+              className={styles.formButton}
+              onClick={submitForm}
+              type='submit'
+            >
+              Save Position
+            </Button>
+          </div>
+        </>
+      ) : null}
+    </div>
+  )
+};
 
 const mapStateToProps = state => ({
-  candidates: state.candidates,
-  issues: state.issues,
-  user: state.user,
-  contests: state.contests
-});
+  issues: state.issues.issues,
+  user: state.user
+})
 
 export default connect(
   mapStateToProps,
   { updateCandidate }
-)(PositionEditForm);
+)(PositionEditForm)
