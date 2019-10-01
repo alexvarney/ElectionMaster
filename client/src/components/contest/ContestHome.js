@@ -1,12 +1,16 @@
-import React from 'react'
-import Sidebar from '../candidate/Sidebar'
-import styles from './css/ContestHome.module.css'
-import ReactMarkdown from 'react-markdown'
-import { Link } from 'react-router-dom'
-import PollingGraph from './PollingGraph'
+import React, { useState } from 'react';
+import Sidebar from '../candidate/Sidebar';
+import styles from './css/ContestHome.module.css';
+import ReactMarkdown from 'react-markdown';
+import { Link } from 'react-router-dom';
+import PollingGraph from './PollingGraph';
+import { Button } from 'reactstrap';
 
 export default function ContestHome (props) {
   const { contest } = props
+
+  const [mobileSelectExpanded, setMobileSelectExpand] = useState(false)
+  const toggleMobileSelect = () => setMobileSelectExpand(!mobileSelectExpanded)
 
   if (!contest) {
     return (
@@ -18,20 +22,44 @@ export default function ContestHome (props) {
 
   return (
     <div className={styles.container}>
-      <Sidebar className={styles.sidebar} selectedContest={contest} />
+      <div className={styles.toggleContainer}>
+        <Button
+          className={styles.mobileToggleButton}
+          onClick={toggleMobileSelect}
+          color='primary'
+          block
+          outline
+        >
+          View Candidates
+        </Button>
+      </div>
+      <Sidebar
+        className={
+          mobileSelectExpanded ? styles.sidebar_expanded : styles.sidebar_hidden
+        }
+        selectedContest={contest}
+      />
       <div className={styles.panel}>
         <div className={styles.bannerContainer}>
           <img src={contest.bannerImage} />
         </div>
         <h1>{contest.name}</h1>
         <ul className={styles.links}>
-          <li><Link to={`/${contest.country}/${contest.url}/`}>Candidates</Link></li>
-          <li><Link to={`/${contest.country}/${contest.url}/issues`}>View the Issues</Link></li>
+          <li>
+            <Link to={`/${contest.country}/${contest.url}/`}>Candidates</Link>
+          </li>
+          <li>
+            <Link to={`/${contest.country}/${contest.url}/issues`}>
+              View the Issues
+            </Link>
+          </li>
         </ul>
-        
+
         <ReactMarkdown source={contest.description} />
         <h3>Polling Data</h3>
-        <PollingGraph contest={contest} />
+        <div className={styles.pollingGraph}>
+          <PollingGraph contest={contest} />
+        </div>
       </div>
     </div>
   )

@@ -1,15 +1,17 @@
 .container {
   display: flex;
+  flex-direction: column;
 }
 
-.sidebar {
-  position: -webkit-sticky;
-  position: sticky;
-  top: var(--nav, 60px);
-  flex: 1 0 21rem;
+.sidebar_expanded {
   height: calc((var(--vh, 1vh) * 100) - var(--nav, 60px));
   max-height: calc((var(--vh, 1vh) * 100) - var(--nav, 60px));
-  border-right: 1px solid #d6d6d6;
+  flex-basis: 100%;
+}
+
+.toggleContainer {
+  width: 100%;
+  padding: 3rem 3rem 0rem 3rem;
 }
 
 .panel {
@@ -46,4 +48,41 @@
 .links > li {
   display: inline;
   margin: 0 0.5rem 0 0.5rem;
+}
+
+.pollingGraph {
+  min-height: 20rem;
+}
+
+@media only screen and (min-width: 800px) {
+  .container{
+    flex-direction: row;
+  }
+  .sidebar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: var(--nav, 60px);
+    flex: 1 0 21rem;
+    height: calc((var(--vh, 1vh) * 100) - var(--nav, 60px));
+    max-height: calc((var(--vh, 1vh) * 100) - var(--nav, 60px));
+    border-right: 1px solid #d6d6d6;
+  }
+
+  .toggleContainer {
+    display: none;
+  }
+
+  .sidebar_expanded {
+    composes: sidebar;
+  }
+
+  .sidebar_hidden {
+    composes: sidebar;
+  }
+  .pollingGraph {
+    height: 20rem;
+    max-height: calc(20rem);
+    width: calc(100vw - 21rem - 5rem);
+    max-width: calc(100vw - 21rem - 5rem);
+  }
 }

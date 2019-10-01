@@ -65,7 +65,7 @@ const PollingGraph = (props) => {
 
   const options = {
     responsive: true,
-    maintainAspectRatio: true,
+    maintainAspectRatio: false,
     scales: {
       xAxes: [{
         type: 'time',
@@ -81,9 +81,7 @@ const PollingGraph = (props) => {
   }
 
   return (
-    <div style={{ height: '500px', maxWidth: 'calc(90vw - 21rem)', marginLeft: 'auto', marginRight: 'auto' }}>
-      <Line options={options} data={chartData} />
-    </div>
+    <Line options={options} data={chartData} />
   )
 }
 
