@@ -1,34 +1,45 @@
-import React, { Component } from "react"
-import { connect } from "react-redux"
-import { Link } from "react-router-dom"
-import styles from "./css/IssueEditForm.module.css"
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import styles from "./css/IssueEditForm.module.css";
 import {
   Button,
   Input,
   InputGroup,
   InputGroupText,
   InputGroupAddon
-} from "reactstrap"
-import { Scrollbars } from "react-custom-scrollbars"
+} from "reactstrap";
+import { Scrollbars } from "react-custom-scrollbars";
 import {
   createIssue,
   updateIssue,
   createIssueAndAssign,
   deleteIssue
-} from "../../actions/issueActions"
-import countries from "iso-3166-country-list"
+} from "../../actions/issueActions";
+import countries from "iso-3166-country-list";
 
-export class IssueEditForm extends Component {
+class IssueEditForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedIssue: props.selectedIssue ? props.selectedIssue : {}
+      selectedIssue: props.selectedIssue ? props.selectedIssue : null
     };
   }
 
   setSelectedIssue = issue => {
     this.setState({ selectedIssue: issue });
   };
+
+  componentDidUpdate(prevProps) {
+    if (this.props.selectedIssue) {
+      if (
+        !prevProps.selectedIssue ||
+        this.props.selectedIssue._id !== prevProps.selectedIssue._id
+      ) {
+        this.setState({ selectedIssue: this.props.selectedIssue });
+      }
+    }
+  }
 
   editIssue = event => {
     event.persist();
@@ -86,7 +97,7 @@ export class IssueEditForm extends Component {
   };
 
   handleDelete = event => {
-    if (window.confirm("Are you sure you want to delete this candidate?")) {
+    if (window.confirm("Are you sure you want to delete this issue?")) {
       this.props.deleteIssue({ ...this.state.selectedIssue });
     }
   };
@@ -100,102 +111,62 @@ export class IssueEditForm extends Component {
   };
 
   render() {
-    if (!this.props.user.token) {
-      return (
-        <div className={styles.overlay}>
-          <div className={styles.container}>
-            <h2 className={styles.subheading}>
-              You must be logged in to view this page.
-            </h2>
-            <Button tag={Link} to="/issues">
-              Close
-            </Button>
-          </div>
-        </div>
-      );
-    }
 
     return (
-      <div className={styles.overlay}>
-        <div className={styles.container}>
-          <h1>Issue Editor</h1>
-          <div className={styles.row}>
-            <div className={styles.selectContainer}>
-              <h2 className={styles.subheading}>Issue</h2>
-              <div className={styles.issueSelectContainer}>
-                <Scrollbars style={{ borderRadius: "10px" }}>
-                  <div
-                    className={styles.issueSelector}
-                    onClick={this.createNewIssue}
-                  >
-                    <span>
-                      <i className="fas fa-plus-circle"></i> New Issue
-                    </span>
-                  </div>
-                  {this.getContestIssues().map(issue => (
-                    <div
-                      key={issue._id}
-                      onClick={() => this.setSelectedIssue(issue)}
-                      className={styles.issueSelector}
-                    >
-                      {issue.name}
-                    </div>
-                  ))}
-                </Scrollbars>
-              </div>
-            </div>
-            <div className={styles.editContainer}>
-              <h2 className={styles.subheading}>Edit</h2>
-              <InputGroup>
-                <InputGroupAddon addonType="prepend">
-                  <InputGroupText>Name</InputGroupText>
-                </InputGroupAddon>
-                <Input
-                  className={""}
-                  onChange={this.editIssue}
-                  type="text"
-                  name="name"
-                  value={this.state.selectedIssue.name || ""}
-                ></Input>
-              </InputGroup>
-              <InputGroup>
-                <InputGroupAddon addonType="prepend">
-                  <InputGroupText>Country</InputGroupText>
-                </InputGroupAddon>
-                <Input
-                  className={""}
-                  onChange={this.editIssue}
-                  type="text"
-                  name="country"
-                  value={this.state.selectedIssue.country || ""}
-                ></Input>
-                <InputGroupAddon addonType="append">
-                  <InputGroupText>{this.getCountryName()}</InputGroupText>
-                </InputGroupAddon>
-              </InputGroup>
-
-              <textarea
-                className={styles.descriptionEditor}
+      <div className={styles.container}>
+        <div className={styles.row}>
+          <div className={styles.editContainer}>
+            <InputGroup>
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>Name</InputGroupText>
+              </InputGroupAddon>
+              <Input
+                className={styles.nameEditor}
                 onChange={this.editIssue}
-                name="description"
-                value={this.state.selectedIssue.description}
-              />
-            </div>
-          </div>
+                type="text"
+                name="name"
+                value={this.state.selectedIssue.name || ""}
+              ></Input>
+            </InputGroup>
+            <InputGroup>
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>Country</InputGroupText>
+              </InputGroupAddon>
+              <Input
+                className={styles.nameEditor}
+                onChange={this.editIssue}
+                type="text"
+                name="country"
+                value={this.state.selectedIssue.country || ""}
+              ></Input>
+              <InputGroupAddon addonType="append">
+                <InputGroupText>{this.getCountryName()}</InputGroupText>
+              </InputGroupAddon>
+            </InputGroup>
 
-          <div className={styles.controlButtons}>
-            <Button
-              disabled={this.state.selectedIssue._id ? false : true}
-              color="danger"
-              onClick={() => this.handleDelete()}
-            >
-              Delete
-            </Button>
-            <Button color="primary" onClick={this.saveIssue}>
-              Save
-            </Button>
-            <Button onClick={() => this.props.history.goBack()}>Close</Button>
+            <textarea
+              className={styles.descriptionEditor}
+              onChange={this.editIssue}
+              name="description"
+              value={this.state.selectedIssue.description}
+            />
           </div>
+        </div>
+
+        <div className={styles.controlButtons}>
+          <Button color="info" onClick={this.createNewIssue}>
+            New Issue
+          </Button>
+          <Button
+            disabled={this.state.selectedIssue._id ? false : true}
+            color="danger"
+            onClick={() => this.handleDelete()}
+          >
+            Delete
+          </Button>
+          <Button color="primary" onClick={this.saveIssue}>
+            Save
+          </Button>
         </div>
       </div>
     );

@@ -1,16 +1,5 @@
-.parentRow > * {
-  margin: 0.5rem;
-}
-
-.navContainer {
-  width: 100%;
-}
-
-.navContainer > li {
-  cursor: pointer;
-}
-
-.linkedCandidateList {
+.issueList {
+  margin-top: 1rem;
   list-style: none;
   padding: 0;
   border: 1px solid #d6d6d6;
@@ -21,7 +10,7 @@
   overflow: auto;
 }
 
-.linkedCandidateList > li {
+.issueList > li {
   padding: 0.6rem;
   display: flex;
   justify-content: space-between;
@@ -31,20 +20,11 @@
   transition: all 0.1s ease-out;
 }
 
-.listItemActive {
-  background-color: rgb(225, 240, 255);
-}
-
-.linkedCandidateList > li:hover {
+.issueList > li:hover {
   border-bottom: 2px solid rgb(188, 221, 253);
   cursor: pointer;
 }
 
-.linkedCandidateList > li > span {
-  margin-right: 2rem;
-}
-
-.searchField {
-  margin-top: 0.5rem;
-  margin-bottom: 1rem;
+.listItemActive {
+  background-color: rgb(225, 240, 255);
 }

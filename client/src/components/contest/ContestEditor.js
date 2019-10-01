@@ -136,7 +136,6 @@ const ContestEditor = props => {
           </TabPane>
           <TabPane tabId='issues'>
             <ContestIssueEditor
-              styles={styles}
               issues={props.issues}
               selectedContest={selectedContest}
               setSelectedContest={setSelectedContest}

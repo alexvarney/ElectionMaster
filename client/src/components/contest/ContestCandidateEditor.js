@@ -18,9 +18,6 @@ import PositionEditForm from '../candidate/PositionEditForm'
 const ContestCandidateEditor = props => {
   const { candidates, selectedContest, setSelectedContest } = props
 
-  const sortCandidates = list =>
-    list.sort((a, b) => (a.name > b.name ? 1 : -1))
-
   const candidateActions = {
     add: id => {
       const candidateList = [

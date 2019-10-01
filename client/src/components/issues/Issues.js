@@ -50,17 +50,6 @@ const Issues = props => {
           />
 
           <div className={styles.sidebar}>
-            {props.user.token ? (
-              <>
-                <div className={styles.adminNav}>
-                  <Button size='sm' tag={Link} to={`${match.url}/edit`} outline>
-                    Issue Editor
-                  </Button>
-                </div>
-                <hr />
-              </>
-            ) : null}
-
             <IssueSidebar
               issues={props.issues.issues}
               selectedContest={selectedContest}
