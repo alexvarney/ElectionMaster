@@ -78,6 +78,15 @@
   font-family: "Open-Sans", sans-serif;
 }
 
+.tagDeleteIcon {
+  padding-left: 0.3rem;
+}
+
+.tagDeleteIcon:hover {
+  cursor: pointer;
+  color: #c9c9c9;
+}
+
 .nameEditor:focus,
 .descriptionEditor:focus {
   outline: none;

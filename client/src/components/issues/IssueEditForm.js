@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import styles from "./css/IssueEditForm.module.css";
+import classNames from "classnames";
 import {
   Button,
   Input,
   InputGroup,
   InputGroupText,
-  InputGroupAddon
+  InputGroupAddon,
+  Badge
 } from "reactstrap";
 import { Scrollbars } from "react-custom-scrollbars";
 import {
@@ -22,9 +24,33 @@ class IssueEditForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedIssue: props.selectedIssue ? props.selectedIssue : null
+      selectedIssue: props.selectedIssue ? props.selectedIssue : null,
+      tagFieldValue: ""
     };
   }
+
+  handleTagFieldChange = event => {
+    this.setState({ tagFieldValue: event.target.value });
+  };
+
+  addTag = () => {
+    this.setState(prevState => ({
+      selectedIssue: {
+        ...prevState.selectedIssue,
+        tags: [...prevState.selectedIssue.tags, prevState.tagFieldValue]
+      },
+      tagFieldValue: ""
+    }));
+  };
+
+  removeTag = tag => {
+    this.setState(prevState => ({
+      selectedIssue: {
+        ...prevState.selectedIssue,
+        tags: [...prevState.selectedIssue.tags.filter(item => item !== tag)]
+      }
+    }));
+  };
 
   setSelectedIssue = issue => {
     this.setState({ selectedIssue: issue });
@@ -111,7 +137,6 @@ class IssueEditForm extends Component {
   };
 
   render() {
-
     return (
       <div className={styles.container}>
         <div className={styles.row}>
@@ -143,6 +168,32 @@ class IssueEditForm extends Component {
                 <InputGroupText>{this.getCountryName()}</InputGroupText>
               </InputGroupAddon>
             </InputGroup>
+
+            <InputGroup>
+              <Input
+                onChange={this.handleTagFieldChange}
+                value={this.state.tagFieldValue}
+              ></Input>
+              <InputGroupAddon addonType="append">
+                <Button color="secondary" onClick={this.addTag}>
+                  Add Tag
+                </Button>
+              </InputGroupAddon>
+            </InputGroup>
+
+            <div className={styles.tags}>
+              {this.state.selectedIssue.tags
+                ? this.state.selectedIssue.tags.map(tag => (
+                    <Badge color="primary" pill>
+                      {tag}
+                      <i
+                        onClick={() => this.removeTag(tag)}
+                        className={classNames('fas', 'fa-times',[styles.tagDeleteIcon])}
+                      ></i>
+                    </Badge>
+                  ))
+                : null}
+            </div>
 
             <textarea
               className={styles.descriptionEditor}
