@@ -30,7 +30,7 @@ export default function ContestHome (props) {
           block
           outline
         >
-          View Candidates
+          {mobileSelectExpanded ? 'Close' : 'View Candidates'}
         </Button>
       </div>
       <Sidebar
@@ -39,28 +39,30 @@ export default function ContestHome (props) {
         }
         selectedContest={contest}
       />
-      <div className={styles.panel}>
-        <div className={styles.bannerContainer}>
-          <img src={contest.bannerImage} />
-        </div>
-        <h1>{contest.name}</h1>
-        <ul className={styles.links}>
-          <li>
-            <Link to={`/${contest.country}/${contest.url}/`}>Candidates</Link>
-          </li>
-          <li>
-            <Link to={`/${contest.country}/${contest.url}/issues`}>
-              View the Issues
-            </Link>
-          </li>
-        </ul>
+      {!mobileSelectExpanded ? (
+        <main className={styles.panel}>
+          <div className={styles.bannerContainer}>
+            <img src={contest.bannerImage} />
+          </div>
+          <h1>{contest.name}</h1>
+          <ul className={styles.links}>
+            <li>
+              <Link to={`/${contest.country}/${contest.url}/`}>Candidates</Link>
+            </li>
+            <li>
+              <Link to={`/${contest.country}/${contest.url}/issues`}>
+                View the Issues
+              </Link>
+            </li>
+          </ul>
 
-        <ReactMarkdown source={contest.description} />
-        <h3>Polling Data</h3>
-        <div className={styles.pollingGraph}>
-          <PollingGraph contest={contest} />
-        </div>
-      </div>
+          <ReactMarkdown source={contest.description} />
+          <h3>Polling Data</h3>
+          <div className={styles.pollingGraph}>
+            <PollingGraph contest={contest} />
+          </div>
+        </main>
+      ) : null}
     </div>
   )
 }
