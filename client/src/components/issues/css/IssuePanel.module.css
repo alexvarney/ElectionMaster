@@ -34,10 +34,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgb(95, 95, 95);
   padding: 0.7rem 1rem 1rem 1rem;
   border-radius: 1rem;
-  color: #fff;
   font-weight: 600;
 }
 
@@ -48,14 +46,16 @@
 }
 
 .pieChart {
-  width: 10rem;
   margin-bottom: 0.5rem;
+  max-width: 40rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .pieChartLabels {
   display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
+  flex-direction: row;
+  justify-content: center;
 }
 
 p.pieLabel {
@@ -63,19 +63,26 @@ p.pieLabel {
   border-radius: 2rem;
   margin: 0.3rem;
   font-size: 12px;
+  font-weight: 600;
+  color: rgb(41, 41, 41);
 }
 
 .pieLabelSupports {
   composes: pieLabel;
-  background-color: #0d9900;
+  background-color: #B1DE9C;
 }
 
 .pieLabelMixed {
   composes: pieLabel;
-  background-color: #c2bb00;
+  background-color: #F5DF9F;
 }
 
 .pieLabelOpposed {
   composes: pieLabel;
-  background-color: #ac2715;
+  background-color: #EBA598;
+}
+
+.pieLabelUnknown {
+  composes: pieLabel;
+  background-color: #B9B5C7;
 }
