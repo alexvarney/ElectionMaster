@@ -201,11 +201,11 @@ router.get('/file/:shortId', (req, res) => {
       if (thumbnailFilename) {
         return res.sendFile(path.join(filePath, thumbnailFilename))
       } else {
-        const newThumbFilename = `${shortId}_${shortid.generate()}.jpeg`
+        const newThumbFilename = `${shortId}_${shortid.generate()}.png`
 
         sharp(path.join(filePath, filename))
           .resize(256)
-          .toFormat('jpeg')
+          .toFormat('png')
           .toBuffer()
           .then(data => {
             fs.writeFile(path.join(filePath, newThumbFilename), data, err => {
