@@ -4,12 +4,14 @@ import { Tooltip } from 'reactstrap'
 import { getSubtleColor } from '../_helpers'
 
 export default function CandidatePositionButton (props) {
-  const { name, image, status } = props.candidate
+  const { name, image, status, colors } = props.candidate
 
   const [hoverStatus, onHover] = useState(false)
   const parentRef = useRef(null)
 
-  const [backgroundColor, setBackgroundColor] = useState(getSubtleColor())
+  const primaryColor = colors.filter(item => item.name === 'primary')[0]
+
+  const [backgroundColor, setBackgroundColor] = useState(primaryColor ? primaryColor.value : getSubtleColor())
 
   const initials = (
     name.split(' ')[0].charAt(0) + name.split(' ')[1].charAt(0)
