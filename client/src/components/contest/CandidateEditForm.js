@@ -72,6 +72,44 @@ class CandidateEditForm extends Component {
     }));
   };
 
+  handlePrimaryColorChange = event => {
+    event.persist();
+
+    const updateColor = () => {
+      this.setState(prevState=>({
+        formValues: {
+          ...prevState.formValues,
+          colors: [...prevState.formValues.colors.filter(item => item.name !== 'primary'), {
+            name: 'primary',
+            value: event.target.value
+          }]
+        }
+      }))
+    }
+
+    if(!this.state.formValues.colors){
+      this.setState(prevState=>({
+        formValues: {
+          ...prevState.formValues,
+          colors: [],
+        }
+      }), updateColor)
+    } else {
+      updateColor()
+    }
+
+    
+  }
+
+  getPrimaryColorValue = () => {
+    //This is really hacky
+    try{
+      return this.state.formValues.colors.filter(item => item.name ==='primary')[0].value || ''
+    } catch {
+      return ''
+    }
+  }
+
   submitForm = event => {
     event.preventDefault();
 
@@ -259,6 +297,17 @@ class CandidateEditForm extends Component {
                 name="netWorth"
                 value={this.state.formValues["netWorth"] || ""}
                 onChange={this.handleFormChange}
+              ></Input>
+            </InputGroup>
+            <InputGroup className={styles.formItem}>
+              <InputGroupAddon addonType="prepend">
+                <InputGroupText>Primary Color</InputGroupText>
+              </InputGroupAddon>
+              <Input
+                type="text"
+                name="netWorth"
+                value={this.getPrimaryColorValue()}
+                onChange={this.handlePrimaryColorChange}
               ></Input>
             </InputGroup>
             <div>
