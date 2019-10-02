@@ -16,7 +16,7 @@ export default function PositionSupportChart (props) {
 
   
   const chartData = {
-    labels: ['Supports', 'Mixed', 'Opposed', 'Unknown'],
+    labels: [`Supports - (${supportsPercentage}%)`, `Mixed - (${mixedPercentage}%)`, `Opposed - (${opposedPercentage}%)`, `Unknown - (${unknownPercentage}%)`],
     datasets: [
       {
         data: [supports, mixed, opposed, unknown],
@@ -25,7 +25,14 @@ export default function PositionSupportChart (props) {
     ]
   }
 
+  const chartOptions = {
+    legend: {
+      display: true,
+      position: 'bottom'
+    }
+  }
+
   return (
-    <Doughnut data={chartData} />
+    <Doughnut options={chartOptions} data={chartData} />
   )
 }

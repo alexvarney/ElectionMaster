@@ -64,21 +64,6 @@ const IssuePanel = props => {
         <PositionSupportChart positions={positions} />
       </div>
 
-      <div className={styles.pieChartLabels}>
-        <p className={styles.pieLabelSupports}>
-            Supports - {Math.floor((supports.length * 100) / totalPositions)}%
-        </p>
-        <p className={styles.pieLabelMixed}>
-            Mixed - {Math.floor((mixed.length * 100) / totalPositions)}%
-        </p>
-        <p className={styles.pieLabelOpposed}>
-            Opposed - {Math.floor((opposed.length * 100) / totalPositions)}%
-        </p>
-        <p className={styles.pieLabelUnknown}>
-            Unknown - {Math.floor((unknown.length * 100) / totalPositions)}%
-        </p>
-      </div>
-
       <div className={styles.positionContainer}>
         <div>
           <h4>
