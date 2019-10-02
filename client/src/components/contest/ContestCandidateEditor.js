@@ -12,7 +12,7 @@ import {
 import classnames from 'classnames'
 import styles from './css/ContestCandidateEditor.module.css'
 import CandidateSearch from './CandidateSearch'
-import CandidateEditForm from '../candidate/CandidateEditForm'
+import CandidateEditForm from './CandidateEditForm'
 import PositionEditForm from '../candidate/PositionEditForm'
 
 const ContestCandidateEditor = props => {
