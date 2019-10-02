@@ -17,6 +17,10 @@ const CandidateSchema = new mongoose.Schema({
   websiteDisplay: String,
   partyAffiliation: String,
   netWorth: Number,
+  colors: [{
+    name: String,
+    value: String
+  }],
   positions: [
     {
       issue: mongoose.Schema.Types.ObjectId,
