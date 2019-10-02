@@ -1,0 +1,83 @@
+.container {
+  margin: 0 1rem 0 1rem;
+  flex: 0 1 10rem;
+  max-width: 20rem;
+}
+
+.container > h2 {
+  text-align: center;
+  font-size: 22px;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.container > hr:nth-of-type(1) {
+  margin-top: 0.5rem;
+  
+}
+
+.positionContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.positionContainer > div {
+  box-sizing: border-box;
+}
+
+.positionContainer > div > h4 {
+  flex-basis: 100%;
+  text-align: center;
+}
+
+.pieContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.7rem 1rem 1rem 1rem;
+  border-radius: 1rem;
+  font-weight: 600;
+}
+
+
+.pieChart {
+  max-height: 20rem;
+  max-width: 20rem;
+}
+
+.pieChartLabels {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+p.pieLabel {
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  border-radius: 2rem;
+  margin: 0.3rem;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgb(41, 41, 41);
+}
+
+.pieLabelSupports {
+  composes: pieLabel;
+  background-color: #B1DE9C;
+}
+
+.pieLabelMixed {
+  composes: pieLabel;
+  background-color: #F5DF9F;
+}
+
+.pieLabelOpposed {
+  composes: pieLabel;
+  background-color: #EBA598;
+}
+
+.pieLabelUnknown {
+  composes: pieLabel;
+  background-color: #B9B5C7;
+}

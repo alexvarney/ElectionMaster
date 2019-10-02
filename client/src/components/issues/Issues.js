@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Route, Link } from 'react-router-dom'
-import { Button } from 'reactstrap'
 
 import { getIssues } from '../../actions/issueActions'
 import { getContests } from '../../actions/contestActions'
 import { ContestContext } from '../contest/ContestProvider'
 
-import IssueEditForm from './IssueEditForm'
-import IssuePanel from './IssuePanel'
-import IssueSidebar from './IssueSidebar'
+import IssueDisplay from './IssueDisplay'
 
 import styles from './css/Issues.module.css'
+import IssuePanel from './IssuePanel'
 
 const Issues = props => {
   const { match } = props
@@ -42,25 +39,8 @@ const Issues = props => {
     <ContestContext.Consumer>
       {selectedContest => (
         <div className={styles.container}>
-          <Route
-            path={`${props.match.path}/edit`}
-            render={props => (
-              <IssueEditForm {...props} selectedIssue={selectedIssue} />
-            )}
-          />
-
-          <div className={styles.sidebar}>
-            <IssueSidebar
-              issues={props.issues.issues}
-              selectedContest={selectedContest}
-              setSelectedIssue={setSelectedIssue}
-            />
-          </div>
-
           <div className={styles.content}>
-            {selectedIssue ? (
-              <IssuePanel issue={selectedIssue} contest={selectedContest} />
-            ) : null}
+            <IssuePanel contest={selectedContest} issues={props.issues.issues} />
           </div>
         </div>
       )}
