@@ -9,13 +9,12 @@ export default function CandidatePositionButton (props) {
   const [hoverStatus, onHover] = useState(false)
   const parentRef = useRef(null)
 
-  const primaryColor = colors.filter(item => item.name === 'primary')[0]
+  const primaryColor = colors ? colors.filter(item => item.name === 'primary')[0] : null
 
   const [backgroundColor, setBackgroundColor] = useState(primaryColor ? primaryColor.value : getSubtleColor())
 
-  const initials = (
-    name.split(' ')[0].charAt(0) + name.split(' ')[1].charAt(0)
-  ).toUpperCase()
+  const spaceIndex = name.indexOf(' ')
+  const initials = name.charAt(0) + '.' + name.slice(spaceIndex)
 
   const computedStyle = () => {
     if (

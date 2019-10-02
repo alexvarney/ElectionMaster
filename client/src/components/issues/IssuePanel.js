@@ -56,77 +56,43 @@ const IssuePanel = props => {
 
   return (
     <div className={styles.container}>
-      <h1>{props.issue.name}</h1>
-
-      <hr />
 
       <div className={styles.pieChart}>
         <PositionSupportChart positions={positions} />
       </div>
 
+      <h1>{props.issue.name}</h1>
+      <hr />
+
+      <ReactMarkdown source={issue.description} />
+      
+      <h3>Candidate Positions</h3>
       <div className={styles.positionContainer}>
-        <div>
-          <h4>
-            <i className='far fa-check-circle' /> Supports - (
-            {supports ? supports.length : 0})
-          </h4>
-          {supports
-            ? supports.map(item => (
-              <CandidatePositionButton
-                key={item.candidate._id}
-                candidate={item.candidate}
-              />
-            ))
-            : null}
-        </div>
 
-        <div>
-          <h4>
-            <i className='fas fa-adjust' /> Mixed - ({mixed ? mixed.length : 0})
-          </h4>
-          {mixed
-            ? mixed.map(item => (
-              <CandidatePositionButton
-                key={item.candidate._id}
-                candidate={item.candidate}
-              />
-            ))
-            : null}
-        </div>
-
-        <div>
-          <h4>
-            <i className='far fa-times-circle' /> Opposed - (
-            {opposed ? opposed.length : 0})
-          </h4>
-          {opposed
-            ? opposed.map(item => (
-              <CandidatePositionButton
-                key={item.candidate._id}
-                candidate={item.candidate}
-              />
-            ))
-            : null}
-        </div>
-        {unknown && unknown.length > 0 ? (
+        {supports.length > 0 ? (
           <div>
-            <h4>
-            <i className="far fa-circle"></i> Unknown - (
-              {unknown ? unknown.length : 0})
-            </h4>
-            {unknown
-              ? unknown.map(item => (
-                <CandidatePositionButton
-                  key={item.candidate._id}
-                  candidate={item.candidate}
-                />
-              ))
-              : null}
-          </div>
-        ) : null}
+            <h4>Supports - ({supports.length})</h4>
+            {supports.map(item => (<CandidatePositionButton key={item.candidate._id} candidate={item.candidate} />))}
+          </div>) : null}
+        {mixed.length > 0 ? (
+          <div>
+            <h4>Mixed - ({mixed.length})</h4>
+            {mixed.map(item => (<CandidatePositionButton key={item.candidate._id} candidate={item.candidate} />))}
+          </div>) : null}
+        {opposed.length > 0 ? (
+          <div>
+            <h4>Opposed - ({opposed.length})</h4>
+            {opposed.map(item => (<CandidatePositionButton key={item.candidate._id} candidate={item.candidate} />))}
+          </div>) : null}
+        {unknown.length > 0 ? (
+          <div>
+            <h4>Unknown - ({unknown.length})</h4>
+            {unknown.map(item => (<CandidatePositionButton key={item.candidate._id} candidate={item.candidate} />))}
+          </div>) : null}
+        
       </div>
       <hr />
-      <ReactMarkdown source={issue.description} />
+      
     </div>
   )
 }
