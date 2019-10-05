@@ -101,17 +101,13 @@ const IssueDisplay = props => {
         }
       />
 
-      <a href='#' className={styles.expandLink} onClick={toggleDescription}>
+      <span className={styles.expandLink} onClick={toggleDescription}>
         View {shortenDescription ? 'More' : 'Less'}
-      </a>
+      </span>
 
       <div className={styles.pieChart}>
         <PositionSupportChart positions={positions} colors={backgroundColors} />
       </div>
-
-      <a href='#' className={styles.expandLink} onClick={togglePositionExpand}>
-        {!isPositionExpanded ? 'Show' : 'Hide'} Candidate Positions
-      </a>
 
       <div
         className={classNames({
@@ -178,6 +174,11 @@ const IssueDisplay = props => {
           </div>
         ) : null}
       </div>
+    
+      <span className={styles.expandLink} onClick={togglePositionExpand}>
+        {!isPositionExpanded ? 'Show' : 'Hide'} Candidate Positions
+      </span>
+    
     </div>
   )
 }

@@ -20,7 +20,11 @@ export default function IssuePanel (props) {
 
   return (
     <div className={styles.container}>
-      <IssueSearch issues={contestIssues} setFilteredIssues={setDisplayedIssues} tags={allTags} />
+      <h1>Issues</h1>
+      <h2>{contest ? contest.name : ''}</h2>
+      <div className={styles.issueSearch}>
+        <IssueSearch issues={contestIssues} setFilteredIssues={setDisplayedIssues} tags={allTags} />
+      </div>
       <div className={styles.content}>
         {displayedIssues.map(item => (<IssueDisplay key={item._id} issue={item} contest={contest} />))}
       </div>
