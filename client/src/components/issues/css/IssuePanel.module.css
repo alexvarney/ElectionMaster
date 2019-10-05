@@ -1,4 +1,9 @@
 div.container {
+  margin: 2rem;
+}
+
+div.content {
+  margin-top: 1rem;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
