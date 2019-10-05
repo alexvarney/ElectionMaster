@@ -2,10 +2,13 @@ import React from 'react'
 import { Doughnut } from 'react-chartjs-2'
 
 export default function PositionSupportChart (props) {
-  const supports = props.positions.supports ? props.positions.supports.length : 0
-  const mixed = props.positions.mixed ? props.positions.mixed.length : 0
-  const opposed = props.positions.opposed ? props.positions.opposed.length : 0
-  const unknown = props.positions.unknown ? props.positions.unknown.length : 0
+
+  const {positions, colors} = props
+
+  const supports = positions.supports ? positions.supports.length : 0
+  const mixed = positions.mixed ? positions.mixed.length : 0
+  const opposed = positions.opposed ? positions.opposed.length : 0
+  const unknown = positions.unknown ? positions.unknown.length : 0
   
   const totalPositions = supports + mixed + opposed + unknown
 
@@ -20,7 +23,7 @@ export default function PositionSupportChart (props) {
     datasets: [
       {
         data: [supports, mixed, opposed, unknown],
-        backgroundColor: ['#B1DE9C', '#F5DF9F', '#EBA598', '#B9B5C7']
+        backgroundColor: [colors.supports, colors.mixed, colors.opposed, colors.unknown]
       }
     ]
   }
@@ -29,7 +32,8 @@ export default function PositionSupportChart (props) {
     legend: {
       display: true,
       position: 'bottom'
-    }
+    },
+    maintainAspectRatio: false
   }
 
   return (
