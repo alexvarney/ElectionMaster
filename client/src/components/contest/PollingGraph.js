@@ -47,10 +47,12 @@ const PollingGraph = (props) => {
     for (const [key, value] of Object.entries(candidatePolling)) {
       const candidate = getCandidateById(key, candidates)
       if (candidate && candidate.status && ['active', 'declared'].includes(candidate.status.toLowerCase().trim())) {
+        const primaryColor = (candidate.colors && !!candidate.colors.filter(color => color.name === 'primary')[0]) ? candidate.colors.filter(color => color.name === 'primary')[0].value : getSubtleColor();
+
         datasets.push({
           label: candidate.name,
           data: value,
-          borderColor: getSubtleColor(),
+          borderColor: primaryColor,
           backgroundColor: 'rgba(0,0,0,0)'
         })
       }
