@@ -35,7 +35,7 @@ export default function IssueSearch (props) {
 
   const updateFilteredIssues = () => {
     const filteredIssues = issues
-      .filter(issue => issue.name.includes(searchField))
+      .filter(issue => issue.name.toLowerCase().includes(searchField.toLowerCase()))
       .reduce((issueAcc, currentIssue) => {
         if (!currentIssue.tags || currentIssue.tags.length === 0) {
           // Include the item if it has no tags
