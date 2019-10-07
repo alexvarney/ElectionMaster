@@ -1,15 +1,24 @@
-.dropdownList {
-  list-style-type: none;
-  padding-left: 0.5rem;
-  margin-left: 1.5rem;
-  margin-right: 0.5rem;
-  -webkit-user-select: none; /* Safari */        
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* IE10+/Edge */
-  user-select: none; /* Standard */
+.container{
+  padding: 0.5rem;
 }
 
-.dropdownList > li {
-  padding: 0.2rem;
-  cursor: pointer;
+.dropdownList_standalone{
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0rem 0.5rem 0rem 0.5rem;
+  padding: 0rem 0 0 0;
+}
+
+.dropdownList_standalone > li {
+  padding: 0.6rem;
+}
+
+.dropdownList_standalone > li:last-of-type {
+  flex-basis: 100%;
+}
+
+.dropdownList_standalone > li span {
+  margin-left: 0.25rem;
+  font-size: 14px;
 }

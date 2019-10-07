@@ -1,5 +1,5 @@
 div.container {
-  padding: 2rem;
+  padding: 1.5rem 2rem 0rem 2rem;
   background-color: #f7f7f7;
   min-height: calc((var(--vh, 1vh) * 100) - var(--nav, 60px));
 }
@@ -13,4 +13,20 @@ div.content {
 
 div.issueSearch {
   box-shadow: 2px 2px 10px #c0c0c0a6;
+  background-color: #fff;
+  border: 2px solid #d6d6d6;
+  border-radius: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.container > h1, .container > h2 {
+  display: inline;
+}
+
+.container > h1 {
+  margin: 0rem 2rem 0rem 1rem;
+}
+
+.container > h2 {
+  color: rgb(41, 52, 70);
 }

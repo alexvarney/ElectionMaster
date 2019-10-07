@@ -4,11 +4,8 @@ import {
   InputGroupAddon,
   InputGroupText,
   Input,
-  InputGroupButtonDropdown,
-  DropdownToggle,
-  DropdownMenu
-} from 'reactstrap';
-import styles from './css/IssueSearch.module.css';
+} from 'reactstrap'
+import styles from './css/IssueSearch.module.css'
 
 export default function IssueSearch (props) {
   const { tags, issues, setFilteredIssues } = props
@@ -61,46 +58,34 @@ export default function IssueSearch (props) {
   }, [filteredTags, props.tags, searchField])
 
   return (
-    <div>
-      <InputGroup size='lg'>
+    <div className={styles.container}>
+      <ul className={styles.dropdownList_standalone}>
+        {sortedTags.map(tag => (
+          <li onClick={() => toggleTag(tag)} key={tag}>
+            <div>
+              <input type='checkbox' checked={!filteredTags.includes(tag)} />
+              <span>{tag}</span>
+            </div>
+          </li>
+        ))}
+        <li>
+          Select:{' '}
+          <a href='#' onClick={selectAll}>
+            All
+          </a>{' '}
+          /{' '}
+          <a onClick={selectNone} href='#'>
+            None
+          </a>
+        </li>
+      </ul>
+      <InputGroup>
         <InputGroupAddon addonType='prepend'>
           <InputGroupText>
             <i className='fas fa-search' />
           </InputGroupText>
         </InputGroupAddon>
-        <Input value={searchField} onChange={handleSearchChange} />
-        <InputGroupButtonDropdown
-          addonType='append'
-          isOpen={isDropdownOpen}
-          toggle={toggleDropdown}
-        >
-          <DropdownToggle caret>
-            Categories ({tags.length - filteredTags.length})
-          </DropdownToggle>
-          <DropdownMenu>
-            <ul className={styles.dropdownList}>
-              {sortedTags.map(tag => (
-                <li onClick={() => toggleTag(tag)} key={tag}>
-                  <Input
-                    type='checkbox'
-                    checked={!filteredTags.includes(tag)}
-                  />
-                  {tag}
-                </li>
-              ))}
-              <li>
-                Select:{' '}
-                <a href='#' onClick={selectAll}>
-                  All
-                </a>{' '}
-                /{' '}
-                <a onClick={selectNone} href='#'>
-                  None
-                </a>
-              </li>
-            </ul>
-          </DropdownMenu>
-        </InputGroupButtonDropdown>
+        <Input value={searchField} onChange={handleSearchChange} placeholder="Search issues" />
       </InputGroup>
     </div>
   )
