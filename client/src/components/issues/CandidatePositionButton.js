@@ -45,7 +45,7 @@ export default function CandidatePositionButton (props) {
         <img
           alt={name}
           className={styles.imgStyle}
-          src={process.env.PUBLIC_URL + `/headshots/${image}`}
+          src={(image.charAt(0) === '/') ? image : process.env.PUBLIC_URL + `/headshots/${image}`}
         />
       ) : null}
 

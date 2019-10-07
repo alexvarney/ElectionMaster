@@ -3,7 +3,7 @@ import {
   InputGroup,
   InputGroupAddon,
   InputGroupText,
-  Input,
+  Input
 } from 'reactstrap'
 import styles from './css/IssueSearch.module.css'
 

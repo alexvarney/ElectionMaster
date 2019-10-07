@@ -12,6 +12,11 @@
 
 .dropdownList_standalone > li {
   padding: 0.6rem;
+  user-select: none;
+}
+
+.dropdownList_standalone input, .dropdownList_standalone span {
+  cursor: pointer;
 }
 
 .dropdownList_standalone > li:last-of-type {

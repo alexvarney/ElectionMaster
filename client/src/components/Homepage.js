@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getContests } from '../actions/contestActions'
+import HomepageContestPanel from './HomepageContestPanel'
+import styles from './css/Homepage.module.css'
 
 const Homepage = props => {
   useEffect(() => {
@@ -9,20 +10,16 @@ const Homepage = props => {
   }, [])
 
   return (
-    <div>
-      <h1>Welcome to ElectionsMaster</h1>
+    <div className={styles.container}>
+      <header className={styles.header}>
+        <h1>ElectionsMaster.com</h1>
 
-      <p>This is the Homepage</p>
+        <p>Select a contest to get started.</p>
+      </header>
+      {props.contests.contests.map(contest => (
+        <HomepageContestPanel contest={contest} />
+      ))}
 
-      <ul>
-        {props.contests.contests.map(contest => (
-          <li key={contest._id}>
-            <Link to={`/${contest.country}/${contest.url}`}>
-              {contest.name}
-            </Link>
-          </li>
-        ))}
-      </ul>
     </div>
   )
 };
