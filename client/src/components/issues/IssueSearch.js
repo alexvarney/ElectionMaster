@@ -63,7 +63,7 @@ export default function IssueSearch (props) {
         {sortedTags.map(tag => (
           <li onClick={() => toggleTag(tag)} key={tag}>
             <div>
-              <input type='checkbox' checked={!filteredTags.includes(tag)} />
+              <input type='checkbox' checked={!filteredTags.includes(tag)} onChange={()=>{}}/>
               <span>{tag}</span>
             </div>
           </li>

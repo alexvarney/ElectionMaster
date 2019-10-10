@@ -17,7 +17,7 @@ const Homepage = props => {
         <p>Select a contest to get started.</p>
       </header>
       {props.contests.contests.map(contest => (
-        <HomepageContestPanel contest={contest} />
+        <HomepageContestPanel key={contest._id} contest={contest} />
       ))}
 
     </div>
