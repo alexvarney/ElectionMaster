@@ -11,7 +11,7 @@ function CandidateSidebarCard (props) {
 
   const { image, name, polling, _id } = candidate
 
-  const imageUrl = image.charAt(0) === '/' ? image : process.env.PUBLIC_URL + `/headshots/${image}`
+  const imageUrl = image ? (image.charAt(0) === '/' ? image : process.env.PUBLIC_URL + `/headshots/${image}`) : null;
 
   return (
     <ContestContext.Consumer>
