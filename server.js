@@ -15,15 +15,18 @@ const app = express()
 
 // Middleware
 app.use(bodyParser.json())
-app.use(cors())
+app.use(cors({origin: '*'}))
 
 // DB Config
 const db = keys.mongoURI
 
-mongoose
+//Wait 5 seconds to attempt to connect to MongoDB service as it may be launching simultaneously
+setTimeout(() => {
+  mongoose
   .connect(db)
   .then(() => console.log('MongoDB Connected...'))
   .catch(err => console.log(err))
+}, 5000);
 
 // Use Routes
 app.use('/api/candidates', candidates)
@@ -32,8 +35,13 @@ app.use('/api/users', users)
 app.use('/api/contests', contests)
 app.use('/api/assets', assets)
 
+let port = process.env.PORT || 5000
+
 // Serve static assets if in production
 if (process.env.NODE_ENV === 'production') {
+
+  console.log('Node is serving in production.')
+
   app.use(express.static('client/build'))
 
   app.get('*', (req, res) => {
@@ -41,5 +49,5 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 
-const port = process.env.PORT || 5000
+
 app.listen(port, () => console.log(`Server started on port ${port}`))
