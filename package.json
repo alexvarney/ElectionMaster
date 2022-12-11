@@ -20,7 +20,7 @@
     "concurrently": "^4.1.1",
     "cors": "^2.8.5",
     "cross-env": "^6.0.3",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-formidable": "^1.2.0",
     "file-type": "^12.3.0",
     "formidable": "^1.2.1",
